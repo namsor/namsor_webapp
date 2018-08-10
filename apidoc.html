@@ -1,0 +1,129 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>NamSor API v2 (beta)</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+        <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+        <style>
+            html
+            {
+                box-sizing: border-box;
+                overflow: -moz-scrollbars-vertical;
+                overflow-y: scroll;
+            }
+
+            *,
+            *:before,
+            *:after
+            {
+                box-sizing: inherit;
+            }
+
+            body
+            {
+                margin:0;
+                background: #fafafa;
+            }
+        </style>
+        <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+        <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyBO-97crBWy9w_olF5qKIy2GmntKm8jkl8",
+                authDomain: "namsoridentities.firebaseapp.com",
+                databaseURL: "https://namsoridentities.firebaseio.com",
+                projectId: "namsoridentities",
+                storageBucket: "namsoridentities.appspot.com",
+                messagingSenderId: "578244426610"
+            };
+            firebase.initializeApp(config);
+        </script>
+
+        <script type="text/javascript">
+            initApp = function () {
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        // User is signed in.
+                        user.getIdToken().then(function (accessToken) {
+                            // Create a request variable and assign a new XMLHttpRequest object to it.
+                            var request = new XMLHttpRequest();
+                            // Open a new connection, using the GET request on the URL endpoint
+                            request.open('GET', '/NamSorAPIv2/api2/json/procureKey/' + accessToken, true);
+                            request.onload = function () {
+                                // Begin accessing JSON data here
+                                // Begin accessing JSON data here
+                                var data = JSON.parse(this.response);
+                                document.getElementById('api_key').textContent = data.api_key;
+                                document.getElementById('signIn').hidden = true;
+                                document.getElementById('signOut').hidden = false;
+                                window.api_key = data.api_key;
+                                console.log('signedin api_key='+window.api_key)
+                            }
+                            // Send request
+                            request.send();
+                        });
+                    } else {
+                        document.getElementById('signIn').hidden = false;
+                        document.getElementById('signOut').hidden = true;
+                        window.api_key = null;
+                        console.log('signedout api_key='+window.api_key)
+                    }
+                }, function (error) {
+                    console.log(error);
+                });
+            };
+
+            window.addEventListener('load', function () {
+                initApp()
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="namsor-api-key">Your api_key : <A id="api_key"></A>
+            <button id="signIn" onclick="location.href = 'sign-in.html'" type="button">Sign In</button>
+            <button id="signOut">Sign Out</button>
+            <script>
+                document.getElementById('signOut').addEventListener('click', function (event) {
+                    firebase.auth().signOut();
+                    window.api_key = null;
+                    console.log('reset api_key='+window.api_key)
+                    document.getElementById('api_key').textContent = '';
+                    document.getElementById('signIn').hidden = false;
+                });
+            </script>
+        </div>
+        <div id="swagger-ui"></div>
+        <script src="./swagger-ui-bundle.js"></script>
+        <script src="./swagger-ui-standalone-preset.js"></script>
+        <script>
+                window.onload = function () {
+
+                    // Build a system
+                    const ui = SwaggerUIBundle({
+                        url: "http://195.201.247.18:8080/NamSorAPIv2/api2/openapi.json",
+                        dom_id: '#swagger-ui',
+                        deepLinking: true,
+                        presets: [
+                            SwaggerUIBundle.presets.apis,
+                            SwaggerUIStandalonePreset
+                        ],
+                        plugins: [
+                            SwaggerUIBundle.plugins.DownloadUrl
+                        ],
+                        layout: "StandaloneLayout",
+                        onComplete: function() {
+                            console.log('retrieve api_key='+window.api_key);
+                            ui.preauthorizeApiKey("api_key", window.api_key);
+                        }
+                    });
+
+                    window.ui = ui;
+                };
+        </script>
+    </body>
+</html>
