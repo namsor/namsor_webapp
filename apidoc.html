@@ -117,6 +117,7 @@
                         ],
                         layout: "StandaloneLayout",
                         onComplete: function() {
+                            initApp();
                             console.log('retrieve api_key='+window.api_key);
                             ui.preauthorizeApiKey("api_key", window.api_key);
                         }
