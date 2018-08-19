@@ -21,12 +21,14 @@ initApp = function () {
                     // Begin accessing JSON data here
                     // Begin accessing JSON data here
                     var data = JSON.parse(this.response);
-                    document.getElementById('api_key').textContent = data.api_key;
+                    console.log(data.api_key);
+                    if (document.getElementById('api_key') != null)
+                      document.getElementById('api_key').textContent = data.api_key;
                     document.getElementById('signIn').hidden = true;
                     document.getElementById('signOut').hidden = false;
                     document.getElementById('navbarDropdownPortfolio').hidden = false;
                     window.api_key = data.api_key;
-                    console.log('signedin api_key='+window.api_key)
+                    console.log('signedin api_key='+window.api_key);
                 }
                 // Send request
                 request.send();

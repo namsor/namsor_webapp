@@ -15,8 +15,6 @@
             <link href="css/modern-business.css" rel="stylesheet">
             <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
             <script src="js/firebase.js" charset="utf-8"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
-        <script src="js/firebase.js"></script>
     </head>
 
     <body>
@@ -67,7 +65,7 @@
         <script src="./swagger-ui-standalone-preset.js"></script>
         <script>
                 window.onload = function () {
-
+                    initApp();
                     // Build a system
                     const ui = SwaggerUIBundle({
                         url: "http://195.201.247.18:8080/NamSorAPIv2/api2/openapi.json",
@@ -82,7 +80,6 @@
                         ],
                         layout: "StandaloneLayout",
                         onComplete: function() {
-                            initApp();
                             console.log('retrieve api_key='+window.api_key);
                             ui.preauthorizeApiKey("api_key", window.api_key);
                         }
