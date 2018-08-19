@@ -25,7 +25,6 @@ initApp = function () {
                     if (document.getElementById('api_key') != null)
                       document.getElementById('api_key').textContent = data.api_key;
                     document.getElementById('signIn').hidden = true;
-                    document.getElementById('signOut').hidden = false;
                     document.getElementById('navbarDropdownPortfolio').hidden = false;
                     window.api_key = data.api_key;
                     console.log('signedin api_key='+window.api_key);
@@ -35,7 +34,6 @@ initApp = function () {
             });
         } else {
             document.getElementById('signIn').hidden = false;
-            document.getElementById('signOut').hidden = true;
             document.getElementById('navbarDropdownPortfolio').hidden = true;
             window.api_key = null;
             console.log('signedout api_key='+window.api_key)
@@ -52,6 +50,7 @@ var signOut = function () {
     console.log('reset api_key='+window.api_key)
     document.getElementById('api_key').textContent = '';
     document.getElementById('signIn').hidden = false;
+    document.getElementById('navbarDropdownPortfolio').hidden = true;
     });
 }
 
