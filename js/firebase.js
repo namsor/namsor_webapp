@@ -9,7 +9,7 @@ var config = {
 
 firebase.initializeApp(config);
 initApp = function () {
-    var deferred = new Promise();
+    var deferred = new Promise(function(resolve, reject){});
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
