@@ -14,7 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/modern-business.css" rel="stylesheet">
-
+    <script src="js/firebase.js" charset="utf-8"></script>
   </head>
 
   <body>
@@ -39,6 +39,11 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <div id="namsor-api-key">Your api_key : <A id="api_key"></A>
+                  <button id="signIn" onclick="location.href = 'sign-in.html'" type="button">Sign In</button>
+                  <button id="signOut">Sign Out</button>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
