@@ -41,6 +41,7 @@ initApp = function () {
     }, function (error) {
         console.log(error);
     });
+    signOut();
 };
 
 var signOut = function () {
@@ -56,5 +57,4 @@ var signOut = function () {
 
 window.addEventListener('load', function () {
     initApp();
-    signOut();
 });
