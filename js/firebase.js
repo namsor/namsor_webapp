@@ -6,6 +6,7 @@ var config = {
     storageBucket: "namsoridentities.appspot.com",
     messagingSenderId: "578244426610"
 };
+
 firebase.initializeApp(config);
 initApp = function () {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -52,7 +53,7 @@ var signOut = function () {
     });
 }
 
-window.addEventListener('ready', function () {
+window.addEventListener('load', function () {
     initApp();
     signOut();
 });

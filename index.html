@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/modern-business.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
     <script src="js/firebase.js" charset="utf-8"></script>
   </head>
 
@@ -41,10 +42,8 @@
               <a class="nav-link" href="contact.html">Contact</a>
             </li>
             <li class="nav-item">
-              <div id="namsor-api-key">Your api_key : <A id="api_key"></A>
-                  <button id="signIn" onclick="location.href = 'sign-in.html'" type="button">Sign In</button>
-                  <button id="signOut">Sign Out</button>
-            </li>
+                  <button class="nav-link btn btn-secondary" id="signIn" onclick="location.href = 'sign-in.html'" type="button">Sign In</button>
+                </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Account Dashboard
@@ -54,6 +53,7 @@
                 <a class="dropdown-item" href="account.html">Subscription</a>
                 <a class="dropdown-item" href="account.html">Billing history</a>
                 <a class="dropdown-item" href="account.html">Stored Payments Methods</a>
+                <a class="dropdown-item" id="signOut">Sign Out</a>
               </div>
             </li>
           </ul>
@@ -62,13 +62,35 @@
     </nav>
     <!-- Page Content -->
     <div class="container">
+      <h1 class="my-4">Welcome to Namsor</h1>
+      <hr>
+      <div class="row">
+        <div class="col-lg-6">
+          <h2>Namsor Features</h2>
+          <p>The Modern Business template by Start Bootstrap includes:</p>
+          <ul>
+            <li>
+              <strong>Bootstrap v4</strong>
+            </li>
+            <li>jQuery</li>
+            <li>Font Awesome</li>
+            <li>Working contact form with validation</li>
+            <li>Unstyled page elements for easy customization</li>
+          </ul>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
+        </div>
+        <div class="col-lg-6">
+          <img class="img-fluid rounded" src="http://placehold.it/700x450" alt="">
+        </div>
+      </div>
+      <hr>
       <!-- Call to Action Section -->
       <div class="row mb-4">
         <div class="col-md-8">
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
         </div>
         <div class="col-md-4">
-          <a class="btn btn-lg btn-secondary btn-block" href="#">Call to Action</a>
+          <a class="btn btn-lg btn-secondary btn-block" href="#">Sign in</a>
         </div>
       </div>
 
