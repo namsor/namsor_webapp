@@ -9,7 +9,7 @@ var config = {
 
 firebase.initializeApp(config);
 initApp = function () {
-    var deferred = $.Deferred();
+    var deferred = new Promise();
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
@@ -43,7 +43,7 @@ initApp = function () {
         console.log(error);
     });
     signOut();
-    return deferred.promise();
+    return deferred.resolve();
 };
 
 var signOut = function () {
