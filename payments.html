@@ -86,8 +86,15 @@
         </div>
         <!-- Content Column -->
         <div class="col-lg-9 mb-4">
-          <h2>Section Heading</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, et temporibus, facere perferendis veniam beatae non debitis, numquam blanditiis necessitatibus vel mollitia dolorum laudantium, voluptate dolores iure maxime ducimus fugit.</p>
+          <form action="/NamSorAPIv2/api2/json/charge" method="POST">
+             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_live_kBpIA9rFZGup..QUqZQ6s" // Florian : GET THIS USING /userInfo/{token} .stripePerishableKey
+              data-image="logo.png?ln=images" // Florian : CHANGE THIS
+              data-name="NamSor" data-description="NamSor API Setup"
+              data-email="povij@travala10.com" // Florian : GET THIS USING /userInfo/{token} .email
+              data-amount="0">
+             </script>
+     </form>
         </div>
       </div>
       <!-- /.row -->
