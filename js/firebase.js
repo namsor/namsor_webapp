@@ -57,11 +57,11 @@ var signOut = function () {
 }
 
 var getInfo = function (){
-  firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+  firebase.auth().currentUser.getIdToken().then(function(idToken) {
     // Create a request variable and assign a new XMLHttpRequest object to it.
     var request = new XMLHttpRequest();
     // Open a new connection, using the GET request on the URL endpoint
-    request.open('GET', '/NamSorAPIv2/api2/json/userInfo/' + accessToken, true);
+    request.open('GET', '/NamSorAPIv2/api2/json/userInfo/' + idToken, true);
     request.onload = function () {
         // Begin accessing JSON data here
         // Begin accessing JSON data here
