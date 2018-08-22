@@ -15,7 +15,8 @@
 
     <!-- Custom styles for this template -->
     <link href="css/modern-business.css" rel="stylesheet">
-
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script src="js/firebase.js" charset="utf-8"></script>
   </head>
 
   <body>
@@ -89,7 +90,6 @@
           <form action="/NamSorAPIv2/api2/json/charge" method="POST">
              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key="pk_live_kBpIA9rFZGup..QUqZQ6s" // Florian : GET THIS USING /userInfo/{token} .stripePerishableKey
-              data-image="logo.png?ln=images" // Florian : CHANGE THIS
               data-name="NamSor" data-description="NamSor API Setup"
               data-email="povij@travala10.com" // Florian : GET THIS USING /userInfo/{token} .email
               data-amount="0">

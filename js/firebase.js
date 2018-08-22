@@ -62,4 +62,5 @@ var signOut = function () {
 
 window.addEventListener('load', function () {
     initApp();
+    console.log(window.api_key);
 });
