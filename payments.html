@@ -87,14 +87,11 @@
         </div>
         <!-- Content Column -->
         <div class="col-lg-9 mb-4">
-          <form action="/NamSorAPIv2/api2/json/charge" method="POST">
-             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-              data-key="pk_live_kBpIA9rFZGup..QUqZQ6s" // Florian : GET THIS USING /userInfo/{token} .stripePerishableKey
-              data-name="NamSor" data-description="NamSor API Setup"
-              data-email="povij@travala10.com" // Florian : GET THIS USING /userInfo/{token} .email
-              data-amount="0">
-             </script>
-     </form>
+          <script type="text/javascript">
+            var request = new XMLHttpRequest();
+            var user = firebase.auth().currentUser;
+            console.log(user.getIDToken.accessToken);
+          </script>
         </div>
       </div>
       <!-- /.row -->
