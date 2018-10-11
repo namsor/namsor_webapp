@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <title>Namsor</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="assets/images/logo/logo.png">
+
+  <!-- plugins css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/PACE/themes/blue/pace-theme-minimal.css" />
+  <link rel="stylesheet" href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+
+  <!-- page plugins css -->
+  <link rel="stylesheet" href="swagger-ui.css" />
+  <link rel="stylesheet" href="bower_components/selectize/dist/css/selectize.default.css" />
+
+  <!-- core css -->
+  <link href="assets/css/ei-icon.css" rel="stylesheet">
+  <link href="assets/css/themify-icons.css" rel="stylesheet">
+  <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/css/animate.min.css" rel="stylesheet">
+  <link href="assets/css/app.css" rel="stylesheet">
+  <link href="assets/css/own.css" rel="stylesheet">
+</head>
+<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+<script src="assets/js/firebase.js" charset="utf-8"></script>
+
+<body>
+  <div class="app side-nav-dark">
+    <div class="layout">
+      <!-- Side Nav START -->
+      <div class="side-nav">
+        <div class="side-nav-inner">
+          <div class="side-nav-logo">
+            <a href="index.html">
+              <div class="logo logo-dark" style="background-image: url('assets/images/logo/logo.png')"></div>
+              <div class="logo logo-white" style="background-image: url('assets/images/logo/logo.png')"></div>
+
+            </a>
+            <div class="mobile-toggle side-nav-toggle">
+              <a href="">
+                <i class="ti-arrow-circle-left"></i>
+              </a>
+            </div>
+          </div>
+          <ul class="side-nav-menu scrollable">
+            <li class="nav-item">
+              <a class="mrg-top-30" href="index.html">
+                <span class="icon-holder">
+                  <i class="ti-home"></i>
+                </span>
+                <span class="title">Home</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="mrg-top-30" href="services.html">
+                <span class="icon-holder">
+                  <i class="ei-hand"></i>
+                </span>
+                <span class="title">Services</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="mrg-top-30" href="apidoc.html">
+                <span class="icon-holder">
+                  <i class="ei-file-code"></i>
+                </span>
+                <span class="title">API Documentation</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="mrg-top-30" href="contact.html">
+                <span class="icon-holder">
+                  <i class="ei-phone-book-contact"></i>
+                </span>
+                <span class="title">Contact</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <!-- Side Nav END -->
+
+      <!-- Page Container START -->
+      <div class="page-container">
+        <!-- Header START -->
+        <div class="header navbar">
+          <div class="header-container">
+            <ul class="nav-left">
+              <li>
+                <a class="side-nav-toggle" href="javascript:void(0);">
+                  <i class="ti-view-grid"></i>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-right mt-2">
+              <li class="nav-item">
+                <button class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Header END -->
+
+        <!-- Content Wrapper START -->
+        <div class="main-content">
+          <div id="namsor-api-key">
+            <div class="btn-toolbar" role="toolbar" aria-label="Api key">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                  <button type="button" class="btn btn-secondary" disabled>Your API key</button>
+                </div>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Copy your API key" aria-describedby="btnGroupAddon2">
+                  <button type="button" class="btn btn-outline-dark p-2"><i class="fa fa-copy font-size-15"></i></button>
+                </div>
+              </div>
+          </div>
+          <div id="swagger-ui"></div>
+          <script src="./swagger-ui-bundle.js"></script>
+          <script src="./swagger-ui-standalone-preset.js"></script>
+          <script>
+                  window.onload = function () {
+                      var promise = initApp();
+                      // Build a system
+                      promise.then(function () {
+                        const ui = SwaggerUIBundle({
+                            url: "http://195.201.247.18:8080/NamSorAPIv2/api2/openapi.json",
+                            dom_id: '#swagger-ui',
+                            deepLinking: true,
+                            presets: [
+                                SwaggerUIBundle.presets.apis,
+                                SwaggerUIStandalonePreset
+                            ],
+                            plugins: [
+                                SwaggerUIBundle.plugins.DownloadUrl
+                            ],
+                            layout: "StandaloneLayout",
+                            onComplete: function() {
+                                console.log('retrieve api_key='+window.api_key);
+                                ui.preauthorizeApiKey("api_key", window.api_key);
+                            }
+                        });
+                        window.ui = ui;
+                      });
+                  };
+          </script>
+        </div>
+        <!-- Content Wrapper END -->
+
+        <!-- Footer START -->
+        <footer class="content-footer">
+          <div class="footer">
+            <div class="copyright">
+              <span>Copyright © 2018 <b class="text-dark">Namsor</b>. All rights reserved.</span>
+              <span class="go-right">
+                <a href="" class="text-gray mrg-right-15">Term &amp; Conditions</a>
+                <a href="" class="text-gray">Privacy &amp; Policy</a>
+              </span>
+            </div>
+          </div>
+        </footer>
+        <!-- Footer END -->
+
+      </div>
+      <!-- Page Container END -->
+
+    </div>
+  </div>
+
+  <!-- build:js assets/js/vendor.js -->
+  <!-- plugins js -->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/PACE/pace.min.js"></script>
+  <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+  <!-- endbuild -->
+
+  <!-- page plugins js -->
+  <script src="bower_components/summernote/src/js/summernote.js"></script>
+  <script src="bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
+
+  <!-- build:js assets/js/app.min.js -->
+  <!-- core js -->
+  <script src="assets/js/app.js"></script>
+  <!-- endbuild -->
+</body>
+</html>

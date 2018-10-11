@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <Title>Namsor</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+
+    <!-- plugins css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/PACE/themes/blue/pace-theme-minimal.css" />
+    <link rel="stylesheet" href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+
+    <!-- core css -->
+    <link href="assets/css/ei-icon.css" rel="stylesheet">
+    <link href="assets/css/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="assets/css/app.css" rel="stylesheet">
+</head>
+<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBO-97crBWy9w_olF5qKIy2GmntKm8jkl8",
+    authDomain: "namsoridentities.firebaseapp.com",
+    databaseURL: "https://namsoridentities.firebaseio.com",
+    projectId: "namsoridentities",
+    storageBucket: "namsoridentities.appspot.com",
+    messagingSenderId: "578244426610"
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+    <script type="text/javascript">
+      // FirebaseUI config.
+      var uiConfig = {
+        signInSuccessUrl: 'index.html',
+        signInOptions: [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+          firebase.auth.GithubAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        // Terms of service url.
+        tosUrl: 'http://api.namsor.com/pdf/201803_NamSor_API_Terms_v007.pdf'
+      };
+
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
+
+<body>
+    <div class="app side-nav-dark">
+        <div class="authentication">
+            <div class="sign-in">
+                <div class="row no-mrg-horizon">
+                    <div class="col-md-8 no-pdd-horizon d-none d-md-block">
+                        <div class="full-height bg" style="background-image: url('assets/images/others/img-29.jpg')">
+                            <div class="img-caption">
+                                <h1 class="caption-title">We make spectacular</h1>
+                                <p class="caption-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-pdd-horizon">
+                        <div class="full-height bg-white height-50">
+                            <div class="full-height pdd-horizon-70 pdd-vertical-100">
+                                <div class="table-cell">
+                                    <div class="pdd-horizon-15">
+                                      <h2>Sign-in</h2>
+                                      <div id="firebaseui-auth-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="login-footer">
+                                <img class="img-responsive inline-block" src="assets/images/logo/logo.png" width="100" alt="">
+                                <span class="font-size-13 pull-right pdd-top-10">Don't have an account? <a href="">Sign Up Now</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- build:js assets/js/vendor.js -->
+    <!-- plugins js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/PACE/pace.min.js"></script>
+    <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js assets/js/app.min.js -->
+    <!-- core js -->
+    <script src="assets/js/app.js"></script>
+    <!-- endbuild -->
+
+    <!-- page js -->
+
+</body>
+
+</html>
