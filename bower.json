@@ -22,21 +22,24 @@
     "twitter-bootstrap-wizard": "https://github.com/VinceG/twitter-bootstrap-wizard.git#master",
     "rickshaw": "~1.6.1",
     "moment": "~2.18.1",
-    "imagesloaded":"~4.1.2",
-    "masonry":"~4.2.0",
+    "imagesloaded": "~4.1.2",
+    "masonry": "~4.2.0",
     "photoswipe": "~4.1.2",
     "bower-jvectormap": "~1.2.2",
     "jquery-validation": "~1.15.0",
     "bootstrap-datepicker": "~1.6.1",
     "bootstrap-daterangepicker": "~2.1.19",
     "bootstrap-timepicker": "~0.5.2",
-    "summernote": "~0.8.1",
+    "summernote": "^0.8.10",
     "fullcalendar": "~2.7.2",
     "sweetalert": "https://github.com/t4t5/sweetalert.git#~0.3.0",
-    "selectize":"https://github.com/selectize/selectize.js.git",
+    "selectize": "https://github.com/selectize/selectize.js.git",
     "d3": "~3.5.17",
     "nvd3": "^1.7.1",
     "chart.js": "^2.5.0",
-	  "sticky": "~1.0.4"
+    "sticky": "~1.0.4"
+  },
+  "devDependencies": {
+    "summernote": "^0.8.10"
   }
 }
