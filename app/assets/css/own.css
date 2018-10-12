@@ -2,3 +2,7 @@
 {
   display: none!important;
 }
+.table-container .col,
+.responses-wrapper .col {
+  width: auto;
+}

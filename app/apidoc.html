@@ -108,13 +108,13 @@
 
         <!-- Content Wrapper START -->
         <div class="main-content">
-          <div id="namsor-api-key">
+          <div class="container" id="namsor-api-key">
             <div class="btn-toolbar" role="toolbar" aria-label="Api key">
                 <div class="btn-group mr-2" role="group" aria-label="First group">
                   <button type="button" class="btn btn-secondary" disabled>Your API key</button>
                 </div>
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Copy your API key" aria-describedby="btnGroupAddon2">
+                  <input type="text" class="form-control mr-2" placeholder="Copy your API key" id="namsor_api_key_input" aria-describedby="btnGroupAddon2">
                   <button type="button" class="btn btn-outline-dark p-2"><i class="fa fa-copy font-size-15"></i></button>
                 </div>
               </div>
@@ -140,7 +140,7 @@
                             ],
                             layout: "StandaloneLayout",
                             onComplete: function() {
-                                console.log('retrieve api_key='+window.api_key);
+                                console.log('retrieve api_key='+ window.api_key);
                                 ui.preauthorizeApiKey("api_key", window.api_key);
                             }
                         });
@@ -181,7 +181,7 @@
   <!-- endbuild -->
 
   <!-- page plugins js -->
-  <script src="bower_components/summernote/src/js/summernote.js"></script>
+  <script src="bower_components/summernote/dist/summernote.min.js"></script>
   <script src="bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
 
   <!-- build:js assets/js/app.min.js -->

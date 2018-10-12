@@ -19,14 +19,11 @@ initApp = function () {
                   // Open a new connection, using the GET request on the URL endpoint
                   request.open('GET', '/NamSorAPIv2/api2/json/procureKey/' + accessToken, true);
                   request.onload = function () {
-                      // Begin accessing JSON data here
-                      // Begin accessing JSON data here
                       var data = JSON.parse(this.response);
-                      if (document.getElementById('api_key') != null)
-                        document.getElementById('api_key').textContent = data.api_key;
+                      if (document.getElementById('namsor_api_key_input') != null)
+                        document.getElementById('namsor_api_key_input').value = data.api_key;
                       window.api_key = data.api_key;
                     }
-                  // Send request
                   request.send();
                   resolve("okay");
               });
@@ -62,6 +59,6 @@ var getInfo = function (){
 }
 
 window.addEventListener('load', function () {
-    initApp().then(getInfo());
+    initApp();
     console.log(window.api_key);
 });
