@@ -39,27 +39,32 @@ initApp = function () {
 };
 
 var getInfo = function (){
-  firebase.auth().currentUser.getIdToken().then(function(idToken) {
-    // Create a request variable and assign a new XMLHttpRequest object to it.
-    var request = new XMLHttpRequest();
-    // Open a new connection, using the GET request on the URL endpoint
-    request.open('GET', '/NamSorAPIv2/api2/json/userInfo/' + idToken, true);
-    request.onload = function () {
-        // Begin accessing JSON data here
-        // Begin accessing JSON data here
-        var data = JSON.parse(this.response);
-        console.dir(data);
-        console.log(JSON.stringify(data))
-        return data;
-      }
-      // Send request
-      request.send();
-  }).catch(function(error) {
-    console.log(error);
-  });
+    var data;
+    var promise = new Promise(function(resolve, reject){
+        firebase.auth().currentUser.getIdToken().then(function(idToken) {
+        // Create a request 
+        var request = new XMLHttpRequest();
+        // Open a new connection
+        request.open('GET', '/NamSorAPIv2/api2/json/userInfo/' + idToken, true);
+        request.onload = function () {
+            // Load data
+            data = JSON.parse(this.response);
+            window.user_data = data;
+            if (document.getElementById('user_name') != null)
+                document.getElementById('user_name').value = data.userId;
+            console.dir(data);
+        }
+        // Send request
+        request.send();
+        resolve("Data is in !");
+        }).catch(function(error) {
+            console.log(error);
+            reject(Error("Unvalid Key"));
+        });
+    });
+    return promise;
 }
 
 window.addEventListener('load', function () {
     initApp();
-    console.log(window.api_key);
 });

@@ -107,15 +107,15 @@
                           <div class="col-md-6">
                             <div class="card">
                               <div class="card-heading border bottom">
-                                <h4 class="card-title">Informations personnelles</h4>
+                                <h4 class="card-title">Personals Details</h4>
                               </div>
                               <div class="card-block">
                                 <div class="row">
                                   <div class="col-md-3">
-                                    <p class="mrg-top-10 text-dark"> <b>Nom</b></p>
+                                    <p class="mrg-top-10 text-dark"> <b>Name</b></p>
                                   </div>
                                   <div class="col-md-6">
-                                    <input type="text" class="form-control" value="Juliette Champagne">
+                                    <input type="text" id="user_name" class="form-control" value="">
                                   </div>
                                 </div>
                                 <hr>
@@ -124,7 +124,7 @@
                                     <p class="mrg-top-10 text-dark"> <b>Email</b></p>
                                   </div>
                                   <div class="col-md-6">
-                                    <p class="mrg-top-10">victoria93@gmail.com</p>
+                                    <input id="user_email" class="mrg-top-10">victoria93@gmail.com</p>
                                   </div>
                                 </div>
                                 <hr>
@@ -142,7 +142,7 @@
                           <div class="col-md-6">
                             <div class="card">
                               <div class="card-heading border bottom">
-                                <h4 class="card-title">Informations bancaires</h4>
+                                <h4 class="card-title">Payements Settings</h4>
                               </div>
                               <div class="card-block">
                                 <div class="row">
@@ -222,7 +222,11 @@
         function () {
         var promise = initApp();
         promise.then(function () {
-          getInfo();
+          getInfo().then(function(){
+            let user = window.user_data;
+            console.log("after");
+            console.dir(user);
+          });
         });
       };
     </script>
