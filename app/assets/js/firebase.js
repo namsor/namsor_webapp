@@ -40,7 +40,7 @@ initApp = function () {
 
 var getInfo = function (){
     var data;
-    var promise = new Promise(function(resolve, reject){
+    var promise = new Promise(function(resolve, reject) {
         firebase.auth().currentUser.getIdToken().then(function(idToken) {
         // Create a request 
         var request = new XMLHttpRequest();

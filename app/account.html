@@ -218,15 +218,15 @@
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
     <script src="assets/js/firebase.js" charset="utf-8"></script>
     <script>
-      window.onload = 
-        function () {
+      window.onload = function (){
         var promise = initApp();
-        promise.then(function () {
-          getInfo().then(function(){
+        promise.then(function (success) {
+          let info = getInfo();
+          info.then(function(infoSuccess){
             let user = window.user_data;
             console.log("after");
             console.dir(user);
-          });
+          }, function (error) { console.log(error); });
         });
       };
     </script>
