@@ -6,3 +6,7 @@
 .responses-wrapper .col {
   width: auto;
 }
+#signin, 
+#signout {
+  display : none;
+}

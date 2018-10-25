@@ -91,6 +91,12 @@
                       </a>
                     </li>
                   </ul>
+                  <ul class="nav nav-right mt-2">
+                    <li class="nav-item">
+                      <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
+                      <button id="signout" class="nav-link btn btn-outline-success" onclick="signOut();">Sign out</button>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <!-- Header END -->
@@ -124,7 +130,7 @@
                                     <p class="mrg-top-10 text-dark"> <b>Email</b></p>
                                   </div>
                                   <div class="col-md-6">
-                                    <input id="user_email" class="mrg-top-10">victoria93@gmail.com</p>
+                                    <input id="user_email" class="mrg-top-10"></p>
                                   </div>
                                 </div>
                                 <hr>
@@ -145,35 +151,10 @@
                                 <h4 class="card-title">Payements Settings</h4>
                               </div>
                               <div class="card-block">
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <p class="mrg-top-10 text-dark"> <b>Email</b></p>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <p class="mrg-top-10">mickael.bnp.conseiller@bnpparibas.com</p>
-                                  </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <p class="mrg-top-10 text-dark"> <b>Location</b></p>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <p class="mrg-top-10">New York, United State</p>
-                                  </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <p class="mrg-top-10 text-dark"> <b>Status</b></p>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <p class="mrg-top-10">
-                                      <span class="status online mrg-top-10"></span>
-                                      <span class="mrg-left-10">Available</span>
-                                    </p>
-                                  </div>
-                                </div>
+                                <form action="/NamSorAPIv2/api2/json/charge" method="POST">
+                                  <script id="stripeScript" class="stripe-button">
+                                  </script>
+                                </form>
                               </div>
                             </div>
                           </div>
@@ -219,15 +200,25 @@
     <script src="assets/js/firebase.js" charset="utf-8"></script>
     <script>
       window.onload = function (){
-        var promise = initApp();
-        promise.then(function (success) {
-          let info = getInfo();
-          info.then(function(infoSuccess){
-            let user = window.user_data;
-            console.log("after");
-            console.dir(user);
+        initApp().then(function (success) {
+            getInfo().then(data => {
+              let userInfo = JSON.parse(data);
+              let name = document.getElementById("user_name");
+              let email = document.getElementById("user_email");
+              name.value = userInfo.displayName;
+              email.value = userInfo.email;
+              box = document.getElementById("stripeScript");
+              box.dataset.email = userInfo.email;
+              box.dataset.key = userInfo.stripePerishableKey;
+              box.dataset.name = "NamSor";
+              box.dataset.amount = 0;
+              box.dataset.description = "Namsor API Setup";
+              box.dataset.src = "https://checkout.stripe.com/checkout.js";
+            })
+            .catch(error => {
+                console.log(error);
+            });
           }, function (error) { console.log(error); });
-        });
       };
     </script>
     <script src="assets/js/app.js"></script>

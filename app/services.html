@@ -94,6 +94,12 @@
                 </a>
               </li>
             </ul>
+            <ul class="nav nav-right mt-2">
+              <li class="nav-item">
+                <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
+                <button id="signout" class="nav-link btn btn-outline-success" onclick="signOut();">Sign out</button>
+              </li>
+            </ul>
           </div>
         </div>
         <!-- Header END -->
@@ -120,75 +126,8 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="row">
-                              <div class="col-md-3 mb-3">
-                                <div class="card h-100">
-                                  <h3 class="card-header">Try it!</h3>
-                                  <div class="card-body">
-                                    <div class="display-4">Free</div>
-                                    <div class="font-italic"></div>
-                                  </div>
-                                  <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">
-                                      <a href="#" class="btn btn-primary">Sign Up!</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <div class="col-md-3 mb-3">
-                                <div class="card h-100">
-                                  <h3 class="card-header">Try it!</h3>
-                                  <div class="card-body">
-                                    <div class="display-4">Free</div>
-                                    <div class="font-italic"></div>
-                                  </div>
-                                  <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">
-                                      <a href="#" class="btn btn-primary">Sign Up!</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <div class="col-md-3 mb-3">
-                                <div class="card h-100">
-                                  <h3 class="card-header">Try it!</h3>
-                                  <div class="card-body">
-                                    <div class="display-4">Free</div>
-                                    <div class="font-italic"></div>
-                                  </div>
-                                  <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">
-                                      <a href="#" class="btn btn-primary">Sign Up!</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <div class="col-md-3 mb-3">
-                                <div class="card h-100">
-                                  <h3 class="card-header">Try it!</h3>
-                                  <div class="card-body">
-                                    <div class="display-4">Free</div>
-                                    <div class="font-italic"></div>
-                                  </div>
-                                  <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                    <li class="list-group-item">
-                                      <a href="#" class="btn btn-primary">Sign Up!</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
+                            <div class="row" id="services">
+                              
                             </div>
                           </div>
                         </div>
@@ -231,6 +170,9 @@
   <!-- build:js assets/js/app.min.js -->
   <!-- core js -->
   <script src="assets/js/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+  <script src="assets/js/firebase.js"></script>
+  <script src="assets/js/pricing.js"></script>
   <!-- endbuild -->
 </body>
 </html>
