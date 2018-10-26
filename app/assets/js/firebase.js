@@ -30,6 +30,48 @@ var request = obj => {
     });
 };
 
+var accSettings = function(idToken)
+{
+    var html;
+    request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken}).then(data => {
+    data = JSON.parse(data);
+    console.log(data)
+    html = `
+        <li class="user-profile dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+            <img class="profile-img img-fluid" src="assets/images/user.jpg" alt="">
+            <div class="user-info">
+                <span class="name pdd-right-5">${data.displayName}</span>
+                <i class="ti-angle-down font-size-10"></i>
+            </div>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="">
+                    <i class="ti-settings pdd-right-10"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="account.html">
+                    <i class="ti-user pdd-right-10"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="">
+                    <i class="ti-power-off pdd-right-10"></i>
+                    <button onclick='signOut();'>Logout</button>
+                </a>
+            </li>
+        </ul>
+        </li>`;
+        document.getElementById("boxSign").innerHTML = html;
+    });
+}
+
+var signOutButton = '';
 var signOut = function () {
     firebase.auth().signOut().then(
         function (success)
@@ -53,14 +95,16 @@ initApp = function () {
                     var data = JSON.parse(this.response);
                     if (document.getElementById('namsor_api_key_input') != null)
                         document.getElementById('namsor_api_key_input').value = data.api_key;
-                    document.getElementById("signout").style.display = "inherit";
+                    accSettings(accessToken)
                     window.api_key = data.api_key;
                 }
                 request.send();
                 resolve("okay");
             });
           } else {
-                document.getElementById("signin").style.display = "inherit";
+                let box = document.getElementById("signin");
+                if (box)
+                    box.style.display = "inherit";
                 window.api_key = null;
                 resolve("okay");
           }
@@ -86,7 +130,3 @@ var getInfo = () => {
         });
     });
 }
-
-window.addEventListener('load', function () {
-    initApp();
-});

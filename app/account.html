@@ -20,6 +20,7 @@
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
     <link href="assets/css/animate.min.css" rel="stylesheet">
     <link href="assets/css/app.css" rel="stylesheet">
+    <link href="assets/css/own.css" rel="stylesheet">
 </head>
 
 <body>
@@ -91,10 +92,10 @@
                       </a>
                     </li>
                   </ul>
-                  <ul class="nav nav-right mt-2">
+                  <ul class="nav nav-right mt-2" id="boxSign">
                     <li class="nav-item">
                       <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
-                      <button id="signout" class="nav-link btn btn-outline-success" onclick="signOut();">Sign out</button>
+                      
                     </li>
                   </ul>
                 </div>
@@ -161,7 +162,15 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                    <div class="row">
+                      <div class="col-6-lg">
+
+                      </div>
+                      <div class="col-6-lg">
+                        
+                      </div>
+                    </div>
+                  </div>           
                 </div>
                 <!-- Content Wrapper END -->
                 <!-- Footer START -->
@@ -208,12 +217,12 @@
               name.value = userInfo.displayName;
               email.value = userInfo.email;
               box = document.getElementById("stripeScript");
+              box.src = "https://checkout.stripe.com/checkout.js";
               box.dataset.email = userInfo.email;
               box.dataset.key = userInfo.stripePerishableKey;
               box.dataset.name = "NamSor";
               box.dataset.amount = 0;
               box.dataset.description = "Namsor API Setup";
-              box.dataset.src = "https://checkout.stripe.com/checkout.js";
             })
             .catch(error => {
                 console.log(error);

@@ -27,8 +27,9 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
     <script type="text/javascript">
       // FirebaseUI config.
+      console.log(document.referrer)
       var uiConfig = {
-        signInSuccessUrl: 'index.html',
+        signInSuccessUrl: "index.html",
         signInOptions: [
           // Leave the lines as is for the providers you want to offer your users.
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,

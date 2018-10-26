@@ -23,6 +23,7 @@
   <link href="assets/css/font-awesome.min.css" rel="stylesheet">
   <link href="assets/css/animate.min.css" rel="stylesheet">
   <link href="assets/css/app.css" rel="stylesheet">
+  <link href="assets/css/own.css" rel="stylesheet">
 </head>
 
 <body>
@@ -94,10 +95,10 @@
                 </a>
               </li>
             </ul>
-            <ul class="nav nav-right mt-2">
+            <ul class="nav nav-right mt-2" id="boxSign">
               <li class="nav-item">
                 <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
-                <button id="signout" class="nav-link btn btn-outline-success" onclick="signOut();">Sign out</button>
+                
               </li>
             </ul>
           </div>
@@ -173,6 +174,9 @@
   <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
   <script src="assets/js/firebase.js"></script>
   <script src="assets/js/pricing.js"></script>
+  <script>
+    window.onload = function () { initApp(); }
+  </script>
   <!-- endbuild -->
 </body>
 </html>
