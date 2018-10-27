@@ -152,9 +152,7 @@
                                 <h4 class="card-title">Payements Settings</h4>
                               </div>
                               <div class="card-block">
-                                <form action="/NamSorAPIv2/api2/json/charge" method="POST">
-                                  <script id="stripeScript" class="stripe-button">
-                                  </script>
+                                <form action="/NamSorAPIv2/api2/json/charge" method="POST" id="StripeForm">
                                 </form>
                               </div>
                             </div>
@@ -163,11 +161,25 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6-lg">
-
+                      <div class="col-lg-6">
+                        <div class="card">
+                          <div class="card-heading border bottom">
+                            <h4 class="card-title">API summary</h4>
+                          </div>
+                          <div class="card-block">
+                            
+                          </div>
+                        </div>
                       </div>
-                      <div class="col-6-lg">
-                        
+                      <div class="col-lg-6">
+                        <div class="card">
+                          <div class="card-heading border bottom">
+                            <h4 class="card-title"></h4>
+                          </div>
+                          <div class="card-block">
+                            
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>           
@@ -216,13 +228,14 @@
               let email = document.getElementById("user_email");
               name.value = userInfo.displayName;
               email.value = userInfo.email;
-              box = document.getElementById("stripeScript");
+              var box = document.createElement("script");
               box.src = "https://checkout.stripe.com/checkout.js";
               box.dataset.email = userInfo.email;
               box.dataset.key = userInfo.stripePerishableKey;
               box.dataset.name = "NamSor";
               box.dataset.amount = 0;
               box.dataset.description = "Namsor API Setup";
+              document.getElementById("stripeForm").innerHTML = box;
             })
             .catch(error => {
                 console.log(error);

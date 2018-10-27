@@ -60,9 +60,9 @@ var accSettings = function(idToken)
             </li>
             <li role="separator" class="divider"></li>
             <li>
-                <a href="">
+                <a href="" onclick='signOut();'>
                     <i class="ti-power-off pdd-right-10"></i>
-                    <button onclick='signOut();'>Logout</button>
+                    <span>Logout</span>
                 </a>
             </li>
         </ul>
