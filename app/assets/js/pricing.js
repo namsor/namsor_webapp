@@ -27,6 +27,8 @@ billingCurrencies.then( data => {
     console.log(data)
 });
 
+
+
 availablePlans.then( data => {
     let html = "";
     data = JSON.parse(data);

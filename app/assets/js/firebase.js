@@ -30,12 +30,25 @@ var request = obj => {
     });
 };
 
+var billingInfo = function() { 
+    return new Promise((resolve, reject) => {
+        // Identify from firebase
+        firebase.auth().currentUser.getIdToken().then(function(idToken) {
+            // Request info from API
+            request({url: "/NamSorAPIv2/api2/json/billingInfo/" + idToken}).then(data => {
+                resolve(data)
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    });
+};
+
 var accSettings = function(idToken)
 {
     var html;
     request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken}).then(data => {
-    data = JSON.parse(data);
-    console.log(data)
     html = `
         <li class="user-profile dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">
