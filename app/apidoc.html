@@ -100,7 +100,7 @@
             <ul class="nav nav-right mt-2" id="boxSign">
               <li class="nav-item">
                 <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
-                
+
               </li>
             </ul>
           </div>
@@ -126,10 +126,11 @@
           <script>
                   window.onload = function () {
                       var promise = initApp();
+                      getInfo.then(function(token) {console.log(token)});
                       // Build a system
                       promise.then(function () {
                         const ui = SwaggerUIBundle({
-                            url: "http://195.201.247.18:8080/NamSorAPIv2/api2/openapi.json",
+                            url: "https:///v2.namsor.com/NamSorAPIv2/api2/openapi.json",
                             dom_id: '#swagger-ui',
                             deepLinking: true,
                             presets: [

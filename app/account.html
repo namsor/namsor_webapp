@@ -94,7 +94,7 @@
                   <ul class="nav nav-right mt-2" id="boxSign">
                     <li class="nav-item">
                       <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
-                      
+
                     </li>
                   </ul>
                 </div>
@@ -144,8 +144,6 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="col-md-6">
                             <div class="card">
                               <div class="card-heading border bottom">
                                 <h4 class="card-title">Payements Settings</h4>
@@ -156,69 +154,64 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="card">
-                          <div class="card-heading border bottom">
-                            <h4 class="card-title">API summary</h4>
-                          </div>
-                          <div class="card-block">
-                            <canvas id="myChart" width="400" height="400"></canvas>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="card">
-                          <div class="card-heading border bottom">
-                            <h4 class="card-title">Billing Info</h4>
-                          </div>
-                          <div class="card-block">
-                            <form action="/NamSorAPIv2/api2/json/updateBillingInfo/" method="POST">
-                              <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <label for="inputEmail4">Email :</label>
-                                  <input type="email" class="form-control" id="billingEmail" placeholder="Email">
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="customerName">Name :</label>
-                                  <input type="text" class="form-control" id="customerName" placeholder="Name">
+                          <div class="col-lg-6">
+                            <div class="card">
+                              <div class="card-heading border bottom">
+                                <div class="row">
+                                  <div class="col-sm-8">
+                                    <h4 class="card-title">Billing Info</h4>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <button type="button" class="btn btn-info" id='updateBillingInfo' name="update">Update</button>
+                                  </div>
                                 </div>
                               </div>
-                              <div class="form-group">
-                                <label for="customerPhone">Phone number :</label>
-                                <input type="text" class="form-control" id="customerPhone" placeholder="Phone number">
+                              <div class="card-block">
+                                <form action="/NamSorAPIv2/api2/json/updateBillingInfo/" method="POST" id='billingInfo'>
+                                  <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                      <label for="inputEmail4">Email :</label>
+                                      <input type="email" class="form-control" id="billingEmail" placeholder="Email">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                      <label for="customerName">Name :</label>
+                                      <input type="text" class="form-control" id="customerName" placeholder="Name">
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="customerPhone">Phone number :</label>
+                                    <input type="text" class="form-control" id="customerPhone" placeholder="Phone number">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="addressLine1">Address 1:</label>
+                                    <input type="text" class="form-control" id="adressLine1" placeholder="Apartment, studio, or floor">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="addressLine2">Address 2:</label>
+                                    <input type="text" class="form-control" id="adressLine2" placeholder="Apartment, studio, or floor">
+                                  </div>
+                                  <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                      <label for="addressCity">City</label>
+                                      <input type="text" class="form-control" id="addressCity">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                      <label for="addressPostalCode">Zip</label>
+                                      <input type="text" class="form-control" id="addressPostalCode">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                      <label for="addressCountry">Country</label>
+                                      <input type="text" class="form-control" id="addressCountry">
+                                    </div>
+                                  </div>
+                                </form>
                               </div>
-                              <div class="form-group">
-                                <label for="addressLine1">Address 1:</label>
-                                <input type="text" class="form-control" id="adressLine1" placeholder="Apartment, studio, or floor">
-                              </div>
-                              <div class="form-group">
-                                <label for="addressLine2">Address 2:</label>
-                                <input type="text" class="form-control" id="adressLine2" placeholder="Apartment, studio, or floor">
-                              </div>
-                              <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <label for="addressCity">City</label>
-                                  <input type="text" class="form-control" id="addressCity">
-                                </div>
-                                <div class="form-group col-md-2">
-                                  <label for="addressPostalCode">Zip</label>
-                                  <input type="text" class="form-control" id="addressPostalCode">
-                                </div>
-                                <div class="form-group col-md-2">
-                                  <label for="addressCountry">Zip</label>
-                                  <input type="text" class="form-control" id="addressCountry">
-                                </div>
-                              </div>
-                            </form>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>           
+                  </div>
                 </div>
                 <!-- Content Wrapper END -->
                 <!-- Footer START -->
@@ -280,65 +273,35 @@
                 console.log(error);
             });
             billingInfo().then(data => {
-              console.dir(data);
               if (data) {
-                let info = JSON.parse(data);
-                let fill = x => document.getElementById(x) !== null ? document.getElementById(x).value = info[x] : 0;
-                info.forEach(y => fill(y));
+                let infos = JSON.parse(data);
+                let fill = x => document.getElementById(x) !== null ? document.getElementById(x).value = (infos[x] !== null ? infos[x] : '') : 0;
+                for (info in infos)
+                  fill(info);
+                console.dir(infos)
               }
-                /*document.getElementById().value = "billingEmail": "string",
-                "customerName": "string",
-                "customerPhone": "string",
-                "addressLine1": "string",
-              "addressLine2": "string",
-              "addressCity": "string",
-              "addressPostalCode": "string",
-              "addressState": "string",
-              "addressCountry": "string",
-              "vatID": "string"*/
+              else {
+                // TODO: add an alert to specify that billing have to be fullfilled
+              }
             });
           }, function (error) { console.log(error); });
+          let update = document.getElementById('updateBillingInfo');
+          update.addEventListener('click', function(event) {
+            getToken().then(function(token) {
+              let info = []
+              jQuery('#billingInfo').find('input').each(function(){
+                info[this.id] = this.value;
+              });
+              console.dir(info)
+              request({
+                url: "/NamSorAPIv2/api2/json/updateBillingInfo/" + token,
+                method: 'POST',
+                body:JSON.stringify(info)
+              });
+            }, function (error) { console.log(Error(error)) });
+          });
       };
     </script>
-    <script>
-      var ctx = document.getElementById("myChart").getContext('2d');
-      var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-              labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-              datasets: [{
-                  label: '# of Votes',
-                  data: [12, 19, 3, 5, 2, 3],
-                  backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                      'rgba(255,99,132,1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero:true
-                      }
-                  }]
-              }
-          }
-      });
-      </script>
     <script src="assets/js/app.js"></script>
     <!-- endbuild -->
 

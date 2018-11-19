@@ -30,7 +30,7 @@ var request = obj => {
     });
 };
 
-var billingInfo = function() { 
+var billingInfo = function() {
     return new Promise((resolve, reject) => {
         // Identify from firebase
         firebase.auth().currentUser.getIdToken().then(function(idToken) {
@@ -49,6 +49,7 @@ var accSettings = function(idToken)
 {
     var html;
     request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken}).then(data => {
+      data = JSON.parse(data);
     html = `
         <li class="user-profile dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">
@@ -60,9 +61,9 @@ var accSettings = function(idToken)
         </a>
         <ul class="dropdown-menu">
             <li>
-                <a href="">
+                <a href="apioverview.html">
                     <i class="ti-settings pdd-right-10"></i>
-                    <span>Settings</span>
+                    <span>Api Overview</span>
                 </a>
             </li>
             <li>
@@ -85,6 +86,22 @@ var accSettings = function(idToken)
 }
 
 var signOutButton = '';
+
+var getToken = function() {
+  return new Promise(function(resolve, reject) {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        user.getIdToken().then(function (accessToken) {
+          resolve(accessToken);
+        }, function (error) { console.log('Error in getID') });
+      } else {
+        console.log('Error no user found')
+        reject(Error("No user"))
+      }
+    });
+  });
+};
+
 var signOut = function () {
     firebase.auth().signOut().then(
         function (success)
