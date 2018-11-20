@@ -105,44 +105,30 @@
                 <div class="main-content">
                   <div class="container-fluid">
                     <div class="page-title">
-                      <h4>Api Overview</h4>
+                      <h4>Payements Settings</h4>
                     </div>
-
                     <div class="row">
-                      <div class="col-lg-6">
+                      <div class="col-md-4 offset-md-1">
                         <div class="card">
-                          <div class="card-heading border bottom">
-                            <div class="row">
-                              <div class="col-sm-6">
-                                <h4 class="card-title">API summary</h4>
-                              </div>
-                              <div class="col-sm-6">
-                                <h4>Current Usage : <span id='usage'></span></h4>
-                              </div>
-                            </div>
-                          </div>
                           <div class="card-block">
-                            <canvas id="myChart" width="400" height="400"></canvas>
+                            <h4 class="card-title">Welcome to Namsor !</h4>
+                            <div class="mrg-top-20">
+                              <p>Here you can add a card for your future subscription and update it</p>
+                              <p>Whenever you register a credit card, a Stripe account will be create and you'll be able to check all your invoice on your account</p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-lg-6">
+                      <div class="col-md-4 offset-md-1">
                         <div class="card">
-                          <div class="card-heading border bottom">
-                            <h4 class="card-title">API current limits</h4>
-                            <button type="button" class='btn btn-info float-right' name="button" id='btn-updateLimit'>Update Limit</button>
-                          </div>
                           <div class="card-block">
-                            <form id='updateLimit'>
-                              <div class="form-group col-md-6">
-                                <label for="limitSoft">Soft limit :</label>
-                                <input type="text" class="form-control" id="limitSoft" placeholder="Soft limit">
-                              </div>
-                              <div class="form-group col-md-6">
-                                <label for="limitHard">Hard limit :</label>
-                                <input type="text" class="form-control" id="limitHard" placeholder="Hard limit">
-                              </div>
-                            </form>
+                              <h4 class="card-title">Update / Add a credit card</h4>
+                            </div>
+                            <div class="card-block">
+                              <p>Use this button to save your credit card</p>
+                              <form action="/NamSorAPIv2/api2/json/charge" method="POST" id="stripeForm">
+                              </form>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -187,106 +173,26 @@
     <script src="assets/js/firebase.js" charset="utf-8"></script>
     <script>
       window.onload = function (){
-          initApp();
-          getUsage().then(usage => {
-            usage = JSON.parse(usage);
-            let current = usage.billingPeriod.usage;
-            let hard = usage.billingPeriod.hardLimit;
-            let soft = usage.billingPeriod.softLimit;
-            document.getElementById('limitHard').value = hard;
-            document.getElementById('limitSoft').value = soft;
-            document.getElementById('usage').innerHTML = current;
-          });
-          document.getElementById('btn-updateLimit').addEventListener('click',function(event) {
-            getToken().then(function(token){
-              let path = '/NamSorAPIv2/api2/json/updateLimit/';
-              let info = []
-              getApiKey().then(
-                  function(key){
-                    jQuery('#updateLimit').find('input').each(function(index, data){
-                      info.push(this.value);
-                    });
-                    if (parseInt(info[0] > 0 && parseInt(info[1] > 0)) {
-                      if (info[0])
-                        request({
-                          url: path + info[0] + '/true/' + token,
-                          headers : {'X-API-KEY' : key}
-                      }).then(function(success){
-                        if (info[1])
-                        request({
-                          url: path + info[1] + '/false/' + token,
-                          headers : {'X-API-KEY' : key}
-                        }).then(function(good){
-                            let success = document.createElement('div');
-                            success.className = 'alert alert-success';
-                            success.innerHTML = 'You have successfuly updated your limits';
-                            document.getElementById('updateLimit').prepend(success);
-                        });
-                      });
-                    } else {
-                      let error = document.createElement('div');
-                      error.className = 'alert alert-warning';
-                      error.innerHTML = 'Make sure that your limits are positive';
-                      document.getElementById('updateLimit').prepend(error);
-                    }
-                });
+        initApp().then(function (success) {
+            getInfo().then(data => {
+              let userInfo = JSON.parse(data);
+              var box = document.createElement("script");
+              box.src = "https://checkout.stripe.com/checkout.js";
+              box.type = "text/javascript";
+              box.dataset.email = userInfo.email;
+              box.dataset.key = userInfo.stripePerishableKey;
+              box.dataset.name = "NamSor";
+              box.className = "stripe-button"
+              box.dataset.amount = 0;
+              box.dataset.description = "Namsor API Setup";
+              document.getElementById("stripeForm").appendChild(box);
+            })
+            .catch(error => {
+                console.log(error);
             });
           });
       }
     </script>
-    <script>
-      let path = "/NamSorAPIv2/api2/json/apiUsageHistory"
-      getApiKey().then(function(key) {
-        request({url : path, headers : {'X-API-KEY' : key} }).then(
-          function(usage) {
-            usage = JSON.parse(usage);
-            var ctx = document.getElementById("myChart").getContext('2d');
-            var lab = []
-            var dat = []
-            for (var i = 0; i < usage.length; i++) {
-              let info = usage[i]
-              lab.push(info.apiService.split('_').join(' ').replace("basic->", ''))
-              dat.push(info.totalUsage)
-            }
-            var myChart = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                  labels: lab,
-                  datasets: [{
-                      label: 'frequency',
-                      data: dat,
-                      backgroundColor: [
-                          'rgba(255, 99, 132, 0.2)',
-                          'rgba(54, 162, 235, 0.2)',
-                          'rgba(255, 206, 86, 0.2)',
-                          'rgba(75, 192, 192, 0.2)',
-                          'rgba(153, 102, 255, 0.2)',
-                          'rgba(255, 159, 64, 0.2)'
-                      ],
-                      borderColor: [
-                          'rgba(255,99,132,1)',
-                          'rgba(54, 162, 235, 1)',
-                          'rgba(255, 206, 86, 1)',
-                          'rgba(75, 192, 192, 1)',
-                          'rgba(153, 102, 255, 1)',
-                          'rgba(255, 159, 64, 1)'
-                      ],
-                      borderWidth: 1
-                  }]
-              },
-              options: {
-                  scales: {
-                      yAxes: [{
-                          ticks: {
-                              beginAtZero:true
-                          }
-                      }]
-                  }
-              }
-            });
-          }, function (error) { console.log(Error(error)) });
-      }).catch( error => console.log(error));
-      </script>
     <script src="assets/js/app.js"></script>
     <!-- endbuild -->
 

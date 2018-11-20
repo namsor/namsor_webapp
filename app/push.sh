@@ -1,6 +1,7 @@
 mv ../bower_components .
-tar --exclude=release --exclude=node_modules --exclude=.git -czvf ../release/0.0.1/webapp.tar.gz *.html *.js *.map *.css \
-META-INF WEB-INF bower_components/**/dist/* assets/*  bower_components/PACE/** bower_components/perfect-scrollbar/**
+tar --exclude=release --exclude=node_modules --exclude=.git -czvf ../release/0.0.1/webapp.tar.gz \
+META-INF WEB-INF bower_components/**/dist/* assets/*  bower_components/PACE/** bower_components/perfect-scrollbar/** \
+*.html *.js *.map *.css 
 mv ./bower_components ../
 git add ../release/
 git commit -m "autopush"

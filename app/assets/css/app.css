@@ -1465,7 +1465,7 @@ iframe { border: 0; }
   .side-nav:hover .side-nav-inner .side-nav-logo { padding: 0px 20px; border-bottom: 1px solid #e6ecf5; }
   .side-nav:hover .side-nav-inner .side-nav-logo a .logo { width: 150px; background-position: center left; }
   .side-nav:hover .side-nav-inner .side-nav-logo a .logo-dark { background-image: url("../images/logo/logo.png") !important; }
-  .side-nav:hover .side-nav-inner .side-nav-logo a .logo-white { background-image: url("../images/logo/logo-white.png") !important; }
+  .side-nav:hover .side-nav-inner .side-nav-logo a .logo-white { background-image: url("../images/logo/logo.png") !important; }
   .side-nav:hover .side-nav-inner .side-nav-menu > li > a .title { display: inline-block; }
   .side-nav:hover .side-nav-inner .side-nav-menu li.dropdown .arrow { opacity: 1; }
   .side-nav:hover .side-nav-inner .side-nav-menu li.open > ul.dropdown-menu { display: block !important; } }
@@ -1485,7 +1485,7 @@ iframe { border: 0; }
   .is-collapsed .side-nav:hover .side-nav-inner .side-nav-logo { padding: 0px 20px; border-bottom: 1px solid #e6ecf5; }
   .is-collapsed .side-nav:hover .side-nav-inner .side-nav-logo a .logo { width: 150px; background-position: center left; }
   .is-collapsed .side-nav:hover .side-nav-inner .side-nav-logo a .logo-dark { background-image: url("../images/logo/logo.png") !important; }
-  .is-collapsed .side-nav:hover .side-nav-inner .side-nav-logo a .logo-white { background-image: url("../images/logo/logo-white.png") !important; }
+  .is-collapsed .side-nav:hover .side-nav-inner .side-nav-logo a .logo-white { background-image: url("../images/logo/logo.png") !important; }
   .is-collapsed .side-nav:hover .side-nav-inner .side-nav-menu > li > a .title { display: inline-block; }
   .is-collapsed .side-nav:hover .side-nav-inner .side-nav-menu li.dropdown .arrow { opacity: 1; }
   .is-collapsed .side-nav:hover .side-nav-inner .side-nav-menu li.open > ul.dropdown-menu { display: block !important; } }
@@ -1494,7 +1494,7 @@ iframe { border: 0; }
   .is-collapsed .side-nav .side-nav-inner .side-nav-logo { padding: 0px 20px; border-bottom: 1px solid #e6ecf5; }
   .is-collapsed .side-nav .side-nav-inner .side-nav-logo > a .logo { width: 150px; background-position: center left; }
   .is-collapsed .side-nav .side-nav-inner .side-nav-logo > a .logo-dark { background-image: url("../images/logo/logo.png") !important; }
-  .is-collapsed .side-nav .side-nav-inner .side-nav-logo > a .logo-white { background-image: url("../images/logo/logo-white.png") !important; }
+  .is-collapsed .side-nav .side-nav-inner .side-nav-logo > a .logo-white { background-image: url("../images/logo/logo.png") !important; }
   .is-collapsed .side-nav .side-nav-inner .side-nav-menu > li > a .title { display: inline-block; }
   .is-collapsed .side-nav .side-nav-inner .side-nav-menu li.dropdown .arrow { opacity: 1; }
   .is-collapsed .side-nav .side-nav-inner .side-nav-menu li.open > ul.dropdown-menu { display: block !important; } }

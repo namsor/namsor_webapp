@@ -45,15 +45,16 @@ var billingInfo = function() {
     });
 };
 
-var accSettings = function(idToken)
-{
+var accSettings = function(idToken) {
     var html;
     request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken}).then(data => {
       data = JSON.parse(data);
     html = `
         <li class="user-profile dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">
-            <img class="profile-img img-fluid" src="assets/images/user.jpg" alt="">
+            <div class=".d-none .d-md-block .d-lg-none">
+                <i class="ti-settings pdd-right-10"></i>
+            </div>
             <div class="user-info">
                 <span class="name pdd-right-5">${data.displayName}</span>
                 <i class="ti-angle-down font-size-10"></i>
@@ -64,6 +65,18 @@ var accSettings = function(idToken)
                 <a href="apioverview.html">
                     <i class="ti-settings pdd-right-10"></i>
                     <span>Api Overview</span>
+                </a>
+            </li>
+            <li>
+                <a href="payements.html">
+                    <i class="ti-credit-card pdd-right-10"></i>
+                    <span>Payements</span>
+                </a>
+            </li>
+            <li>
+                <a href="invoices.html">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Invoices</span>
                 </a>
             </li>
             <li>
@@ -85,30 +98,45 @@ var accSettings = function(idToken)
     });
 }
 
-var signOutButton = '';
-
 var getToken = function() {
   return new Promise(function(resolve, reject) {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         user.getIdToken().then(function (accessToken) {
           resolve(accessToken);
-        }, function (error) { console.log('Error in getID') });
+        }, function (error) { reject(Error(error)) });
       } else {
-        console.log('Error no user found')
-        reject(Error("No user"))
+        reject(Error('No user'))
       }
     });
   });
 };
 
+var getApiKey = function() {
+  return new Promise(function(resolve, reject) {
+    getToken().then(function(token) {
+      let path = '/NamSorAPIv2/api2/json/procureKey/'
+      request({url : path + token})
+      .then( data => resolve((JSON.parse(data)).api_key) , error => reject(error))
+    }, function(error) { reject(Error(error)) });
+  });
+}
+
+var getUsage = function () {
+  return new Promise(function(resolve, reject) {
+    getApiKey().then(function(key) {
+      let path = '/NamSorAPIv2/api2/json/apiUsage';
+      let head = {'X-API-KEY' : key}
+      request({url : path, headers : head})
+      .then( data => resolve(data), error => reject(error))
+    }, function(error) { reject(error) });
+  });
+}
+
 var signOut = function () {
-    firebase.auth().signOut().then(
-        function (success)
-        {
-            window.location.replace("index.html");
-        }
-    );
+  firebase.auth().signOut().then(function (success) {
+          window.location.replace("index.html");
+  });
 };
 
 initApp = function () {
@@ -147,11 +175,8 @@ initApp = function () {
 
 var getInfo = () => {
     return new Promise((resolve, reject) => {
-        // Identify from firebase
         firebase.auth().currentUser.getIdToken().then(function(idToken) {
-            // Request info from API
             request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken}).then(data => {
-                // Send info
                 resolve(data)
             })
             .catch(error => {

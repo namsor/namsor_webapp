@@ -91,7 +91,7 @@
                       </a>
                     </li>
                   </ul>
-                  <ul class="nav nav-right mt-2" id="boxSign">
+                  <ul class="nav nav-right" id="boxSign">
                     <li class="nav-item">
                       <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
 
@@ -139,18 +139,9 @@
                                     <p class="mrg-top-10 text-dark"> <b>Localisation:</b></p>
                                   </div>
                                   <div class="col-md-6">
-                                    <p class="mrg-top-10">Paris</p>
+                                    <p class="mrg-top-10">Undefined</p>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                            <div class="card">
-                              <div class="card-heading border bottom">
-                                <h4 class="card-title">Payements Settings</h4>
-                              </div>
-                              <div class="card-block">
-                                <form action="/NamSorAPIv2/api2/json/charge" method="POST" id="stripeForm">
-                                </form>
                               </div>
                             </div>
                           </div>
@@ -184,11 +175,11 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="addressLine1">Address 1:</label>
-                                    <input type="text" class="form-control" id="adressLine1" placeholder="Apartment, studio, or floor">
+                                    <input type="text" class="form-control" id="addressLine1" placeholder="Apartment, studio, or floor">
                                   </div>
                                   <div class="form-group">
                                     <label for="addressLine2">Address 2:</label>
-                                    <input type="text" class="form-control" id="adressLine2" placeholder="Apartment, studio, or floor">
+                                    <input type="text" class="form-control" id="addressLine2" placeholder="Apartment, studio, or floor">
                                   </div>
                                   <div class="form-row">
                                     <div class="form-group col-md-6">
@@ -199,10 +190,14 @@
                                       <label for="addressPostalCode">Zip</label>
                                       <input type="text" class="form-control" id="addressPostalCode">
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-4">
                                       <label for="addressCountry">Country</label>
                                       <input type="text" class="form-control" id="addressCountry">
                                     </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="vatID">VAT ID:</label>
+                                    <input type="text" class="form-control" id="vatID" placeholder="Your VAT ID">
                                   </div>
                                 </form>
                               </div>
@@ -253,24 +248,9 @@
       window.onload = function (){
         initApp().then(function (success) {
             getInfo().then(data => {
-              let userInfo = JSON.parse(data);
-              let name = document.getElementById("user_name");
-              let email = document.getElementById("user_email");
-              name.value = userInfo.displayName;
-              email.value = userInfo.email;
-              var box = document.createElement("script");
-              box.src = "https://checkout.stripe.com/checkout.js";
-              box.type = "text/javascript";
-              box.dataset.email = userInfo.email;
-              box.dataset.key = userInfo.stripePerishableKey;
-              box.dataset.name = "NamSor";
-              box.className = "stripe-button"
-              box.dataset.amount = 0;
-              box.dataset.description = "Namsor API Setup";
-              document.getElementById("stripeForm").appendChild(box);
-            })
-            .catch(error => {
-                console.log(error);
+              data = JSON.parse(data);
+              document.getElementById("user_name").value = data.displayName;
+              document.getElementById("user_email").value = data.email;
             });
             billingInfo().then(data => {
               if (data) {
@@ -288,17 +268,28 @@
           let update = document.getElementById('updateBillingInfo');
           update.addEventListener('click', function(event) {
             getToken().then(function(token) {
-              let info = []
+              let info = {};
               jQuery('#billingInfo').find('input').each(function(){
                 info[this.id] = this.value;
               });
-              console.dir(info)
+              console.log(JSON.stringify(info))
               request({
                 url: "/NamSorAPIv2/api2/json/updateBillingInfo/" + token,
                 method: 'POST',
-                body:JSON.stringify(info)
+                headers : {'Content-Type' : 'application/json'},
+                body: JSON.stringify(info)
+              }).then(function(requested){
+                let success = document.createElement('div');
+                success.className = 'alert alert-success';
+                success.innerHTML = 'You have successfuly updated your billing informations';
+                document.getElementById('billingInfo').prepend(success);
+              }, function(error){
+                  let err = document.createElement('div');
+                  err.className = 'alert alert-warning';
+                  err.innerHTML = 'Please verify that all fields are not empty';
+                  document.getElementById('billingInfo').prepend(err);
               });
-            }, function (error) { console.log(Error(error)) });
+            }, function (error) { console.log(Error(error)) })
           });
       };
     </script>
