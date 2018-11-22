@@ -264,7 +264,12 @@
                 // TODO: add an alert to specify that billing have to be fullfilled
               }
             });
-          }, function (error) { console.log(error); });
+          }, function (error) { 
+            $('.container-fluid').innerHTML =  
+            `<div class="alert alert-warning" role="alert">
+              You need to be logged in to access theses functionalities. 
+            </div>`;
+          });
           let update = document.getElementById('updateBillingInfo');
           update.addEventListener('click', function(event) {
             getToken().then(function(token) {
@@ -272,9 +277,8 @@
               jQuery('#billingInfo').find('input').each(function(){
                 info[this.id] = this.value;
               });
-              console.log(JSON.stringify(info))
               request({
-                url: "/NamSorAPIv2/api2/json/updateBillingInfo/" + token,
+                url: "updateBillingInfo/" + token,
                 method: 'POST',
                 headers : {'Content-Type' : 'application/json'},
                 body: JSON.stringify(info)
@@ -289,7 +293,12 @@
                   err.innerHTML = 'Please verify that all fields are not empty';
                   document.getElementById('billingInfo').prepend(err);
               });
-            }, function (error) { console.log(Error(error)) })
+            }, function (error) {
+              $('.container-fluid').innerHTML =  
+                `<div class="alert alert-warning" role="alert">
+                  You need to be logged in to access theses functionalities. 
+                </div>`;
+            })
           });
       };
     </script>

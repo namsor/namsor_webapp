@@ -121,34 +121,7 @@
               </div>
           </div>
           <div id="swagger-ui"></div>
-          <script src="./swagger-ui-bundle.js"></script>
-          <script src="./swagger-ui-standalone-preset.js"></script>
-          <script>
-                  window.onload = function () {
-                      var promise = initApp();
-                      getToken().then(function(token) {console.log(token)});
-                      // Build a system
-                      promise.then(function () {
-                        const ui = SwaggerUIBundle({
-                            url: "https:///v2.namsor.com/NamSorAPIv2/api2/openapi.json",
-                            dom_id: '#swagger-ui',
-                            deepLinking: true,
-                            presets: [
-                                SwaggerUIBundle.presets.apis,
-                                SwaggerUIStandalonePreset
-                            ],
-                            plugins: [
-                                SwaggerUIBundle.plugins.DownloadUrl
-                            ],
-                            layout: "StandaloneLayout",
-                            onComplete: function() {
-                                ui.preauthorizeApiKey("api_key", window.api_key);
-                            }
-                        });
-                        window.ui = ui;
-                      });
-                  };
-          </script>
+
         </div>
         <!-- Content Wrapper END -->
 
@@ -184,7 +157,43 @@
   <!-- page plugins js -->
   
   <script src="bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
-
+  <script src="./swagger-ui-bundle.js"></script>
+  <script src="./swagger-ui-standalone-preset.js"></script>
+  <script>
+    var insertSwag = function(key) {
+      const ui = SwaggerUIBundle({
+            url: "https:///v2.namsor.com/NamSorAPIv2/api2/openapi.json",
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+            ],
+            plugins: [
+                SwaggerUIBundle.plugins.DownloadUrl
+            ],
+            layout: "StandaloneLayout",
+            onComplete: function() {
+                ui.preauthorizeApiKey("api_key", key);
+            }
+        });
+        window.ui = ui;
+    }
+    window.onload = function() {
+      initApp().then(function(token){
+        getApiKey().then(function(key) {
+          document.getElementById('namsor_api_key_input').value = key;
+          insertSwag(key);
+        });
+      }, function() {
+        insertSwag('');
+        document.getElementById('namsor-api-key').innerHTML = 
+          `<div class="alert alert-warning" role="alert">
+            You need an API key to sign in to use real-time functions. 
+          </div>`;
+      });
+    }
+  </script>
   <!-- build:js assets/js/app.min.js -->
   <!-- core js -->
   <script src="assets/js/app.js"></script>

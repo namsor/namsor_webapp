@@ -27,9 +27,14 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
     <script type="text/javascript">
       // FirebaseUI config.
-      console.log(document.referrer)
+      let url = 'apidoc.html';
+      if (document.referrer == 'https://v2.namsor.com/NamSorAPIv2/services.html')
+      {
+          url = 'services.html';
+          console.log(document.referrer);
+      }
       var uiConfig = {
-        signInSuccessUrl: "apidoc.html",
+        signInSuccessUrl: url,
         signInOptions: [
           // Leave the lines as is for the providers you want to offer your users.
           firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -70,10 +75,6 @@
                                       <div id="firebaseui-auth-container"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="login-footer">
-                                <img class="img-responsive inline-block" src="assets/images/logo/logo.png" width="100" alt="">
-                                <span class="font-size-13 pull-right pdd-top-10">Don't have an account? <a href="">Sign Up Now</a></span>
                             </div>
                         </div>
                     </div>

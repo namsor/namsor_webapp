@@ -199,7 +199,6 @@
           });
           document.getElementById('btn-updateLimit').addEventListener('click',function(event) {
             getToken().then(function(token){
-              let path = '/NamSorAPIv2/api2/json/updateLimit/';
               let info = []
               getApiKey().then(
                   function(key) {
@@ -209,12 +208,12 @@
                     if (parseInt(info[0]) > 0 && parseInt(info[1]) > 0) {
                       if (info[0])
                         request({
-                          url: path + info[0] + '/true/' + token,
+                          url: info[0] + '/true/' + token,
                           headers : {'X-API-KEY' : key}
                       }).then(function(success){
                         if (info[1])
                         request({
-                          url: path + info[1] + '/false/' + token,
+                          url: info[1] + '/false/' + token,
                           headers : {'X-API-KEY' : key}
                         }).then(function(good){
                             let success = document.createElement('div');

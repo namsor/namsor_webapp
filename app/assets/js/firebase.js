@@ -12,7 +12,7 @@ firebase.initializeApp(config);
 var request = obj => {
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        xhr.open(obj.method || "GET", obj.url, true);
+        xhr.open(obj.method || "GET", "/NamSorAPIv2/api2/json/" + obj.url, true);
         if (obj.headers) {
             Object.keys(obj.headers).forEach(key => {
                 xhr.setRequestHeader(key, obj.headers[key]);
@@ -33,23 +33,26 @@ var request = obj => {
 var billingInfo = function() {
     return new Promise((resolve, reject) => {
         // Identify from firebase
-        firebase.auth().currentUser.getIdToken().then(function(idToken) {
+        getToken().then(function(token) {
             // Request info from API
-            request({url: "/NamSorAPIv2/api2/json/billingInfo/" + idToken}).then(data => {
+            request({url: "billingInfo/" + token}).then(data => {
                 resolve(data)
             })
             .catch(error => {
                 reject(error);
             });
+        })
+        .catch(error => {
+            reject(error);
         });
     });
 };
 
 var billingHistory = function() {
     return new Promise((resolve, reject) => {
-        getToken().then(function(idToken) {
+        getToken().then(function(token) {
             // Request info from API
-            request({url: "/NamSorAPIv2/api2/json/billingHistory/" + idToken}).then(data => {
+            request({url: "billingHistory/" + token}).then(data => {
                 resolve(data)
             })
             .catch(error => {
@@ -61,7 +64,7 @@ var billingHistory = function() {
 
 var accSettings = function(idToken) {
     var html;
-    request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken}).then(data => {
+    request({url: "userInfo/" + idToken}).then(data => {
       data = JSON.parse(data);
     html = `
         <li class="user-profile dropdown">
@@ -120,7 +123,7 @@ var getToken = function() {
           resolve(accessToken);
         }, function (error) { reject(Error(error)) });
       } else {
-        reject(Error('No user'))
+        reject('no user')
       }
     });
   });
@@ -130,12 +133,11 @@ var getApiKey = function() {
   return new Promise(function(resolve, reject) {
     getToken()
     .then(function(token) {
-      let path = '/NamSorAPIv2/api2/json/procureKey/'
+      let path = 'procureKey/'
       request({url : path + token})
       .then( data => resolve((JSON.parse(data)).api_key) , error => reject(error))
     }, error => reject(error))
     .catch(error => {
-      console.log(error);
       reject(error);
     });
   });
@@ -144,7 +146,7 @@ var getApiKey = function() {
 var getUsage = function () {
   return new Promise(function(resolve, reject) {
     getApiKey().then(function(key) {
-      let path = '/NamSorAPIv2/api2/json/apiUsage';
+      let path = 'apiUsage';
       let head = {'X-API-KEY' : key}
       request({url : path, headers : head})
       .then( data => resolve(data), error => reject(error))
@@ -162,7 +164,7 @@ var getInfo = () => {
     return new Promise((resolve, reject) => {
         firebase.auth().currentUser.getIdToken()
         .then(function(idToken) {
-            request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken})
+            request({url: "userInfo/" + idToken})
             .then(data => {
                 resolve(data);
             })
@@ -173,36 +175,17 @@ var getInfo = () => {
     });
 }
 
-initApp = function () {
-    var deferred = new Promise(function(resolve, reject){
-      firebase.auth().onAuthStateChanged(function (user) {
-          if (user) {
-              // User is signed in.
-              user.getIdToken().then(function (accessToken) {
-                // Create a request variable and assign a new XMLHttpRequest object to it.
-                let request = new XMLHttpRequest();
-                // Open a new connection, using the GET request on the URL endpoint
-                request.open('GET', '/NamSorAPIv2/api2/json/procureKey/' + accessToken, true);
-                request.onload = function () {
-                    var data = JSON.parse(this.response);
-                    if (document.getElementById('namsor_api_key_input') != null)
-                        document.getElementById('namsor_api_key_input').value = data.api_key;
-                    accSettings(accessToken)
-                    window.api_key = data.api_key;
-                }
-                request.send();
-                resolve("okay");
-            });
-          } else {
-                let box = document.getElementById("signin");
-                if (box)
-                    box.style.display = "inherit";
-                window.api_key = null;
-                resolve("okay");
-          }
-      }, function (error) {
-          console.log(error);
-      });
+initApp = function() {
+    return new Promise(function(resolve, reject){
+        getToken().then(function(token){
+            accSettings(token);
+            resolve(token)
+        },
+        function (error){
+            let box = document.getElementById("signin");
+            if (box)
+                box.style.display = "inherit";
+            reject('No user');
+        });
     });
-    return deferred;
 };
