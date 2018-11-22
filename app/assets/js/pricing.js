@@ -39,78 +39,80 @@ var currentPlanName = function() {
   });
 }
 
-availablePlans.then( data => {
-  let html = "";
-  data = JSON.parse(data);
-  currentPlanName().then(function(current) {
-    current = current.subscription.planName;
-    data.plans.forEach( plan => {
-      if (plan.planName != "ENTERPRISE") {
-        html += `
-        <div class="col-md-3 mb-3">
-        <div class="card h-100">
-        <h3 class="card-header">${plan.planName}</h3>
-        <div class="card-body">
-        <div class="display-4">${plan.price}</div>
-        <div class="font-italic"></div>
-        </div>
-        <ul class="list-group list-group-flush">
-        <li class="list-group-item">Plan quota : ${plan.planQuota}</li>
-        <li class="list-group-item">Price overage : ${plan.priceOverage} </li>
-        <li class="list-group-item">`
-        console.log(current, plan.planName)
-        if (plan.planName == current) {
-          html += `<button disabled id ="current" class="btn btn-success">Current</button>`
+var insertData = function() {
+  availablePlans.then( data => {
+    let html = "";
+    data = JSON.parse(data);
+    currentPlanName().then(function(current) {
+      current = current.subscription.planName;
+      data.plans.forEach( plan => {
+        if (plan.planName != "ENTERPRISE") {
+          html += `
+          <div class="col-md-3 mb-3">
+          <div class="card h-100">
+          <h3 class="card-header">${plan.planName}</h3>
+          <div class="card-body">
+          <div class="display-4">${plan.price}</div>
+          <div class="font-italic"></div>
+          </div>
+          <ul class="list-group list-group-flush">
+          <li class="list-group-item">Plan quota : ${plan.planQuota}</li>
+          <li class="list-group-item">Price overage : ${plan.priceOverage} </li>
+          <li class="list-group-item">`;
+          if (plan.planName == current) {
+            html += `<button data-name="${plan.planName}" disabled id="current" class="btn btn-success">Current</button>`
+          }
+          else {
+            html += `<button data-name="${plan.planName}"
+            data-loading-text="<i class='fa fa-spinner fa-spin'></i> Processing Order"
+            class="btn btn-primary">Subscribe!</button>`
+          }
+          html +=       `</li>
+          </ul>
+          </div>
+          </div>
+          `;
         }
-        else {
-          html += `<button data-name="${plan.planName}"
-          data-loading-text="<i class='fa fa-spinner fa-spin'></i> Processing Order"
-          class="btn btn-primary">Subscribe!</button>`
-        }
-        html +=       `</li>
-        </ul>
-        </div>
-        </div>
-        `;
-      }
-    });
-    var service = document.getElementById("services");
-    service.innerHTML = html;
-    let getToken = function() {
-      return new Promise(function(resolve, reject) {
-        firebase.auth().onAuthStateChanged(function (user) {
-          if (user) {
-            user.getIdToken().then(function (accessToken) {
-              resolve(accessToken);
-            }, function (error) { console.log('Error in getID') });
-          } else {
-            jQuery('#services').find('button').each(function (index, button) {
-              button.textContent = 'Sign in';
-              button.addEventListener('click', function(event){
-                document.getElementById('signin').click();
-              });
+      });
+      const services = document.getElementById('services')
+      services.innerHTML = html;
+      //        jQuery('#services').find('button').each(function (index, button) {
+        //        button.textContent = 'Sign in';
+          //      button.addEventListener('click', function(event){
+            //      document.getElementById('signin').click();
+      getToken().then(function (token) {
+        getUsage().then(function(usage){
+          usage = JSON.parse(usage);
+          if (usage.subscription.stripeStatus == 'active') {
+            jQuery('#services').find('button').not('#current').click(function (event) {
+              let p = path +"subscribePlan/" + this.dataset.name + "/" + token;
+              var btn = $(this)
+              this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing Order';
+              request({url : p}).then (
+                function (planInfos) {
+                  planInfos = JSON.parse(planInfos)
+                  let success = document.createElement('div');
+                  success.className = 'col-sm-12 alert alert-success';
+                  success.innerHTML = 'You have successfuly register to ' + planInfos.planName;
+                  services.prepend(success);
+                  btn.text(() => 'Success');
+                  btn.toggleClass('btn-info');
+                  setTimeout(function() {
+                     insertData();
+                  }, 3000);
+                }, function (error) {
+                  console.log(error)
+                });
             });
           }
+          else {
+            let error = document.createElement('div');
+            error.className = 'col-sm-12 alert alert-warning';
+            error.innerHTML = 'You have to register <a href="payments.html">here</a> your credit card before doing that';
+            services.prepend(error);
+          }
         });
-      });
-    };
-    getToken().then(function (token) {
-      jQuery('#services').find('button').not('#current').click(function (event) {
-        let p = path +"subscribePlan/" + this.dataset.name + "/" + token;
-        var btn = $(this);
-        btn.button('loading');
-        request({url : p}).then(
-          function (planInfos) {
-            planInfos = JSON.parse(planInfos)
-            let success = document.createElement('div');
-            success.className = 'col-sm-12 alert alert-success';
-            success.innerHTML = 'You have successfuly register to ' + planInfos.planName;
-            services.prepend(success);
-            btn.button('reset');
-          }, function (error) {
-            console.log(error)
-          });
-        });
-      }, function(error) { console.log(error) });
+      }, function (error) {console.log(error)});
     });
   });
+}

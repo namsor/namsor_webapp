@@ -45,6 +45,20 @@ var billingInfo = function() {
     });
 };
 
+var billingHistory = function() {
+    return new Promise((resolve, reject) => {
+        getToken().then(function(idToken) {
+            // Request info from API
+            request({url: "/NamSorAPIv2/api2/json/billingHistory/" + idToken}).then(data => {
+                resolve(data)
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    });
+};
+
 var accSettings = function(idToken) {
     var html;
     request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken}).then(data => {
@@ -52,7 +66,7 @@ var accSettings = function(idToken) {
     html = `
         <li class="user-profile dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">
-            <div class=".d-none .d-md-block .d-lg-none">
+            <div class="d-none d-md-block d-lg-none">
                 <i class="ti-settings pdd-right-10"></i>
             </div>
             <div class="user-info">
@@ -75,7 +89,7 @@ var accSettings = function(idToken) {
             </li>
             <li>
                 <a href="invoices.html">
-                    <i class="fas fa-file-invoice"></i>
+                    <i class="ti-file pdd-right-10"></i>
                     <span>Invoices</span>
                 </a>
             </li>
@@ -114,11 +128,16 @@ var getToken = function() {
 
 var getApiKey = function() {
   return new Promise(function(resolve, reject) {
-    getToken().then(function(token) {
+    getToken()
+    .then(function(token) {
       let path = '/NamSorAPIv2/api2/json/procureKey/'
       request({url : path + token})
       .then( data => resolve((JSON.parse(data)).api_key) , error => reject(error))
-    }, function(error) { reject(Error(error)) });
+    }, error => reject(error))
+    .catch(error => {
+      console.log(error);
+      reject(error);
+    });
   });
 }
 
@@ -138,6 +157,21 @@ var signOut = function () {
           window.location.replace("index.html");
   });
 };
+
+var getInfo = () => {
+    return new Promise((resolve, reject) => {
+        firebase.auth().currentUser.getIdToken()
+        .then(function(idToken) {
+            request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken})
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    });
+}
 
 initApp = function () {
     var deferred = new Promise(function(resolve, reject){
@@ -172,16 +206,3 @@ initApp = function () {
     });
     return deferred;
 };
-
-var getInfo = () => {
-    return new Promise((resolve, reject) => {
-        firebase.auth().currentUser.getIdToken().then(function(idToken) {
-            request({url: "/NamSorAPIv2/api2/json/userInfo/" + idToken}).then(data => {
-                resolve(data)
-            })
-            .catch(error => {
-                reject(error);
-            });
-        });
-    });
-}

@@ -202,11 +202,11 @@
               let path = '/NamSorAPIv2/api2/json/updateLimit/';
               let info = []
               getApiKey().then(
-                  function(key){
+                  function(key) {
                     jQuery('#updateLimit').find('input').each(function(index, data){
                       info.push(this.value);
                     });
-                    if (parseInt(info[0] > 0 && parseInt(info[1] > 0)) {
+                    if (parseInt(info[0]) > 0 && parseInt(info[1]) > 0) {
                       if (info[0])
                         request({
                           url: path + info[0] + '/true/' + token,

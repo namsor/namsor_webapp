@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" />
 
   <!-- page plugins css -->
-  
+
   <link rel="stylesheet" href="bower_components/selectize/dist/css/selectize.default.css" />
 
   <!-- core css -->
@@ -140,7 +140,7 @@
                 <footer class="content-footer">
                     <div class="footer">
                       <div class="copyright">
-                          <span>Copyright © 2017 <b class="text-dark">Theme_Nate</b>. All rights reserved.</span>
+                          <span>Copyright © 2018 <b class="text-dark">Namsor</b>. All rights reserved.</span>
                           <span class="go-right">
           									<a href="" class="text-gray mrg-right-15">Term &amp; Conditions</a>
           									<a href="" class="text-gray">Privacy &amp; Policy</a>
@@ -164,7 +164,7 @@
   <!-- endbuild -->
 
   <!-- page plugins js -->
-  
+
   <script src="bower_components/selectize/dist/js/standalone/selectize.min.js"></script>
 
   <!-- build:js assets/js/app.min.js -->
@@ -174,7 +174,14 @@
   <script src="assets/js/firebase.js"></script>
   <script src="assets/js/pricing.js"></script>
   <script>
-    window.onload = function () { initApp(); }
+    window.onload = function () {
+      initApp()
+      .then(insertData(), insertData())
+      .catch(error => {
+          insertData();
+      });
+
+    }
   </script>
   <!-- endbuild -->
 </body>

@@ -109,43 +109,26 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12">
-                        <div class="row">
-                            <div class="card">
-                              <div class="card-heading border bottom">
-                                <h4 class="card-title">Summary</h4>
-                              </div>
-                              <div class="card-block">
-                                <table class="table table-hover">
-                                  <thead>
-                                    <tr>
-                                      <th scope="col">#</th>
-                                      <th scope="col">First</th>
-                                      <th scope="col">Last</th>
-                                      <th scope="col">Handle</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">1</th>
-                                      <td>Mark</td>
-                                      <td>Otto</td>
-                                      <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">2</th>
-                                      <td>Jacob</td>
-                                      <td>Thornton</td>
-                                      <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">3</th>
-                                      <td colspan="2">Larry the Bird</td>
-                                      <td>@twitter</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
+                        <div class="card">
+                          <div class="card-heading border bottom">
+                            <h4 class="card-title">Summary</h4>
+                          </div>
+                          <div class="card-block">
+                            <table class="table table-hover" id ='invoicesTable'>
+                              <thead>
+                                <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Subscription</th>
+                                  <th scope="col">Price</th>
+                                  <th scope="col">Details</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -189,7 +172,26 @@
     <script src="assets/js/firebase.js" charset="utf-8"></script>
     <script>
       window.onload = function (){
-        initApp();
+        initApp().then(billingHistory().then(
+          data => {
+            data = JSON.parse(data);
+            console.log(data);
+            invoices = data.stripeInvoices;
+            const invoicesTable = document.getElementById('invoicesTable');
+            invoices.forEach((invoice, index) => {
+              let tr = document.createElement('tr');
+              let date = new Date(parseInt(invoice['invoiceDate'])).toDateString()
+              let html =
+              '<td>' + index + '</td>' +
+              '<td>' + date + '</td>' +
+              '<td>' + 'ultra' + '</td>' +
+              '<td>' + invoice['amountPaid'] + '</td>' +
+              '<td><a target="blank" href="' + invoice['invoicePdf'] + '">Download here</a></td>' ;
+              tr.innerHTML = html;
+              invoicesTable.prepend(tr);
+            });
+          }
+        ))
       };
     </script>
     <script src="assets/js/app.js"></script>
