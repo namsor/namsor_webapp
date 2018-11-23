@@ -115,18 +115,7 @@
                           </div>
                           <div class="card-block">
                             <table class="table table-hover" id ='invoicesTable'>
-                              <thead>
-                                <tr>
-                                  <th scope="col">#</th>
-                                  <th scope="col">Date</th>
-                                  <th scope="col">Subscription</th>
-                                  <th scope="col">Price</th>
-                                  <th scope="col">Details</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-
-                              </tbody>
+                              
                             </table>
                           </div>
                         </div>
@@ -172,21 +161,47 @@
     <script src="assets/js/firebase.js" charset="utf-8"></script>
     <script>
       window.onload = function (){
+        const invoicesTable = document.getElementById('invoicesTable');
+        invoicesTable.innerHTML =
+          `<div class="artboard">
+            <div class="domino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>`;
         initApp().then(billingHistory().then(
           data => {
             data = JSON.parse(data);
             console.log(data);
-            invoices = data.stripeInvoices;
-            const invoicesTable = document.getElementById('invoicesTable');
+            invoicesTable.innerHTML =
+              `<thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Subscription</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>`;
+            invoices = data.stripeInvoices.concat(data.corporateInvoices);
+            invoices.sort((a, b) => a['invoiceDate'] - b['invoiceDate']);
             invoices.forEach((invoice, index) => {
               let tr = document.createElement('tr');
-              let date = new Date(parseInt(invoice['invoiceDate'])).toDateString()
+              let date = new Date(parseInt(invoice['invoiceDate'])).toDateString();
+              let name = 'temporary name';
               let html =
               '<td>' + index + '</td>' +
               '<td>' + date + '</td>' +
-              '<td>' + 'ultra' + '</td>' +
+              '<td>' + name + '</td>' +
               '<td>' + invoice['amountPaid'] + '</td>' +
-              '<td><a target="blank" href="' + invoice['invoicePdf'] + '">Download here</a></td>' ;
+              (invoice.isStriped ? '<td><a target="blank" href="' +
+              invoice['invoicePdf'] +
+              '">Download here</a></td>' : '');
               tr.innerHTML = html;
               invoicesTable.prepend(tr);
             });
