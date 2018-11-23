@@ -30,12 +30,28 @@ var request = obj => {
     });
 };
 
-var billingInfo = function() {
+var getToken = function() {
+    return new Promise(function(resolve, reject) {
+        firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            user.getIdToken().then(function (accessToken) {
+            resolve(accessToken);
+            }, function (error) { reject(Error(error)) });
+        } else {
+            reject('no user')
+        }
+        });
+    });
+};
+
+var tokenRequest = function (path){
     return new Promise((resolve, reject) => {
-        // Identify from firebase
-        getToken().then(function(token) {
+        // Get token from firebase
+        getToken()
+        .then(function(token) {
             // Request info from API
-            request({url: "billingInfo/" + token}).then(data => {
+            request({url: path + "/" + token}).then(data => {
+                // Send Data via promise
                 resolve(data)
             })
             .catch(error => {
@@ -48,18 +64,16 @@ var billingInfo = function() {
     });
 };
 
-var billingHistory = function() {
-    return new Promise((resolve, reject) => {
-        getToken().then(function(token) {
-            // Request info from API
-            request({url: "billingHistory/" + token}).then(data => {
-                resolve(data)
-            })
-            .catch(error => {
-                reject(error);
-            });
-        });
-    });
+var billingInfo = function () {
+   return tokenRequest("billingInfo");
+};
+
+var billingHistory = function () {
+    return tokenRequest("billingHistory")
+};
+
+var getInfo = () => {
+    return tokenRequest("userInfo");
 };
 
 var accSettings = function(idToken) {
@@ -69,7 +83,7 @@ var accSettings = function(idToken) {
     html = `
         <li class="user-profile dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">
-            <div class="d-none d-md-block d-lg-none">
+            <div class="d-block d-lg-none">
                 <i class="ti-settings pdd-right-10"></i>
             </div>
             <div class="user-info">
@@ -115,26 +129,12 @@ var accSettings = function(idToken) {
     });
 }
 
-var getToken = function() {
-  return new Promise(function(resolve, reject) {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        user.getIdToken().then(function (accessToken) {
-          resolve(accessToken);
-        }, function (error) { reject(Error(error)) });
-      } else {
-        reject('no user')
-      }
-    });
-  });
-};
 
 var getApiKey = function() {
   return new Promise(function(resolve, reject) {
     getToken()
     .then(function(token) {
-      let path = 'procureKey/'
-      request({url : path + token})
+      request({url : 'procureKey/' + token})
       .then( data => resolve((JSON.parse(data)).api_key) , error => reject(error))
     }, error => reject(error))
     .catch(error => {
@@ -146,9 +146,7 @@ var getApiKey = function() {
 var getUsage = function () {
   return new Promise(function(resolve, reject) {
     getApiKey().then(function(key) {
-      let path = 'apiUsage';
-      let head = {'X-API-KEY' : key}
-      request({url : path, headers : head})
+      request({url : 'apiUsage', headers : {'X-API-KEY' : key}})
       .then( data => resolve(data), error => reject(error))
     }, function(error) { reject(error) });
   });
@@ -159,21 +157,6 @@ var signOut = function () {
           window.location.replace("index.html");
   });
 };
-
-var getInfo = () => {
-    return new Promise((resolve, reject) => {
-        firebase.auth().currentUser.getIdToken()
-        .then(function(idToken) {
-            request({url: "userInfo/" + idToken})
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-        });
-    });
-}
 
 initApp = function() {
     return new Promise(function(resolve, reject){

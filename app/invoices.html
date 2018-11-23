@@ -113,10 +113,8 @@
                           <div class="card-heading border bottom">
                             <h4 class="card-title">Summary</h4>
                           </div>
-                          <div class="card-block">
-                            <table class="table table-hover" id ='invoicesTable'>
-                              
-                            </table>
+                          <div class="card-block" id="invoicesContent">
+                            
                           </div>
                         </div>
                       </div>
@@ -160,34 +158,57 @@
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
     <script src="assets/js/firebase.js" charset="utf-8"></script>
     <script>
-      window.onload = function (){
-        const invoicesTable = document.getElementById('invoicesTable');
-        invoicesTable.innerHTML =
-          `<div class="artboard">
-            <div class="domino">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>`;
+      
+      const invoicesContent = document.getElementById('invoicesContent');
+
+      let insertInfos = function(data) {
+        console.log(data);
+      }
+      let insertInvoice = function(data){
+        let invoice = document.createElement('iframe');
+        invoice.width = "100%";
+        invoice.height = "800px";
+        invoice.src = "invoice.html"
+        invoice.onload = insertInfos(data);
+        $('table').slideUp('slow', () => {
+          $('#invoicesContent').prepend(invoice);
+          insertBack();
+        });
+      };
+
+      let insertBack = function () {
+        let btn = document.createElement('button');
+        btn.className = 'btn btn-primary';
+        btn.innerHTML = '<i class="ti-angle-left font-size-10"></i>';
+        btn.id = 'back'
+        btn.addEventListener('click', function() {
+          $('#back').remove();
+          $('iframe').remove();
+          $('table').slideDown('slow');
+        });
+        invoicesContent.prepend(btn);
+      };
+
+      let insertData = function(){
         initApp().then(billingHistory().then(
           data => {
             data = JSON.parse(data);
             console.log(data);
-            invoicesTable.innerHTML =
-              `<thead>
+            invoicesContent.innerHTML =
+            `
+            <table class="table table-hover" id ='invoicesTable'>              
+              <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Date</th>
                   <th scope="col">Subscription</th>
                   <th scope="col">Price</th>
                   <th scope="col">Details</th>
-                </tr>
+                  </tr>
               </thead>
               <tbody>
-
-              </tbody>`;
+              </tbody>
+            </table>`;
             invoices = data.stripeInvoices.concat(data.corporateInvoices);
             invoices.sort((a, b) => a['invoiceDate'] - b['invoiceDate']);
             invoices.forEach((invoice, index) => {
@@ -198,17 +219,41 @@
               '<td>' + index + '</td>' +
               '<td>' + date + '</td>' +
               '<td>' + name + '</td>' +
-              '<td>' + invoice['amountPaid'] + '</td>' +
-              (invoice.isStriped ? '<td><a target="blank" href="' +
-              invoice['invoicePdf'] +
-              '">Download here</a></td>' : '');
+              '<td>' + invoice['amountPaid'] + '</td>';
               tr.innerHTML = html;
-              invoicesTable.prepend(tr);
+              let link = document.createElement('td');
+              if (invoice.isStriped) {
+                link.innerHTML = '<a target="blank" href="' + invoice['invoicePdf'] + '">Download here</a>'
+              }
+              else {
+                let btton = document.createElement('button');
+                btton.innerHTML = "View Details";
+                btton.className = 'btn-link border-0 p-0';
+                btton.addEventListener('click', function(){
+                  insertInvoice(invoice);
+                });
+                link.appendChild(btton);
+              }
+              tr.appendChild(link);
+              document.getElementById('invoicesTable').prepend(tr);
             });
           }
-        ))
+        ));
       };
-    </script>
+        
+      window.onload = function (){
+        invoicesContent.innerHTML =
+          `<div class="artboard">
+            <div class="domino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>`;
+        insertData();
+      }
+                  </script>
     <script src="assets/js/app.js"></script>
     <!-- endbuild -->
 
