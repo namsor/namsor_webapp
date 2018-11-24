@@ -62,25 +62,28 @@
                         <div class="col-md-9 col-sm-9">
                             <h3 class="pdd-left-10 mrg-top-10">Invoice To:</h3>
                             <address class="pdd-left-10 mrg-top-10">
-                                <b class="text-dark">Eastern Holdings.</b><br>
-                                <span>8626 Maiden Dr. </span><br>
-                                <span>Niagara Falls, New York 14304</span>
+                                <b class="text-dark" id="customerName"></b><br>
+                                <span id="addressLine1"></span><br>
+                                <span id="addressLine2"></span><br>
+                                <span id="addressCity"></span>
+                                <span id="addressState"></span>
+                                <span id="addressPostalCode"></span>
                             </address>
                         </div>
                         <div class="col-md-3 col-sm-3">
                             <div class="mrg-top-80">
                                 <div class="text-dark text-uppercase inline-block"><b>Invoice No :</b></div>
-                                <div class="pull-right">#1668</div>
+                                <div class="pull-right" id="invoiceId"></div>
                             </div>
                             <div class="">
                                 <div class="text-dark text-uppercase inline-block"><b>Date :</b></div>
-                                <div class="pull-right">25/6/2017</div>
+                                <div class="pull-right" id="invoiceDate"></div>
                             </div>
                         </div>
                     </div>
                     <div class="row mrg-top-20">
                         <div class="col-md-12">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="invoiceSoloContent">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -91,36 +94,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Asus Zenfone 3 Zoom ZE553KL Dual Sim (4GB, 64GB)</td>
-                                        <td>2</td>
-                                        <td>$450.00</td>
-                                        <td class="text-right">$900.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>HP Pavilion 15-au103TX 15.6˝ Laptop Red</td>
-                                        <td>1</td>
-                                        <td>$550.00</td>
-                                        <td class="text-right">$550.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Canon EOS 77D</td>
-                                        <td>1</td>
-                                        <td>$875.00</td>
-                                        <td class="text-right">$875.00</td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
                             <div class="row mrg-top-30">
                                 <div class="col-md-12">
                                     <div class="pull-right text-right">
-                                        <p>Sub - Total amount: $2,325</p>
-                                        <p>vat (10%) : $232 </p>
+                                        <p>Sub - Total amount: <span id="subTotal"></span></p>
+                                        <p>vat : <span id="tax"></span></p>
                                         <hr>
-                                        <h3><b>Total :</b> $2,557</h3>
+                                        <h3><b>Total :</b><span id="total"></span></h3>
                                     </div>
                                 </div>
                             </div>

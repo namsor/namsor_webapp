@@ -160,18 +160,54 @@
     <script>
       
       const invoicesContent = document.getElementById('invoicesContent');
-
-      let insertInfos = function(data) {
-        console.log(data);
+      
+      let insertInfos = function(datas) {
+        let invoiceInfo = document.getElementById('invoiceInfo');
+        let innerDoc;
+        if (invoiceInfo)
+          innerDoc = invoiceInfo.contentDocument || invoiceInfo.contentWindow.document;
+        else
+        {
+          console.log('error');
+          return('');
+        }
+        billingInfo().then(function(address){
+          infos = JSON.parse(address);
+          let items = datas.items;
+          let fill = (x, y) => {
+            if (innerDoc.getElementById(x) !== null && y[x] !== null) 
+              innerDoc.getElementById(x).innerHTML = y[x];
+          }
+          for (info in infos)
+              fill(info, infos);
+          for (data in datas)
+            fill(data, datas);
+          for (item in items)
+          {
+            console.log(item);
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<th>${item.id}</th>
+            <th>${item.subscription}</th>
+            <th>${item.quantity}</th>
+            <th>${item.amount}</th>
+            <th class="text-right"></th>`;
+            innerDoc.getElementById("invoiceSoloContent").prepend(tr);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
       }
+
       let insertInvoice = function(data){
         let invoice = document.createElement('iframe');
         invoice.width = "100%";
         invoice.height = "800px";
-        invoice.src = "invoice.html"
-        invoice.onload = insertInfos(data);
+        invoice.src = "invoice.html";
+        invoice.id = "invoiceInfo"
         $('table').slideUp('slow', () => {
           $('#invoicesContent').prepend(invoice);
+          $('iframe').ready(insertInfos(data));
           insertBack();
         });
       };
