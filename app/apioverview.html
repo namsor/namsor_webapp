@@ -93,7 +93,7 @@
                   </ul>
                   <ul class="nav nav-right" id="boxSign">
                     <li class="nav-item">
-                      <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
+                     <a href="#">                         <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>                       </a>
 
                     </li>
                   </ul>
@@ -187,54 +187,55 @@
     <script src="assets/js/firebase.js" charset="utf-8"></script>
     <script>
       window.onload = function (){
-          initApp();
-          getUsage().then(usage => {
+        initApp().then(function(success){
+          getUsage()
+          .then(usage => {
             usage = JSON.parse(usage);
-            let current = usage.billingPeriod.usage;
-            let hard = usage.billingPeriod.hardLimit;
-            let soft = usage.billingPeriod.softLimit;
-            document.getElementById('limitHard').value = hard;
-            document.getElementById('limitSoft').value = soft;
-            document.getElementById('usage').innerHTML = current;
+            document.getElementById('limitHard').value = usage.billingPeriod.hardLimit;
+            document.getElementById('limitSoft').value = usage.billingPeriod.softLimit;
+            document.getElementById('usage').innerHTML = usage.billingPeriod.usage;
           });
-          document.getElementById('btn-updateLimit').addEventListener('click',function(event) {
-            getToken().then(function(token){
+          document.getElementById('btn-updateLimit')
+          .addEventListener('click',function(event) {
+            getToken()
+            .then(function(token){
               let info = []
-              getApiKey().then(
-                  function(key) {
-                    jQuery('#updateLimit').find('input').each(function(index, data){
-                      info.push(this.value);
-                    });
-                    if (parseInt(info[0]) > 0 && parseInt(info[1]) > 0) {
-                      if (info[0])
-                        request({
-                          url: info[0] + '/true/' + token,
-                          headers : {'X-API-KEY' : key}
-                      }).then(function(success){
-                        if (info[1])
-                        request({
-                          url: info[1] + '/false/' + token,
-                          headers : {'X-API-KEY' : key}
-                        }).then(function(good){
-                            let success = document.createElement('div');
-                            success.className = 'alert alert-success';
-                            success.innerHTML = 'You have successfuly updated your limits';
-                            document.getElementById('updateLimit').prepend(success);
-                        });
+              getApiKey()
+              .then(function(key) {
+                  jQuery('#updateLimit').find('input').each(function(index, data){
+                    info.push(this.value);
+                  });
+                  if (parseInt(info[0]) > 0 && parseInt(info[1]) > 0) {
+                    if (info[0])
+                    request({
+                      url: info[0] + '/true/' + token,
+                      headers : {'X-API-KEY' : key}
+                    }).then(function(success){
+                      if (info[1])
+                      request({
+                        url: info[1] + '/false/' + token,
+                        headers : {'X-API-KEY' : key}
+                      }).then(function(good){
+                        let success = document.createElement('div');
+                        success.className = 'alert alert-success';
+                        success.innerHTML = 'You have successfuly updated your limits';
+                        document.getElementById('updateLimit').prepend(success);
                       });
-                    } else {
-                      let error = document.createElement('div');
-                      error.className = 'alert alert-warning';
-                      error.innerHTML = 'Make sure that your limits are positive';
-                      document.getElementById('updateLimit').prepend(error);
-                    }
-                });
+                    });
+                  } else {
+                    let error = document.createElement('div');
+                    error.className = 'alert alert-warning';
+                    error.innerHTML = 'Make sure that your limits are positive';
+                    document.getElementById('updateLimit').prepend(error);
+                  }
+              });
             });
           });
-      }
+        }, error => divError(error));
+      };
     </script>
     <script>
-      let path = "/NamSorAPIv2/api2/json/apiUsageHistory"
+      let path = "/NamSorAPIv2/api2/json/apiUsageHistory";
       getApiKey().then(function(key) {
         request({url : path, headers : {'X-API-KEY' : key} }).then(
           function(usage) {

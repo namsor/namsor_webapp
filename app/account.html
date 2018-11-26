@@ -7,7 +7,7 @@
     <Title>Namsor</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+    <link rel="shortcut icon" href="assets/images/logo/logo.png">
 
     <!-- plugins css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
@@ -93,8 +93,9 @@
                   </ul>
                   <ul class="nav nav-right" id="boxSign">
                     <li class="nav-item">
-                      <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
-
+                     <a href="#">
+                       <button id="signin" class="nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign in</button>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -245,6 +246,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
     <script src="assets/js/firebase.js" charset="utf-8"></script>
     <script>
+
       window.onload = function (){
         initApp().then(function (success) {
             getInfo().then(data => {
@@ -258,48 +260,37 @@
                 let fill = x => document.getElementById(x) !== null ? document.getElementById(x).value = (infos[x] !== null ? infos[x] : '') : 0;
                 for (info in infos)
                   fill(info);
-                console.dir(infos)
               }
               else {
                 // TODO: add an alert to specify that billing have to be fullfilled
               }
             });
-          }, function (error) { 
-            $('.container-fluid').innerHTML =  
-            `<div class="alert alert-warning" role="alert">
-              You need to be logged in to access theses functionalities. 
-            </div>`;
-          });
-          let update = document.getElementById('updateBillingInfo');
-          update.addEventListener('click', function(event) {
-            getToken().then(function(token) {
-              let info = {};
-              jQuery('#billingInfo').find('input').each(function(){
-                info[this.id] = this.value;
-              });
-              request({
-                url: "updateBillingInfo/" + token,
-                method: 'POST',
-                headers : {'Content-Type' : 'application/json'},
-                body: JSON.stringify(info)
-              }).then(function(requested){
-                let success = document.createElement('div');
-                success.className = 'alert alert-success';
-                success.innerHTML = 'You have successfuly updated your billing informations';
-                document.getElementById('billingInfo').prepend(success);
-              }, function(error){
-                  let err = document.createElement('div');
-                  err.className = 'alert alert-warning';
-                  err.innerHTML = 'Please verify that all fields are not empty';
-                  document.getElementById('billingInfo').prepend(err);
-              });
-            }, function (error) {
-              $('.container-fluid').innerHTML =  
-                `<div class="alert alert-warning" role="alert">
-                  You need to be logged in to access theses functionalities. 
-                </div>`;
-            })
-          });
+            document.getElementById('updateBillingInfo').addEventListener('click', 
+              function(event) {
+                getToken().then(function(token) {
+                  let info = {};
+                  jQuery('#billingInfo').find('input').each(function(){
+                    info[this.id] = this.value;
+                  });
+                  request({
+                    url: "updateBillingInfo/" + token,
+                    method: 'POST',
+                    headers : {'Content-Type' : 'application/json'},
+                    body: JSON.stringify(info)
+                  }).then(function(requested){
+                    let success = document.createElement('div');
+                    success.className = 'alert alert-success';
+                    success.innerHTML = 'You have successfuly updated your billing informations';
+                    document.getElementById('billingInfo').prepend(success);
+                  }, function(error){
+                      let err = document.createElement('div');
+                      err.className = 'alert alert-warning';
+                      err.innerHTML = 'Please verify that all fields are not empty';
+                      document.getElementById('billingInfo').prepend(err);
+                  });
+                }, error => divError(error));
+            });
+        }, error => divError(error));
       };
     </script>
     <script src="assets/js/app.js"></script>

@@ -158,16 +158,22 @@ var signOut = function () {
   });
 };
 
+var divError = error => {
+    $('.container-fluid').html('\
+        <div class="alert alert-warning" role="alert"> \
+        You need to be logged in to access theses functionalities. \
+        </div>');
+}
 initApp = function() {
     return new Promise(function(resolve, reject){
         getToken().then(function(token){
             accSettings(token);
             resolve(token)
         },
-        function (error){
+        function (error) {
             let box = document.getElementById("signin");
             if (box)
-                box.style.display = "inherit";
+                box.style.display = "inline";
             reject('No user');
         });
     });
