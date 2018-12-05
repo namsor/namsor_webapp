@@ -70,7 +70,6 @@
             <a href="index.html">
               <div class="logo logo-dark" style="background-image: url('assets/images/logo/logo.png')"></div>
               <div class="logo logo-white" style="background-image: url('assets/images/logo/logo.png')"></div>
-
             </a>
             <div class="mobile-toggle side-nav-toggle">
               <a href="">
@@ -148,33 +147,37 @@
                 <h4>Home</h4>
               </div>
               <div class="row">
-                <div class="col-md-4 offset-md-1">
-                  <div class="card">
-                    <div class="card-block">
-                      <h4 class="card-title">NamSor software classifies personal names accurately by gender, country of
-                        origin, or ethnicity.</h4>
-                      <div class="mrg-top-20">
-                        <p>The API is free to classify up to 500 names per month (origin, ethnicity) and 5000 names per
-                          month (gender).</p>
-                        <div class="mrg-top-25">
-                          <a href="sign-in.html" class="btn btn-primary no-mrg-btm">Sign up !</a>
-                        </div>
+                <div class="col-md-4 offset-md-1 d-flex align-items-stretch">
+                  <div class="card h-100">
+                    <div class="card-block d-flex align-items-start flex-column h-100">
+                      <h4 class="card-title mb-auto p-2">
+                        NamSor software classifies personal names accurately by gender,
+                        country of origin, or ethnicity.
+                      </h4>
+                      <div class="card-text p-2">
+                        <p>
+                          The API is free to classify up to 500 names per month (origin, ethnicity)
+                          and 5000 names per month (gender).
+                        </p>
+                      </div>
+                      <div class="p-2">
+                        <a href="sign-in.html" class="btn btn-primary no-mrg-btm">Sign up !</a>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 offset-md-1">
-                  <div class="card">
-                    <div class="card-block">
-                      <h4 class="card-title">Try our API !</h4>
-                      <div class="mrg-top-20">
-                        <p>We offer many different end-points to classify common names (personal names, place names,
-                          brand names, ...) using machine learning techniques.</p>
-                        <p>Need something you can't find here? Let us know and we'll consider your requirement for our
-                          roadmap !</p>
-                        <div class="mrg-top-25">
-                          <a href="sign-in.html" class="btn btn-primary no-mrg-btm">Sign in</a>
-                        </div>
+                <div class="col-md-4 offset-md-1 d-flex align-items-stretch">
+                  <div class="card h-100">
+                    <div class="card-block d-flex align-items-start flex-column h-100">
+                      <h4 class="card-title mb-auto p-2"> Try our API !</h4>
+                      <div class="card-text p-2">
+                        <p>We offer many different end-points to classify common names (personal names,
+                          place names, brand names, ...) using machine learning techniques.</p>
+                        <p>Need something you can't find here? Let us know and we'll
+                          consider your requirement for our roadmap !</p>
+                      </div>
+                      <div class="p-2">
+                        <a href="sign-in.html" class="btn btn-primary no-mrg-btm">Sign in !</a>
                       </div>
                     </div>
                   </div>
@@ -183,29 +186,29 @@
             </div>
           </div>
         </div>
-        <!-- Content Wrapper END -->
-
-        <!-- Footer START -->
-        <footer class="content-footer">
-          <div class="footer">
-            <div class="copyright">
-              <span>Copyright © 2019 <b class="text-dark">Namsor</b>. All rights reserved. NamSor SAS is a French
-                Limited Liability Company, Reg. 81148844400019 - VAT FR84811488444 - Data Protection Reg. 1876223
-              </span>
-              <span class="go-right">
-                <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" class="text-gray mrg-right-15">Term &amp;
-                  Conditions</a>
-                <a href="assets/pdf/NamSor_Data_Processing_Agreement_v007.pdf" class="text-gray">DPA</a>
-              </span>
-            </div>
-          </div>
-        </footer>
-        <!-- Footer END -->
-
       </div>
-      <!-- Page Container END -->
+      <!-- Content Wrapper END -->
+
+      <!-- Footer START -->
+      <footer class="content-footer">
+        <div class="footer">
+          <div class="copyright">
+            <span>Copyright © 2019 <b class="text-dark">Namsor</b>. All rights reserved. NamSor SAS is a French
+              Limited Liability Company, Reg. 81148844400019 - VAT FR84811488444 - Data Protection Reg. 1876223
+            </span>
+            <span class="go-right">
+              <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" class="text-gray mrg-right-15">Term &amp;
+                Conditions</a>
+              <a href="assets/pdf/NamSor_Data_Processing_Agreement_v007.pdf" class="text-gray">DPA</a>
+            </span>
+          </div>
+        </div>
+      </footer>
+      <!-- Footer END -->
 
     </div>
+    <!-- Page Container END -->
+
   </div>
 
   <!-- build:js assets/js/vendor.js -->
@@ -227,11 +230,9 @@
   <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
   <script src="assets/js/firebase.js"></script>
   <script>
-    window.onload = () => initApp().then(() => {
-      billingInfo().then(data => {
-
-      })
-    });
+    window.onload = () => {
+      initApp().then((success) => {}, (error) => {});
+    }
   </script>
   <!-- endbuild -->
 </body>
