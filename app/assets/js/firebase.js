@@ -95,13 +95,13 @@ var accSettings = function(idToken) {
             <li>
                 <a href="apioverview.html">
                     <i class="ti-settings pdd-right-10"></i>
-                    <span>Api Overview</span>
+                    <span>API Overview</span>
                 </a>
             </li>
             <li>
-                <a href="payements.html">
+                <a href="payments.html">
                     <i class="ti-credit-card pdd-right-10"></i>
-                    <span>Payements</span>
+                    <span>Payments</span>
                 </a>
             </li>
             <li>
