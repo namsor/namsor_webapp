@@ -112,7 +112,7 @@ var insertData = function(prep) {
                 });
             });
           }
-          else {
+          else if (prep) {
             let error = document.createElement('div');
             error.className = 'col-sm-12 alert alert-warning';
             error.innerHTML = 'You have to register <a href="payments.html">here</a> your credit card before doing that';

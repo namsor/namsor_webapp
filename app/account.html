@@ -138,8 +138,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="row">
-                  <div class="col-md-6">
-                    <div class="card">
+                  <div class="col-md-6 d-flex align-items-stretch">
+                    <div class="card w-100">
                       <div class="card-heading border bottom">
                         <h4 class="card-title">Personals Details</h4>
                       </div>
@@ -152,16 +152,25 @@
                             <input type="text" id="user_name" class="form-control" value="">
                           </div>
                         </div>
-                        <hr>
                         <div class="row">
                           <div class="col-md-3">
                             <p class="mrg-top-10 text-dark"> <b>Email</b></p>
                           </div>
                           <div class="col-md-6">
-                            <input id="user_email" class="mrg-top-10"></p>
+                            <input type="text" id="user_email" class="form-control"></p>
                           </div>
                         </div>
                         <hr>
+                        <div class="row">
+                          <div class="form-group">
+                            <label for="preferredCurrency">Preferred Currency</label>
+                            <select class="form-control" id="preferredCurrency">
+                              <option>USD</option>
+                              <option>EUR</option>
+                              <option>4</option>
+                            </select>
+                          </div>
+                        </div>
                         <div class="row">
                           <div class="col-md-3">
                             <p class="mrg-top-10 text-dark"> <b>Localisation:</b></p>
@@ -173,7 +182,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-md-6">
                     <div class="card">
                       <div class="card-heading border bottom">
                         <div class="row">
@@ -181,7 +190,7 @@
                             <h4 class="card-title">Billing Info</h4>
                           </div>
                           <div class="col-sm-4">
-                            <button type="button" class="btn btn-info" id='updateBillingInfo' name="update">Update</button>
+                            <button type="button" class="btn btn-info" id='updateBillingInfo'>Update</button>
                           </div>
                         </div>
                       </div>
@@ -243,8 +252,8 @@
             <div class="copyright">
               <span>Copyright © 2018 <b class="text-dark">Namsor</b>. All rights reserved. v2.0.1</span>
               <span class="go-right">
-                <a href="" class="text-gray mrg-right-15">Term &amp; Conditions</a>
-                <a href="" class="text-gray">Privacy &amp; Policy</a>
+                <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" class="text-gray mrg-right-15">Term &amp; Conditions</a>
+                <a href="NamSor_Data_Processing_Agreement_v007.pdf" class="text-gray">Privacy &amp; Policy</a>
               </span>
             </div>
           </div>
