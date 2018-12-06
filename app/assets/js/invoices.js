@@ -26,16 +26,22 @@ let insertInfos = function (datas) {
             let item = items[i];
             let tr = document.createElement('tr');
             tr.innerHTML = `<th>${item.planName}</th>
-    <th>${item.subscription}</th>
-    <th>${item.quantity}</th>
-    <th>${item.amount}</th>
-    <th class="text-right"></th>`;
+                            <th>${item.subscription}</th>
+                            <th>${item.quantity}</th>
+                            <th>${item.amount}</th>
+                            <th class="text-right"></th>`;
             tbody.prepend(tr);
         }
+    },
+    function (error) {
+        let errBox = document.createElement('div');
+        errBox.className = 'col-sm-12 alert alert-danger';
+        errBox.innerHTML = 'You have to specify a billing address <a href="account.html">here</a>';
+        invoicesContent.prepend(errBox);
     })
-        .catch(error => {
-            console.log(error);
-        });
+    .catch(error => {
+        console.log(error);
+    });
 }
 
 let insertInvoice = function (data) {
@@ -67,7 +73,7 @@ let insertData = function () {
             data = JSON.parse(data);
             invoicesContent.innerHTML =
                 `
-                <table class="table table-hover" id ='invoicesTable'>              
+                <table class="table table-hover" id ='invoicesTable'>
                     <thead>
                     <tr>
                         <th scope="col">#</th>

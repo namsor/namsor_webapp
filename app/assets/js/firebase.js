@@ -164,6 +164,14 @@ var divError = error => {
         You need to be logged in to access theses functionalities. \
         </div>');
 }
+
+var alertBox = (message, alertClass, boxToPrepend) => {
+    let box = document.createElement('div');
+    box.className = 'col-sm-12 alert alert-' + alertClass;
+    box.innerHTML = message;
+    boxToPrepend.prepend(box);
+}
+
 initApp = function() {
     return new Promise(function(resolve, reject){
         getToken().then(function(token){

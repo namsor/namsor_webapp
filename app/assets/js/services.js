@@ -97,10 +97,11 @@ var insertData = function(prep) {
                   planInfos = JSON.parse(planInfos)
                   if (prep)
                   {
-                    let success = document.createElement('div');
-                    success.className = 'col-sm-12 alert alert-success';
-                    success.innerHTML = 'You have successfuly register to ' + planInfos.planName;
-                    services.prepend(success);
+                    alertBox(
+                      'You have successfuly register to ' + planInfos.planName,
+                      'success',
+                      services
+                    );
                     btn.text(() => 'Success');
                     btn.toggleClass('btn-info');
                   }
@@ -113,10 +114,11 @@ var insertData = function(prep) {
             });
           }
           else if (prep) {
-            let error = document.createElement('div');
-            error.className = 'col-sm-12 alert alert-warning';
-            error.innerHTML = 'You have to register <a href="payments.html">here</a> your credit card before doing that';
-            services.prepend(error);
+            alertBox(
+              'You have to register <a href="payments.html">here</a> your credit card before doing that',
+              'warning',
+              services
+            );
           }
         });
       }, function (error) { console.log(error) });
