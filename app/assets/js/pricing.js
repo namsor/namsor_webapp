@@ -75,7 +75,7 @@ var insertServices = function(data, current, signedIn) {
   return (html);
 }
 
-var insertData = function() {
+var insertData = function(prep) {
   availablePlans.then( data => {
     const services = document.getElementById('services')
     let html = "";
@@ -91,18 +91,21 @@ var insertData = function() {
             jQuery('#services').find('button').not('#current').click(function (event) {
               let p = "subscribePlan/" + this.dataset.name + "/" + token;
               var btn = $(this)
-              this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing Order';
+              this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
               request({url : p}).then (
                 function (planInfos) {
                   planInfos = JSON.parse(planInfos)
-                  let success = document.createElement('div');
-                  success.className = 'col-sm-12 alert alert-success';
-                  success.innerHTML = 'You have successfuly register to ' + planInfos.planName;
-                  services.prepend(success);
-                  btn.text(() => 'Success');
-                  btn.toggleClass('btn-info');
+                  if (prep)
+                  {
+                    let success = document.createElement('div');
+                    success.className = 'col-sm-12 alert alert-success';
+                    success.innerHTML = 'You have successfuly register to ' + planInfos.planName;
+                    services.prepend(success);
+                    btn.text(() => 'Success');
+                    btn.toggleClass('btn-info');
+                  }
                   setTimeout(function() {
-                     insertData();
+                     insertData(false);
                   }, 3000);
                 }, function (error) {
                   console.log(error)
