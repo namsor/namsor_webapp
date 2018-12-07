@@ -284,7 +284,7 @@
           let clr = []
           let b_clr = []
           r_clr = (alpha) => {
-              let o = () => Math.round(Math.random * 255);
+              let o = () => Math.round(Math.random() * 255);
               return 'rgba(' + o() + ',' + o() + ',' + o() + ', ' + alpha + ')';
           }
           for (var i = 0; i < usage.length; i++) {
