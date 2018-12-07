@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-  <Title>Namsor</title>
+  <Title>NamSor API v2 - account management</title>
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="assets/images/logo/logo.png">
@@ -246,19 +246,20 @@
           </div>
         </div>
         <!-- Content Wrapper END -->
-        <!-- Footer START -->
-        <footer class="content-footer">
-          <div class="footer">
-            <div class="copyright">
-              <span>Copyright © 2018 <b class="text-dark">Namsor</b>. All rights reserved. v2.0.1</span>
-              <span class="go-right">
-                <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" class="text-gray mrg-right-15">Term &amp; Conditions</a>
-                <a href="NamSor_Data_Processing_Agreement_v007.pdf" class="text-gray">Privacy &amp; Policy</a>
-              </span>
-            </div>
+      <!-- Footer START -->
+      <footer class="content-footer">
+        <div class="footer">
+          <div class="copyright">
+            <span> Copyright © 2019 <b class="text-dark">NamSor</b>. NamSor SAS is a French Limited Liability Company, Reg. 81148844400019 - VAT FR84811488444 - Data Reg. 1876223 </span>
+            <span class="go-right">
+              <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" target="top" class="text-gray mrg-right-15">Term &amp; Conditions</a>
+              <a href="assets/pdf/NamSor_Data_Processing_Agreement_v007.pdf" target="top" class="text-gray">DPA</a>
+            </span>
           </div>
-        </footer>
-        <!-- Footer END -->
+        </div>
+      </footer>
+      <!-- Footer END -->
+
 
 
       </div>
@@ -281,55 +282,7 @@
   <!-- core js -->
   <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
   <script src="assets/js/firebase.js" charset="utf-8"></script>
-  <script>
-    window.onload = function () {
-      initApp().then(function (success) {
-        getInfo().then(data => {
-          data = JSON.parse(data);
-          document.getElementById("user_name").value = data.displayName;
-          document.getElementById("user_email").value = data.email;
-        });
-        billingInfo().then(data => {
-          if (data) {
-            let infos = JSON.parse(data);
-            let fill = x => document.getElementById(x) !== null ? document.getElementById(x).value = (infos[x] !==
-              null ? infos[x] : '') : 0;
-            for (info in infos)
-              fill(info);
-          } else {
-            // TODO: add an alert to specify that billing have to be fullfilled
-          }
-        });
-        document.getElementById('updateBillingInfo').addEventListener('click',
-          function (event) {
-            getToken().then(function (token) {
-              let info = {};
-              jQuery('#billingInfo').find('input').each(function () {
-                info[this.id] = this.value;
-              });
-              request({
-                url: "updateBillingInfo/" + token,
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(info)
-              }).then(function (requested) {
-                let success = document.createElement('div');
-                success.className = 'alert alert-success';
-                success.innerHTML = 'You have successfuly updated your billing informations';
-                document.getElementById('billingInfo').prepend(success);
-              }, function (error) {
-                let err = document.createElement('div');
-                err.className = 'alert alert-warning';
-                err.innerHTML = 'Please verify that all fields are not empty';
-                document.getElementById('billingInfo').prepend(err);
-              });
-            }, error => divError(error));
-          });
-      }, error => divError(error));
-    };
-  </script>
+  <script src="assets/js/account.js" charset="utf-8"></script>
   <script src="assets/js/app.js"></script>
   <!-- endbuild -->
 
