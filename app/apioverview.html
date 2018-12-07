@@ -7,7 +7,7 @@
   <Title>NamSor API v2 - API usage and overview</title>
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+  <link rel="shortcut icon" href="assets/images/logo/logo.png">
 
   <!-- plugins css -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
@@ -268,7 +268,7 @@
     };
   </script>
   <script>
-    let path = "/NamSorAPIv2/api2/json/apiUsageHistory";
+    let path = "apiUsageHistory";
     getApiKey().then(function (key) {
       request({
         url: path,
@@ -278,13 +278,24 @@
       }).then(
         function (usage) {
           usage = JSON.parse(usage);
-          var ctx = document.getElementById("myChart").getContext('2d');
-          var lab = []
-          var dat = []
+          let ctx = document.getElementById("myChart").getContext('2d');
+          let lab = []
+          let dat = []
+          let clr = []
+          let b_clr = []
+          r_clr = (alpha) => {
+              let o = () => Math.round(Math.random * 255);
+              return 'rgba(' + o() + ',' + o() + ',' + o() + ', ' + alpha + ')';
+          }
           for (var i = 0; i < usage.length; i++) {
             let info = usage[i]
-            lab.push(info.apiService.split('_').join(' ').replace("basic->", ''))
-            dat.push(info.totalUsage)
+            if (info.totalUsage > 0)
+            {
+              lab.push(info.apiService.split('_').join(' ').replace("basic->", ''))
+              dat.push(info.totalUsage)
+              clr.push(r_clr('0.2'));
+              b_clr.push(r_clr('1.0'));
+            }
           }
           var myChart = new Chart(ctx, {
             type: 'bar',
@@ -293,22 +304,8 @@
               datasets: [{
                 label: 'frequency',
                 data: dat,
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-                ],
+                backgroundColor: clr,
+                borderColor: b_clr,
                 borderWidth: 1
               }]
             },
@@ -318,6 +315,11 @@
                   ticks: {
                     beginAtZero: true
                   }
+                }],
+                xAxes: [{
+                    ticks: {
+                        display: false
+                    }
                 }]
               }
             }
