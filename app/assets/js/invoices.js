@@ -91,7 +91,7 @@ let insertData = function () {
             invoices.forEach((invoice, index) => {
                 let tr = document.createElement('tr');
                 let date = new Date(parseInt(invoice['invoiceDate'])).toDateString();
-                let name = 'temporary name';
+                let name = invoice['items'][0].planName !== null ? invoice['items'][0].planName : 'Subscription';
                 let html =
                     '<td>' + index + '</td>' +
                     '<td>' + date + '</td>' +
