@@ -1,6 +1,6 @@
 let getElem = (x) => document.getElementById(x);
-let updateBillingInfo = getElem('updateBillingInfo');
-let billingInfo = getElem('billingInfo');
+let divUpdateBillingInfo = getElem('updateBillingInfo');
+let divBillingInfo = getElem('billingInfo');
 let body = document.getElementsByTagName('body')[0];
 
 let insertInfos = () => {
@@ -38,7 +38,7 @@ let fillInfo = () => {
 }
 
 let updateBI = () => {
-  updateBillingInfo.innerHTML = '\
+  divUpdateBillingInfo.innerHTML = '\
   <i class="fa fa-spinner fa-spin"></i> Processing..';
   getToken().then(function (token) {
     let info = {};
@@ -56,14 +56,14 @@ let updateBI = () => {
       alertBox(
         'You have successfuly updated your billing informations',
         'success',
-        billingInfo
+        divBillingInfo
       );
-      updateBillingInfo.innerHTML = 'Update';
+      divUpdateBillingInfo.innerHTML = 'Update';
     }, function (error) {
       alertBox(
         'Please verify that all fields are not empty',
         'warning',
-        billingInfo
+        divBillingInfo
       );
     });
   }, error => divError(error));
@@ -74,6 +74,6 @@ window.onload = () => {
     () => {
       insertInfos();
       fillInfo();
-      updateBillingInfo.addEventListener('click', updateBI());
+      divUpdateBillingInfo.addEventListener('click', updateBI());
     }, error => divError(error));
 }
