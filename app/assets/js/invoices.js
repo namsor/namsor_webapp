@@ -86,8 +86,8 @@ let insertData = function () {
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Subscription</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Invoice Id</th>
+                        <th scope="col">Total</th>
                         <th scope="col">Details</th>
                         </tr>
                     </thead>
