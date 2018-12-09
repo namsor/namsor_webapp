@@ -33,10 +33,10 @@ let insertInfos = function (datas) {
             let price = parseFloat(item.amount) / 100;
             let total = price * parseInt(item.quantity);
             let tr = document.createElement('tr');
-            tr.innerHTML = `<th>${item.planName}</th>
-                            <th>${item.subscription}</th>
+            tr.innerHTML = `<th>${item.invoiceItemType}</th>
+                            <th>${item.description}</th>
                             <th>${item.quantity}</th>
-                            <th>${price}</th>
+                            <th>${price} ${item.currency}</th>
                             <th class="text-right">${total}</th>`;
             tbody.prepend(tr);
         }
