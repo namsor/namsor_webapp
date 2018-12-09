@@ -9,6 +9,10 @@ let insertInfos = function (datas) {
         console.log('error');
         return ('');
     }
+    getInfo().then(function(data) {
+      data = JSON.parse(data);
+      innerDoc.getElementById('email').innerHTML = data.email;
+    });
     billingInfo().then(function (address) {
         infos = JSON.parse(address);
         let items = datas.items;
@@ -20,16 +24,20 @@ let insertInfos = function (datas) {
         }
         for (info in infos)
             fill(info, infos);
+        for (data in datas)
+        fill(data, datas)
         let date = new Date(parseInt(datas['invoiceDate'])).toDateString();
         fill('invoiceDate', { invoiceDate: date });
         for (var i = 0; i < items.length; i++) {
             let item = items[i];
+            let price = parseFloat(item.amount) / 100;
+            let total = price * parseInt(item.quantity);
             let tr = document.createElement('tr');
             tr.innerHTML = `<th>${item.planName}</th>
                             <th>${item.subscription}</th>
                             <th>${item.quantity}</th>
-                            <th>${item.amount}</th>
-                            <th class="text-right"></th>`;
+                            <th>${price}</th>
+                            <th class="text-right">${total}</th>`;
             tbody.prepend(tr);
         }
     },
@@ -91,12 +99,13 @@ let insertData = function () {
             invoices.forEach((invoice, index) => {
                 let tr = document.createElement('tr');
                 let date = new Date(parseInt(invoice['invoiceDate'])).toDateString();
-                let name = invoice['items'][0].planName !== null ? invoice['items'][0].planName : 'Subscription';
+                let name = invoice['invoiceId'];
+                let price = parseFloat(invoice['total']) / 100;
                 let html =
                     '<td>' + index + '</td>' +
                     '<td>' + date + '</td>' +
                     '<td>' + name + '</td>' +
-                    '<td>' + invoice['amountPaid'] + '</td>';
+                    '<td>' + price + ' ' + invoice['currency'] + '</td>';
                 tr.innerHTML = html;
                 let link = document.createElement('td');
                 if (invoice.isStriped) {

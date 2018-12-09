@@ -224,7 +224,7 @@
   <script>
     window.onload = function () {
       initApp()
-        .then(insertData(true), insertData(true))
+        .then(insertData(false), insertData(true))
         .catch(error => {
           insertData(false);
         });

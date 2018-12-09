@@ -106,7 +106,7 @@ var insertData = function(prep) {
                     btn.toggleClass('btn-info');
                   }
                   setTimeout(function() {
-                     insertData(false);
+                     insertData(true);
                   }, 3000);
                 }, function (error) {
                   console.log(error)
