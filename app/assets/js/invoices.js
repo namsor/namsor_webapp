@@ -78,8 +78,8 @@ let insertData = function () {
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Subscription</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Invoice Id</th>
+                        <th scope="col">Total</th>
                         <th scope="col">Details</th>
                         </tr>
                     </thead>
@@ -91,12 +91,12 @@ let insertData = function () {
             invoices.forEach((invoice, index) => {
                 let tr = document.createElement('tr');
                 let date = new Date(parseInt(invoice['invoiceDate'])).toDateString();
-                let name = invoice['items'][0].planName !== null ? invoice['items'][0].planName : 'Subscription';
+                let name = invoice['invoiceId'] !== null ? invoice['invoiceId'] : 'Invoice';
                 let html =
                     '<td>' + index + '</td>' +
                     '<td>' + date + '</td>' +
                     '<td>' + name + '</td>' +
-                    '<td>' + invoice['amountPaid'] + '</td>';
+                    '<td>' + invoice['total'] + '</td>';
                 tr.innerHTML = html;
                 let link = document.createElement('td');
                 if (invoice.isStriped) {
