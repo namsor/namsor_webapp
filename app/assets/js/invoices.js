@@ -1,5 +1,47 @@
 const invoicesContent = document.getElementById('invoicesContent');
 
+let createRowInvoice = (item) => {
+    let tr = document.createElement('tr');
+    let price = parseFloat(item.amount) / 100;
+    let total = price * parseInt(item.quantity);
+    tr.innerHTML = `<td>${item.invoiceItemType}</td>
+                    <td>${item.description}</td>
+                    <td>${item.quantity}</td>
+                    <td>${price} ${item.currency}</td>
+                    <td class="text-right">${total}</td>`;
+    return (tr);
+}
+
+// Insert in the table details of all invoices
+let createRowInvoices = (item, isStriped) => {
+    let tr = document.createElement('tr');
+    let date = new Date(parseInt(item['invoiceDate'])).toDateString();
+    let name = item['invoiceId'];
+    let url = item['invoicePdf'];
+    let currency = item['currency'];
+    let price = parseFloat(item['total']) / 100;
+    tr.innerHTML =
+        '<td>' + index + '</td>' +
+        '<td>' + date + '</td>' +
+        '<td>' + name + '</td>' +
+        '<td>' + price + ' ' + currency + '</td>';
+    let link = document.createElement('td');
+    if (isStriped) {
+        link.innerHTML = '<a target="blank" href="' + url + '">Download here</a>'
+    } else {
+        let btn = document.createElement('button');
+        btn.innerHTML = "View Details";
+        btn.className = 'btn-link border-0 p-0';
+        btn.addEventListener('click', function () {
+            insertInvoice(item);
+        });
+        link.appendChild(btn);
+    }
+    tr.appendChild(link);
+    return (tr);
+}
+
+// Insert all informatio into the iframe
 let insertInfos = function (datas) {
     let invoiceInfo = document.getElementById('invoiceInfo');
     let innerDoc;
@@ -9,6 +51,7 @@ let insertInfos = function (datas) {
         console.log('error');
         return ('');
     }
+    // Insert email
     getInfo().then(function(data) {
       data = JSON.parse(data);
       innerDoc.getElementById('email').innerHTML = data.email;
@@ -20,24 +63,19 @@ let insertInfos = function (datas) {
         tbody.innerHTML = '';
         let fill = (x, y) => {
             if (innerDoc.getElementById(x) !== null && y[x] !== null)
-                innerDoc.getElementById(x).innerHTML = y[x];
+            innerDoc.getElementById(x).innerHTML = y[x];
         }
+        // Insert address
         for (info in infos)
             fill(info, infos);
+        // Insert invoice information
         for (data in datas)
-        fill(data, datas)
+            fill(data, datas)
+        // Insert date
         let date = new Date(parseInt(datas['invoiceDate'])).toDateString();
         fill('invoiceDate', { invoiceDate: date });
         for (var i = 0; i < items.length; i++) {
-            let item = items[i];
-            let price = parseFloat(item.amount) / 100;
-            let total = price * parseInt(item.quantity);
-            let tr = document.createElement('tr');
-            tr.innerHTML = `<th>${item.invoiceItemType}</th>
-                            <th>${item.description}</th>
-                            <th>${item.quantity}</th>
-                            <th>${price} ${item.currency}</th>
-                            <th class="text-right">${total}</th>`;
+            let tr = createRowInvoice(items[i]);
             tbody.prepend(tr);
         }
     },
@@ -52,6 +90,7 @@ let insertInfos = function (datas) {
     });
 }
 
+// Motion when view details is triggered
 let insertInvoice = function (data) {
     if (document.getElementById('back') == null) {
         insertInfos(data);
@@ -62,6 +101,7 @@ let insertInvoice = function (data) {
     }
 };
 
+// Insert back button from one invoice to overview
 let insertBack = function () {
     let btn = document.createElement('button');
     btn.className = 'btn btn-primary';
@@ -74,53 +114,31 @@ let insertBack = function () {
     });
     invoicesContent.prepend(btn);
 };
+const tableInvoice = `
+<table class="table table-hover" id ='invoicesTable'>
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">Invoice Id</th>
+        <th scope="col">Total</th>
+        <th scope="col">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>`;
 
+// Retrieve billing history and create a table overview
 let insertData = function () {
     initApp().then(billingHistory().then(
         data => {
             data = JSON.parse(data);
-            invoicesContent.innerHTML =
-                `
-                <table class="table table-hover" id ='invoicesTable'>
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Invoice Id</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>`;
+            invoicesContent.innerHTML = tableInvoice;                
             invoices = data.stripeInvoices.concat(data.corporateInvoices);
             invoices.sort((a, b) => a['invoiceDate'] - b['invoiceDate']);
             invoices.forEach((invoice, index) => {
-                let tr = document.createElement('tr');
-                let date = new Date(parseInt(invoice['invoiceDate'])).toDateString();
-                let name = invoice['invoiceId'];
-                let price = parseFloat(invoice['total']) / 100;
-                let html =
-                    '<td>' + index + '</td>' +
-                    '<td>' + date + '</td>' +
-                    '<td>' + name + '</td>' +
-                    '<td>' + price + ' ' + invoice['currency'] + '</td>';
-                tr.innerHTML = html;
-                let link = document.createElement('td');
-                if (invoice.isStriped) {
-                    link.innerHTML = '<a target="blank" href="' + invoice['invoicePdf'] + '">Download here</a>'
-                }
-                else {
-                    let btton = document.createElement('button');
-                    btton.innerHTML = "View Details";
-                    btton.className = 'btn-link border-0 p-0';
-                    btton.addEventListener('click', function () {
-                        insertInvoice(invoice);
-                    });
-                    link.appendChild(btton);
-                }
-                tr.appendChild(link);
+                let tr = createRowInvoices(invoice, invoice.isStriped);
                 document.getElementById('invoicesTable').prepend(tr);
             });
         }, error => divError(error)
@@ -129,13 +147,13 @@ let insertData = function () {
 
 window.onload = function () {
     invoicesContent.innerHTML =
-        `<div class="artboard">
-    <div class="domino">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
+    `<div class="artboard">
+        <div class="domino">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>`;
     insertData();
 }
