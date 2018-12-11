@@ -293,8 +293,9 @@
             {
               lab.push(info.apiService.split('_').join(' ').replace("basic->", ''))
               dat.push(info.totalUsage)
-              clr.push(r_clr('0.2'));
-              b_clr.push(r_clr('1.0'));
+              let color = r_clr('0.2');
+              clr.push(color);
+              b_clr.push(color.replace('0.2','1.0'));
             }
           }
           var myChart = new Chart(ctx, {

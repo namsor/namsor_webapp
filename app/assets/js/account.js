@@ -4,18 +4,28 @@ let divBillingInfo = getElem('billingInfo');
 let body = document.getElementsByTagName('body')[0];
 
 let insertInfos = () => {
-  getInfo().then(data => {
+  const alertMessage = alertBox(
+    'There is an error retrieving your informations, please try again \
+    later or contact an adminisatrator',
+    'warning',
+    body
+  ); 
+  getUsage()
+  .then(data => {
+    data = JSON.parse(data);
+    getElem("preferredCurrency").innerHTML = data.preferredCurrency;
+  })
+  .catch(error => {
+    alertMessage;
+  });
+  getInfo()
+  .then(data => {
     data = JSON.parse(data);
     getElem("user_name").innerHTML = data.displayName;
     getElem("user_email").innerHTML = data.email;
-    getElem("preferredCurrency").innerHTML = data.preferredCurrency;
-  }, function (error) {
-    alertBox(
-      'There is an error retrieving your informations, please try again \
-      later or contact an adminisatrator',
-      'warning',
-      body
-    );
+  })
+  .catch(error => {
+    alertMessage;
   });
 }
 
@@ -74,6 +84,6 @@ window.onload = () => {
     () => {
       insertInfos();
       fillInfo();
-      divUpdateBillingInfo.addEventListener('click', updateBI());
+      divUpdateBillingInfo.addEventListener('click', () => { updateBI() } );
     }, error => divError(error));
 }
