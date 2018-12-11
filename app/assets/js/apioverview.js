@@ -26,25 +26,26 @@ uHard.addEventListener('click', function (event) {
 
 let updateLimit = (value, isHard, btn) => {
     getToken()
-    .then(token => {
+        .then(token => {
             request({
-                url: `updateLimit/${value}/${isHard}/${token}`
-            }).then(success => {
-                alertBox(
-                    'Your soft limit has been succesfully updated',
-                    'success',
-                    prependBox
-                );
-                btn.innerHTML = 'update';
-            })
-            .catch(error => {
-                alertBox(
-                    'An error has occured, please make sure limits are correctly set',
-                    'warning',
-                    prependBox
-                );
-                btn.innerHTML = 'update';
-            });
+                    url: `updateLimit/${value}/${isHard}/${token}`
+                })
+                .then(success => {
+                    alertBox(
+                        'Your soft limit has been succesfully updated',
+                        'success',
+                        prependBox
+                    );
+                    btn.innerHTML = 'Update';
+                })
+                .catch(error => {
+                    alertBox(
+                        'An error has occured, please make sure limits are correctly set',
+                        'warning',
+                        prependBox
+                    );
+                    btn.innerHTML = 'Update';
+                });
         })
         .catch(error => {
             alertBox(
@@ -52,6 +53,7 @@ let updateLimit = (value, isHard, btn) => {
                 'warning',
                 prependBox
             );
+            btn.innerHTML = 'Update';
         });
 }
 
