@@ -1,4 +1,5 @@
 let prependBox = document.getElementsByClassName('main-content')[0];
+let getElem = (x) => getElem(x);
 let lHard = getElem('limitHard');
 let lSoft = getElem('limitSoft');
 window.onload = function () {
@@ -7,12 +8,12 @@ window.onload = function () {
             usage = JSON.parse(usage);
             lHard.value = usage.billingPeriod.hardLimit;
             lSoft.value = usage.billingPeriod.softLimit;
-            document.getElementById('usage').innerHTML = usage.billingPeriod.usage;
+            getElem('usage').innerHTML = usage.billingPeriod.usage;
         });
-        document.getElementById('updateSoft').addEventListener('click', function (event) {
+        getElem('updateSoft').addEventListener('click', function (event) {
             updateLimit(lSoft.value, 'true');
         });
-        document.getElementById('updateSoft').addEventListener('click', function (event) {
+        getElem('updateSoft').addEventListener('click', function (event) {
             updateLimit(lHard.value, 'false');
         });
     }, error => divError(error));
@@ -48,7 +49,7 @@ getApiKey().then(function (key) {
     }).then(
         function (usage) {
             usage = JSON.parse(usage);
-            let ctx = document.getElementById("myChart").getContext('2d');
+            let ctx = getElem("myChart").getContext('2d');
             let lab = []
             let dat = []
             let clr = []
