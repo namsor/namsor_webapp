@@ -22,7 +22,7 @@ function dataServicesToHTML(data, current, signedIn, currency)
       <div class="card h-100">
       <h3 class="card-header">${plan.planName}</h3>
       <div class="card-body">
-      <div class="display-4">${plan.price} <span class="small"> ${currency}</span></div>
+      <div class="display-4">${plan.price} <span class="xsmall"> ${currency}</span></div>
       <div class="font-italic"></div>
       </div>
       <ul class="list-group list-group-flush">

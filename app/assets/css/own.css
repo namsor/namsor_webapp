@@ -15,6 +15,10 @@
   min-height: 800px;
 }
 
+.xsmall {
+  font-size: 50%;
+}
+
 /* REVIEW: modify this to be less */
 
 .artboard {
