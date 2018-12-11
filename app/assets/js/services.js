@@ -87,7 +87,7 @@ var insertData = function (prep) {
           });
         } else if (prep) {
           alertBox(
-            'Register your payment card <a href="payments.html">here</a> before purchasing a monthly plan',
+            'Register your payment card <a href="payments.html">here</a> before purchasing a plan',
             'warning',
             services
           );
