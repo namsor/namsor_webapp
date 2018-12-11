@@ -6,17 +6,10 @@ var availablePlans = request({
 })
 
 var currentPlanName = function () {
-  return new Promise(function (resolve, reject) {
-    getApiKey().then(function (key) {
-      request({
-        url: 'apiUsage',
-        headers: {
-          "X-API-KEY": key
-        }
-      }).then(data => resolve((JSON.parse(data))), error => reject(error))
-    }, function (error) {
-      reject(error)
-    });
+  return new Promise((resolve, reject) => {
+    getUsage().then(usage => {
+      resolve(JSON.parse(usage).subscription.planName);
+    })
   });
 }
 
@@ -62,58 +55,52 @@ var insertServices = function (data, current, signedIn, currency) {
 var insertData = function (prep) {
   availablePlans.then(data => {
     const services = document.getElementById('services')
-    let html = "";
     data = JSON.parse(data);
-    currentPlanName().then(function (current) {
-      current = current.subscription.planName;
-      getToken().then(function (token) {
-        getUsage().then(function (usage) {
-          usage = JSON.parse(usage);
-          services.innerHTML = insertServices(data, current, true, usage.subscription.currency);
-          if (usage.subscription.stripeStatus == 'active') {
-            jQuery('#services').find('button').not('#current').click(function (event) {
-              let p = "subscribePlan/" + this.dataset.name + "/" + token;
-              var btn = $(this)
-              this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
-              request({
-                url: p
-              }).then(
-                function (planInfos) {
-                  planInfos = JSON.parse(planInfos)
-                  if (prep) {
-                    alertBox(
-                      'You have successfuly register to ' + planInfos.planName,
-                      'success',
-                      services
-                    );
-                    btn.text(() => 'Success');
-                    btn.toggleClass('btn-info');
-                  }
-                  setTimeout(function () {
-                    insertData(true);
-                  }, 3000);
-                },
-                function (error) {
-                  console.log(error)
-                });
-            });
-          } else if (prep) {
-            alertBox(
-              'You have to register <a href="payments.html">here</a> your credit card before doing that',
-              'warning',
-              services
-            );
-          }
+    Promise.all([currentPlanName(), getUsage()])
+      .then(values => {
+        current = values[0]
+        usage = JSON.parse(values[1]);
+        services.innerHTML = insertServices(data, current, true, usage.subscription.currency);
+        if (usage.subscription.stripeStatus == 'active') {
+          jQuery('#services').find('button').not('#current').click(function (event) {
+            var btn = $(this)
+            this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
+            tokenRequest('subscribePlan/' + this.dataset.name).then(
+              planInfos => {
+                planInfos = JSON.parse(planInfos)
+                if (prep) {
+                  alertBox(
+                    'You have successfuly register to ' + planInfos.planName,
+                    'success',
+                    services
+                  );
+                  btn.text(() => 'Success');
+                  btn.toggleClass('btn-info');
+                }
+                setTimeout(function () {
+                  insertData(true);
+                }, 3000);
+              },
+              function (error) {
+                console.log(error)
+              });
+          });
+        } else if (prep) {
+          alertBox(
+            'You have to register <a href="payments.html">here</a> your credit card before doing that',
+            'warning',
+            services
+          );
+        }
+      })
+      .catch(error => {
+        services.innerHTML = insertServices(data, '', false, 'USD');
+        jQuery('#services').find('button').each(function (index, button) {
+          button.textContent = 'Sign in !';
+          button.addEventListener('click', function (event) {
+            document.getElementById('signin').click();
+          });
         });
       });
-    }, function (error) {
-      services.innerHTML = insertServices(data, '', false, 'USD');
-      jQuery('#services').find('button').each(function (index, button) {
-        button.textContent = 'Sign in !';
-        button.addEventListener('click', function (event) {
-          document.getElementById('signin').click();
-        });
-      });
-    });
   });
 }

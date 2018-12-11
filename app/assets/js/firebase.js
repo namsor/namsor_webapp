@@ -30,42 +30,62 @@ var request = obj => {
     });
 };
 
-var getToken = function() {
-    return new Promise(function(resolve, reject) {
+var getToken = function () {
+    return new Promise(function (resolve, reject) {
         firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            user.getIdToken().then(function (accessToken) {
-            resolve(accessToken);
-            }, function (error) { reject(Error(error)) });
-        } else {
-            reject('no user')
-        }
+            if (user) {
+                user.getIdToken().then(function (accessToken) {
+                    resolve(accessToken);
+                }, function (error) {
+                    reject(Error(error))
+                });
+            } else {
+                reject('no user')
+            }
         });
     });
 };
 
-var tokenRequest = function (path){
+var apiKeyRequest = function (path) {
+    return new Promise(function (resolve, reject) {
+        getApiKey().then(function (key) {
+            request({
+                    url: path,
+                    headers: {
+                        'X-API-KEY': key
+                    }
+                })
+                .then(data => resolve(data), error => reject(error))
+        }, function (error) {
+            reject(error)
+        });
+    });
+}
+
+var tokenRequest = function (path) {
     return new Promise((resolve, reject) => {
         // Get token from firebase
         getToken()
-        .then(function(token) {
-            // Request info from API
-            request({url: path + "/" + token}).then(data => {
-                // Send Data via promise
-                resolve(data)
+            .then(function (token) {
+                // Request info from API
+                request({
+                        url: path + "/" + token
+                    }).then(data => {
+                        // Send Data via promise
+                        resolve(data)
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
             })
             .catch(error => {
                 reject(error);
             });
-        })
-        .catch(error => {
-            reject(error);
-        });
     });
 };
 
 var billingInfo = function () {
-   return tokenRequest("billingInfo");
+    return tokenRequest("billingInfo");
 };
 
 var billingHistory = function () {
@@ -76,11 +96,13 @@ var getInfo = () => {
     return tokenRequest("userInfo");
 };
 
-var accSettings = function(idToken) {
+var accSettings = function (idToken) {
     var html;
-    request({url: "userInfo/" + idToken}).then(data => {
-      data = JSON.parse(data);
-    html = `
+    request({
+        url: "userInfo/" + idToken
+    }).then(data => {
+        data = JSON.parse(data);
+        html = `
         <li class="user-profile dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">
             <div class="d-block d-lg-none">
@@ -129,33 +151,29 @@ var accSettings = function(idToken) {
     });
 }
 
-
-var getApiKey = function() {
-  return new Promise(function(resolve, reject) {
-    getToken()
-    .then(function(token) {
-      request({url : 'procureKey/' + token})
-      .then( data => resolve((JSON.parse(data)).api_key) , error => reject(error))
-    }, error => reject(error))
-    .catch(error => {
-      reject(error);
+var getApiKey = function () {
+    return new Promise(function (resolve, reject) {
+        getToken()
+            .then(function (token) {
+                request({
+                        url: 'procureKey/' + token
+                    })
+                    .then(data => resolve((JSON.parse(data)).api_key), error => reject(error))
+            }, error => reject(error))
+            .catch(error => {
+                reject(error);
+            });
     });
-  });
 }
 
 var getUsage = function () {
-  return new Promise(function(resolve, reject) {
-    getApiKey().then(function(key) {
-      request({url : 'apiUsage', headers : {'X-API-KEY' : key}})
-      .then( data => resolve(data), error => reject(error))
-    }, function(error) { reject(error) });
-  });
+    return apiKeyRequest('apiUsage');
 }
 
 var signOut = function () {
-  firebase.auth().signOut().then(function (success) {
-          window.location.replace("index.html");
-  });
+    firebase.auth().signOut().then(function (success) {
+        window.location.replace("index.html");
+    });
 };
 
 var divError = error => {
@@ -172,17 +190,17 @@ var alertBox = (message, alertClass, boxToPrepend) => {
     boxToPrepend.prepend(box);
 }
 
-initApp = function() {
-    return new Promise(function(resolve, reject){
-        getToken().then(function(token){
-            accSettings(token);
-            resolve(token)
-        },
-        function (error) {
-            let box = document.getElementById("signin");
-            if (box)
-                box.style.display = "inline";
-            reject('No user');
-        });
+initApp = function () {
+    return new Promise(function (resolve, reject) {
+        getToken().then(function (token) {
+                accSettings(token);
+                resolve(token)
+            },
+            function (error) {
+                let box = document.getElementById("signin");
+                if (box)
+                    box.style.display = "inline";
+                reject('No user');
+            });
     });
 };

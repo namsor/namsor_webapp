@@ -2,34 +2,49 @@ let prependBox = document.getElementsByClassName('main-content')[0];
 let getElem = (x) => document.getElementById(x);
 let lHard = getElem('limitHard');
 let lSoft = getElem('limitSoft');
+let uSoft = getElem('updateSoft');
+let uHard = getElem('updateHard');
+
 window.onload = function () {
-    initApp().then(function (success) {
-        getUsage().then(usage => {
-            usage = JSON.parse(usage);
-            lHard.value = usage.billingPeriod.hardLimit;
-            lSoft.value = usage.billingPeriod.softLimit;
-            getElem('usage').innerHTML = usage.billingPeriod.usage;
-        });
-        getElem('updateSoft').addEventListener('click', function (event) {
-            updateLimit(lSoft.value, 'true');
-        });
-        getElem('updateSoft').addEventListener('click', function (event) {
-            updateLimit(lHard.value, 'false');
-        });
+    Promise.all([initApp(), getUsage()]).then(values => {
+        usage = JSON.parse(values[1]);
+        lHard.value = usage.billingPeriod.hardLimit;
+        lSoft.value = usage.billingPeriod.softLimit;
+        getElem('usage').innerHTML = usage.billingPeriod.usage;
     }, error => divError(error));
 };
-let updateLimit = (value, isSoft) => {
+
+// Update triggers
+uSoft.addEventListener('click', function (event) {
+    uSoft.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
+    updateLimit(lSoft.value, 'false');
+});
+uHard.addEventListener('click', function (event) {
+    uHard.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
+    updateLimit(lHard.value, 'true');
+});
+
+let updateLimit = (value, isHard, btn) => {
     getToken()
-        .then(token => {
+    .then(token => {
             request({
-                url: `updateLimit/${value}/${isSoft}/${token}`
+                url: `updateLimit/${value}/${isHard}/${token}`
             }).then(success => {
                 alertBox(
                     'Your soft limit has been succesfully updated',
                     'success',
                     prependBox
                 );
-            }, () => { throw "Update unsuccessful" });
+                btn.innerHTML = 'update';
+            })
+            .catch(error => {
+                alertBox(
+                    'An error has occured, please make sure limits are correctly set',
+                    'warning',
+                    prependBox
+                );
+                btn.innerHTML = 'update';
+            });
         })
         .catch(error => {
             alertBox(
