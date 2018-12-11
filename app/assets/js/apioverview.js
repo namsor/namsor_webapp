@@ -17,11 +17,11 @@ window.onload = function () {
 // Update triggers
 uSoft.addEventListener('click', function (event) {
     uSoft.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
-    updateLimit(lSoft.value, 'false');
+    updateLimit(lSoft.value, 'false', uSoft);
 });
 uHard.addEventListener('click', function (event) {
     uHard.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
-    updateLimit(lHard.value, 'true');
+    updateLimit(lHard.value, 'true', uHard);
 });
 
 let updateLimit = (value, isHard, btn) => {
