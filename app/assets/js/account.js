@@ -1,7 +1,7 @@
 let getElem = (x) => document.getElementById(x);
 let divUpdateBillingInfo = getElem('updateBillingInfo');
 let divBillingInfo = getElem('billingInfo');
-let body = document.getElementsByTagName('body')[0];
+let body = document.getElementsByClassName('main-content')[0];
 
 let insertInfos = () => {
   const alertMessage = alertBox(
@@ -13,7 +13,7 @@ let insertInfos = () => {
   getUsage()
   .then(data => {
     data = JSON.parse(data);
-    getElem("preferredCurrency").innerHTML = data.preferredCurrency;
+    getElem("preferredCurrency").innerHTML = data.subscription.currency;
   })
   .catch(error => {
     alertMessage;
@@ -75,6 +75,7 @@ let updateBI = () => {
         'warning',
         divBillingInfo
       );
+      divUpdateBillingInfo.innerHTML = 'Update';
     });
   }, error => divError(error));
 }
