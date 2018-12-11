@@ -22,12 +22,12 @@ function dataServicesToHTML(data, current, signedIn, currency) {
       <div class="card h-100">
       <h3 class="card-header">${plan.planName}</h3>
       <div class="card-body">
-      <div class="display-4">${plan.price} <span class="xsmall"> ${currency}</span></div>
+      <div class="display-4">${plan.price} <span class="xsmall"> ${currency} / month </span></div>
       <div class="font-italic"></div>
       </div>
       <ul class="list-group list-group-flush">
       <li class="list-group-item">Plan quota : ${plan.planQuota}</li>
-      <li class="list-group-item">Price overage : ${plan.priceOverage} </li>
+      <li class="list-group-item">Price overage : ${plan.priceOverage} ${currency} / name</li>
       <li class="list-group-item">`;
       if (!signedIn) {
         html += `<button class="btn btn-primary">Sign in !</button>`;
