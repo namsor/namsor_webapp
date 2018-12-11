@@ -52,42 +52,44 @@ let insertInfos = function (datas) {
         return ('');
     }
     // Insert email
-    getInfo().then(function(data) {
-      data = JSON.parse(data);
-      innerDoc.getElementById('email').innerHTML = data.email;
+    getInfo().then(function (data) {
+        data = JSON.parse(data);
+        innerDoc.getElementById('email').innerHTML = data.email;
     });
     billingInfo().then(function (address) {
-        infos = JSON.parse(address);
-        let items = datas.items;
-        let tbody = innerDoc.getElementsByTagName('tbody')[0];
-        tbody.innerHTML = '';
-        let fill = (x, y) => {
-            if (innerDoc.getElementById(x) !== null && y[x] !== null)
-            innerDoc.getElementById(x).innerHTML = y[x];
-        }
-        // Insert address
-        for (info in infos)
-            fill(info, infos);
-        // Insert invoice information
-        for (data in datas)
-            fill(data, datas)
-        // Insert date
-        let date = new Date(parseInt(datas['invoiceDate'])).toDateString();
-        fill('invoiceDate', { invoiceDate: date });
-        for (var i = 0; i < items.length; i++) {
-            let tr = createRowInvoice(items[i]);
-            tbody.prepend(tr);
-        }
-    },
-    function (error) {
-        let errBox = document.createElement('div');
-        errBox.className = 'col-sm-12 alert alert-danger';
-        errBox.innerHTML = 'You have to specify a billing address <a href="account.html">here</a>';
-        invoicesContent.prepend(errBox);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+                infos = JSON.parse(address);
+                let items = datas.items;
+                let tbody = innerDoc.getElementsByTagName('tbody')[0];
+                tbody.innerHTML = '';
+                let fill = (x, y) => {
+                    if (innerDoc.getElementById(x) !== null && y[x] !== null)
+                        innerDoc.getElementById(x).innerHTML = y[x];
+                }
+                // Insert address
+                for (info in infos)
+                    fill(info, infos);
+                // Insert invoice information
+                for (data in datas)
+                    fill(data, datas)
+                // Insert date
+                let date = new Date(parseInt(datas['invoiceDate'])).toDateString();
+                fill('invoiceDate', {
+                    invoiceDate: date
+                });
+                for (var i = 0; i < items.length; i++) {
+                    let tr = createRowInvoice(items[i]);
+                    tbody.prepend(tr);
+                }
+            },
+            function (error) {
+                let errBox = document.createElement('div');
+                errBox.className = 'col-sm-12 alert alert-danger';
+                errBox.innerHTML = 'You have to specify a billing address <a href="account.html">here</a>';
+                invoicesContent.prepend(errBox);
+            })
+        .catch(error => {
+            console.log(error);
+        });
 }
 
 // Motion when view details is triggered
@@ -134,7 +136,7 @@ let insertData = function () {
     initApp().then(billingHistory().then(
         data => {
             data = JSON.parse(data);
-            invoicesContent.innerHTML = tableInvoice;                
+            invoicesContent.innerHTML = tableInvoice;
             invoices = data.stripeInvoices.concat(data.corporateInvoices);
             invoices.sort((a, b) => a['invoiceDate'] - b['invoiceDate']);
             invoices.forEach((invoice, index) => {
@@ -147,7 +149,7 @@ let insertData = function () {
 
 window.onload = function () {
     invoicesContent.innerHTML =
-    `<div class="artboard">
+        `<div class="artboard">
         <div class="domino">
             <div></div>
             <div></div>

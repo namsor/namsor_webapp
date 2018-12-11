@@ -6,27 +6,29 @@ let body = document.getElementsByClassName('main-content')[0];
 let insertInfos = () => {
   const alertMessage = alertBox(
     'There is an error retrieving your informations, please try again \
-    later or contact an adminisatrator',
+    later or contact an admin',
     'warning',
     body
-  ); 
+  );
   getUsage()
-  .then(data => {
-    data = JSON.parse(data);
-    getElem("preferredCurrency").innerHTML = data.subscription.currency;
-  })
-  .catch(error => {
-    alertMessage;
-  });
+    .then(data => {
+      data = JSON.parse(data);
+      getElem("preferredCurrency").innerHTML = data.subscription.currency;
+    })
+    .catch(error => {
+      alertMessage;
+      console.log(error);
+    });
   getInfo()
-  .then(data => {
-    data = JSON.parse(data);
-    getElem("user_name").innerHTML = data.displayName;
-    getElem("user_email").innerHTML = data.email;
-  })
-  .catch(error => {
-    alertMessage;
-  });
+    .then(data => {
+      data = JSON.parse(data);
+      getElem("user_name").innerHTML = data.displayName;
+      getElem("user_email").innerHTML = data.email;
+    })
+    .catch(error => {
+      alertMessage;
+      console.log(error);
+    });
 }
 
 let fillInfo = () => {
@@ -48,8 +50,7 @@ let fillInfo = () => {
 }
 
 let updateBI = () => {
-  divUpdateBillingInfo.innerHTML = '\
-  <i class="fa fa-spinner fa-spin"></i> Processing..';
+  divUpdateBillingInfo.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
   getToken().then(function (token) {
     let info = {};
     jQuery('#billingInfo').find('input').each(function () {
@@ -85,6 +86,8 @@ window.onload = () => {
     () => {
       insertInfos();
       fillInfo();
-      divUpdateBillingInfo.addEventListener('click', () => { updateBI() } );
+      divUpdateBillingInfo.addEventListener('click', () => {
+        updateBI()
+      });
     }, error => divError(error));
 }

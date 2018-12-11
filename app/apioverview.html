@@ -157,18 +157,26 @@
                 <div class="card">
                   <div class="card-heading border bottom">
                     <h4 class="card-title">API current limits</h4>
-                    <button type="button" class='btn btn-info float-right' name="button" id='btn-updateLimit'>Update
-                      Limit</button>
                   </div>
                   <div class="card-block">
                     <form id='updateLimit'>
-                      <div class="form-group col-md-6">
-                        <label for="limitSoft">Soft limit :</label>
-                        <input type="text" class="form-control" id="limitSoft" placeholder="Soft limit">
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="limitHard">Hard limit :</label>
-                        <input type="text" class="form-control" id="limitHard" placeholder="Hard limit">
+                      <div class="row">
+                        <div class="form-group col-md-6">
+                          <label for="limitSoft">Soft limit :</label>
+                          <input type="text" class="form-control" id="limitSoft" placeholder="Soft limit">
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class='btn btn-info float-right' name="button" id='updateSoft'>Update</button>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-md-6">
+                            <label for="limitHard">Hard limit :</label>
+                            <input type="text" class="form-control" id="limitHard" placeholder="Hard limit">
+                          </div>
+                          <div class="col-md-6">
+                              <button type="button" class='btn btn-info float-right' name="button" id='updateHard'>Update</button>
+                        </div>
                       </div>
                     </form>
                   </div>
@@ -214,123 +222,7 @@
   <!-- core js -->
   <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
   <script src="assets/js/firebase.js" charset="utf-8"></script>
-  <script>
-    window.onload = function () {
-      initApp().then(function (success) {
-        getUsage()
-          .then(usage => {
-            usage = JSON.parse(usage);
-            document.getElementById('limitHard').value = usage.billingPeriod.hardLimit;
-            document.getElementById('limitSoft').value = usage.billingPeriod.softLimit;
-            document.getElementById('usage').innerHTML = usage.billingPeriod.usage;
-          });
-        document.getElementById('btn-updateLimit')
-          .addEventListener('click', function (event) {
-            getToken()
-              .then(function (token) {
-                let info = []
-                getApiKey()
-                  .then(function (key) {
-                    jQuery('#updateLimit').find('input').each(function (index, data) {
-                      info.push(this.value);
-                    });
-                    if (parseInt(info[0]) > 0 && parseInt(info[1]) > 0) {
-                      if (info[0])
-                        request({
-                          url: info[0] + '/true/' + token,
-                          headers: {
-                            'X-API-KEY': key
-                          }
-                        }).then(function (success) {
-                          if (info[1])
-                            request({
-                              url: info[1] + '/false/' + token,
-                              headers: {
-                                'X-API-KEY': key
-                              }
-                            }).then(function (good) {
-                              let success = document.createElement('div');
-                              success.className = 'alert alert-success';
-                              success.innerHTML = 'You have successfuly updated your limits';
-                              document.getElementById('updateLimit').prepend(success);
-                            });
-                        });
-                    } else {
-                      let error = document.createElement('div');
-                      error.className = 'alert alert-warning';
-                      error.innerHTML = 'Make sure that your limits are positive';
-                      document.getElementById('updateLimit').prepend(error);
-                    }
-                  });
-              });
-          });
-      }, error => divError(error));
-    };
-  </script>
-  <script>
-    let path = "apiUsageHistory";
-    getApiKey().then(function (key) {
-      request({
-        url: path,
-        headers: {
-          'X-API-KEY': key
-        }
-      }).then(
-        function (usage) {
-          usage = JSON.parse(usage);
-          let ctx = document.getElementById("myChart").getContext('2d');
-          let lab = []
-          let dat = []
-          let clr = []
-          let b_clr = []
-          r_clr = (alpha) => {
-              let o = () => Math.round(Math.random() * 255);
-              return 'rgba(' + o() + ',' + o() + ',' + o() + ', ' + alpha + ')';
-          }
-          for (var i = 0; i < usage.length; i++) {
-            let info = usage[i]
-            if (info.totalUsage > 0)
-            {
-              lab.push(info.apiService.split('_').join(' ').replace("basic->", ''))
-              dat.push(info.totalUsage)
-              let color = r_clr('0.2');
-              clr.push(color);
-              b_clr.push(color.replace('0.2','1.0'));
-            }
-          }
-          var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: lab,
-              datasets: [{
-                label: 'frequency',
-                data: dat,
-                backgroundColor: clr,
-                borderColor: b_clr,
-                borderWidth: 1
-              }]
-            },
-            options: {
-              scales: {
-                yAxes: [{
-                  ticks: {
-                    beginAtZero: true
-                  }
-                }],
-                xAxes: [{
-                    ticks: {
-                        display: false
-                    }
-                }]
-              }
-            }
-          });
-        },
-        function (error) {
-          console.log(Error(error))
-        });
-    }).catch(error => console.log(error));
-  </script>
+  <script src="assets/js/apioverview.js" charset="utf-8"></script>
   <script src="assets/js/app.js"></script>
   <!-- endbuild -->
 
