@@ -4,19 +4,21 @@ let divBillingInfo = getElem('billingInfo');
 let body = document.getElementsByClassName('main-content')[0];
 
 let insertInfos = () => {
-  const alertMessage = alertBox(
-    'There is an error retrieving your informations, please try again \
-    later or contact an admin',
-    'warning',
-    body
-  );
+  const alertMessage = () => {
+    alertBox(
+     'There is an error retrieving your informations, please try again \
+     later or contact an admin',
+     'warning',
+     body
+   );
+  }
   getUsage()
     .then(data => {
       data = JSON.parse(data);
       getElem("preferredCurrency").innerHTML = data.subscription.currency;
     })
     .catch(error => {
-      alertMessage;
+      alertMessage();
       console.log(error);
     });
   getInfo()
@@ -26,7 +28,7 @@ let insertInfos = () => {
       getElem("user_email").innerHTML = data.email;
     })
     .catch(error => {
-      alertMessage;
+      alertMessage();
       console.log(error);
     });
 }

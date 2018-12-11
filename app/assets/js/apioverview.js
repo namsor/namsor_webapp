@@ -1,5 +1,5 @@
 let prependBox = document.getElementsByClassName('main-content')[0];
-let getElem = (x) => getElem(x);
+let getElem = (x) => document.getElementById(x);
 let lHard = getElem('limitHard');
 let lSoft = getElem('limitSoft');
 window.onload = function () {
