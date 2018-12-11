@@ -1,60 +1,42 @@
 let prependBox = document.getElementsByClassName('main-content')[0];
+let lHard = getElem('limitHard');
+let lSoft = getElem('limitSoft');
 window.onload = function () {
     initApp().then(function (success) {
         getUsage().then(usage => {
             usage = JSON.parse(usage);
-            document.getElementById('limitHard').value = usage.billingPeriod.hardLimit;
-            document.getElementById('limitSoft').value = usage.billingPeriod.softLimit;
+            lHard.value = usage.billingPeriod.hardLimit;
+            lSoft.value = usage.billingPeriod.softLimit;
             document.getElementById('usage').innerHTML = usage.billingPeriod.usage;
         });
         document.getElementById('updateSoft').addEventListener('click', function (event) {
-            updateLimit($('#limitSoft').value, 'true')
-                .then(() => {
-                    alertBox(
-                        'Your soft limit has been succesfully updated',
-                        'success',
-                        prependBox
-                    );
-                }, () => {
-                    alertBox(
-                        'An error has occured, try again later or contact an admin',
-                        'warning',
-                        prependBox
-                    );
-                });
+            updateLimit(lSoft.value, 'true');
         });
         document.getElementById('updateSoft').addEventListener('click', function (event) {
-            updateLimit($('#limitHard').value, 'false')
-                .then(() => {
-                    alertBox(
-                        'Your soft limit has been succesfully updated',
-                        'success',
-                        prependBox
-                    );
-                }, () => {
-                    alertBox(
-                        'An error has occured, try again later or contact an admin',
-                        'warning',
-                        prependBox
-                    );
-                });
+            updateLimit(lHard.value, 'false');
         });
     }, error => divError(error));
 };
 let updateLimit = (value, isSoft) => {
-    return new Promise((resolve, reject) => {
-        getToken()
-            .then(token => {
-                request({
-                    url: `updateLimit/${value}/${isSoft}/${token}`
-                }).then(success => {
-                    resolve(success);
-                });
-            })
-            .catch(error => {
-                reject(error)
-            });
-    });
+    getToken()
+        .then(token => {
+            request({
+                url: `updateLimit/${value}/${isSoft}/${token}`
+            }).then(success => {
+                alertBox(
+                    'Your soft limit has been succesfully updated',
+                    'success',
+                    prependBox
+                );
+            }, () => { throw "Update unsuccessful" });
+        })
+        .catch(error => {
+            alertBox(
+                'An error has occured, try again later or contact an admin',
+                'warning',
+                prependBox
+            );
+        });
 }
 
 getApiKey().then(function (key) {
