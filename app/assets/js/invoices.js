@@ -13,7 +13,7 @@ let createRowInvoice = (item) => {
 }
 
 // Insert in the table details of all invoices
-let createRowInvoices = (item, isStriped) => {
+let createRowInvoices = (item, isStriped, index) => {
     let tr = document.createElement('tr');
     let date = new Date(parseInt(item['invoiceDate'])).toDateString();
     let name = item['invoiceId'];
@@ -140,7 +140,7 @@ let insertData = function () {
             invoices = data.stripeInvoices.concat(data.corporateInvoices);
             invoices.sort((a, b) => a['invoiceDate'] - b['invoiceDate']);
             invoices.forEach((invoice, index) => {
-                let tr = createRowInvoices(invoice, invoice.isStriped);
+                let tr = createRowInvoices(invoice, invoice.isStriped, index);
                 document.getElementById('invoicesTable').prepend(tr);
             });
         }, error => divError(error)

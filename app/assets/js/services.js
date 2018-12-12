@@ -89,7 +89,8 @@ var insertData = function (prep) {
           alertBox(
             'Register your payment card <a href="payments.html">here</a> before purchasing a plan',
             'warning',
-            services
+            services,
+            'append'
           );
         }
       })

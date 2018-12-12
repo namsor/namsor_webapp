@@ -181,11 +181,14 @@ var divError = error => {
         </div>');
 }
 
-var alertBox = (message, alertClass, boxToPrepend) => {
+var alertBox = (message, alertClass, boxToPrepend, appendOr) => {
     let box = document.createElement('div');
     box.className = 'col-sm-12 alert alert-' + alertClass;
     box.innerHTML = message;
-    boxToPrepend.prepend(box);
+    if (appendOr == 'append')
+        boxToPrepend.append(box);
+      else
+        boxToPrepend.prepend(box);
 }
 
 initApp = function () {

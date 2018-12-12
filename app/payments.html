@@ -160,7 +160,11 @@
                     </form>
                   </div>
                   <div class="card-block" id='stripeInfo'>
+                    <table class="table table-hover">
+                        <tbody id="cardInfo">
 
+                        </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -220,14 +224,21 @@
             box.dataset.description = "Namsor API Setup";
             document.getElementById("stripeForm").appendChild(box);
             tokenRequest('paymentsInfo').then(datas => {
-              let sBox = document.getElementById('stripeInfo');
-              datas = JSON.parse(data);
-              for (var data in datas) {
-                if (datas.hasOwnProperty(data)) {
-                  let div = document.createElement('div');
-                  div.innerHTML = datas[data];
-                  sBox.prepend(div);
+              let tbody = document.getElementById('cardInfo');
+              cards = JSON.parse(data).StripedCards;
+              for (var i = 0; i < cards.length; i++) {
+                let card = cards[i];
+                let tr = document.createElement('tr')
+                for (var info in card) {
+                  if (card.hasOwnProperty(info)) {
+                    let td = document.createElement('td');
+                    td.innerHTML = card[info];
+                    tr.prepend(td);
+                  }
                 }
+                if (card['defaultCard'] === true)
+                  tr.className = 'bg-info';
+                tbody.append(tr);
               }
             });
           })
