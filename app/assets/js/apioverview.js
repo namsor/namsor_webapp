@@ -57,63 +57,55 @@ let updateLimit = (value, isHard, btn) => {
         });
 }
 
-getApiKey().then(function (key) {
-    request({
-        url: 'apiUsageHistory',
-        headers: {
-            'X-API-KEY': key
+apiKeyRequest('apiUsageHistory')
+  .then(usage => {
+      usage = JSON.parse(usage);
+      let ctx = getElem("myChart").getContext('2d');
+      let lab, dat, cl, b_clr;
+      lab = []
+      dat = []
+      clr = []
+      b_clr = []
+      r_clr = (alpha) => {
+        let o = () => Math.round(Math.random() * 255);
+        return 'rgba(' + o() + ',' + o() + ',' + o() + ', ' + alpha + ')';
+      }
+      for (var i = 0; i < usage.length; i++) {
+        let info = usage[i]
+        if (info.totalUsage > 0) {
+          lab.push(info.apiService.split('_').join(' ').replace("basic->", ''))
+          dat.push(info.totalUsage)
+          let color = r_clr('0.2');
+          clr.push(color);
+          b_clr.push(color.replace('0.2', '1.0'));
         }
-    }).then(
-        function (usage) {
-            usage = JSON.parse(usage);
-            let ctx = getElem("myChart").getContext('2d');
-            let lab = []
-            let dat = []
-            let clr = []
-            let b_clr = []
-            r_clr = (alpha) => {
-                let o = () => Math.round(Math.random() * 255);
-                return 'rgba(' + o() + ',' + o() + ',' + o() + ', ' + alpha + ')';
-            }
-            for (var i = 0; i < usage.length; i++) {
-                let info = usage[i]
-                if (info.totalUsage > 0) {
-                    lab.push(info.apiService.split('_').join(' ').replace("basic->", ''))
-                    dat.push(info.totalUsage)
-                    let color = r_clr('0.2');
-                    clr.push(color);
-                    b_clr.push(color.replace('0.2', '1.0'));
-                }
-            }
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: lab,
-                    datasets: [{
-                        label: 'frequency',
-                        data: dat,
-                        backgroundColor: clr,
-                        borderColor: b_clr,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                display: false
-                            }
-                        }]
-                    }
-                }
-            });
+      }
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: lab,
+          datasets: [{
+            label: 'frequency',
+            data: dat,
+            backgroundColor: clr,
+            borderColor: b_clr,
+            borderWidth: 1
+          }]
         },
-        function (error) {
-            console.log(Error(error))
-        });
-}).catch(error => console.log(error));
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                display: false
+              }
+            }]
+          }
+        }
+      });
+  })
+  .catch(error => console.log(error));

@@ -37,7 +37,7 @@ var getToken = function () {
                 user.getIdToken().then(function (accessToken) {
                     resolve(accessToken);
                 }, function (error) {
-                    reject(Error(error))
+                    reject(error)
                 });
             } else {
                 reject('no user')
@@ -56,7 +56,7 @@ var apiKeyRequest = function (path) {
                     }
                 })
                 .then(data => resolve(data), error => reject(error))
-        }, function (error) {
+        }, error => {
             reject(error)
         });
     });
@@ -64,14 +64,12 @@ var apiKeyRequest = function (path) {
 
 var tokenRequest = function (path) {
     return new Promise((resolve, reject) => {
-        // Get token from firebase
         getToken()
-            .then(function (token) {
-                // Request info from API
+            .then(token => {
                 request({
                         url: path + "/" + token
-                    }).then(data => {
-                        // Send Data via promise
+                    })
+                    .then(data => {
                         resolve(data)
                     })
                     .catch(error => {
@@ -84,11 +82,11 @@ var tokenRequest = function (path) {
     });
 };
 
-var billingInfo = function () {
+var billingInfo = () => {
     return tokenRequest("billingInfo");
 };
 
-var billingHistory = function () {
+var billingHistory = () => {
     return tokenRequest("billingHistory")
 };
 
@@ -96,7 +94,7 @@ var getInfo = () => {
     return tokenRequest("userInfo");
 };
 
-var accSettings = function (idToken) {
+var accSettings = idToken => {
     var html;
     request({
         url: "userInfo/" + idToken
@@ -151,10 +149,10 @@ var accSettings = function (idToken) {
     });
 }
 
-var getApiKey = function () {
+var getApiKey = () => {
     return new Promise(function (resolve, reject) {
         getToken()
-            .then(function (token) {
+            .then(token => {
                 request({
                         url: 'procureKey/' + token
                     })
@@ -166,11 +164,11 @@ var getApiKey = function () {
     });
 }
 
-var getUsage = function () {
+var getUsage = () => {
     return apiKeyRequest('apiUsage');
 }
 
-var signOut = function () {
+var signOut = () => {
     firebase.auth().signOut().then(function (success) {
         window.location.replace("index.html");
     });
@@ -191,16 +189,17 @@ var alertBox = (message, alertClass, boxToPrepend) => {
 }
 
 initApp = function () {
-    return new Promise(function (resolve, reject) {
-        getToken().then(function (token) {
-                accSettings(token);
-                resolve(token)
-            },
-            function (error) {
-                let box = document.getElementById("signin");
-                if (box)
-                    box.style.display = "inline";
-                reject('No user');
-            });
+    return new Promise((resolve, reject) => {
+        getToken()
+        .then(token => {
+            accSettings(token);
+            resolve(token);
+        })
+        .catch(error => {
+          let box = document.getElementById("signin");
+          if (box)
+            box.style.display = "inline";
+          reject('No user');
+        });
     });
 };

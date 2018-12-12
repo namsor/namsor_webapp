@@ -159,6 +159,9 @@
                     <form action="/NamSorAPIv2/api2/json/charge" method="POST" id="stripeForm">
                     </form>
                   </div>
+                  <div class="card-block" id='stripeInfo'>
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -216,6 +219,17 @@
             box.dataset.amount = 0;
             box.dataset.description = "Namsor API Setup";
             document.getElementById("stripeForm").appendChild(box);
+            tokenRequest('paymentsInfo').then(datas => {
+              let sBox = document.getElementById('stripeInfo');
+              datas = JSON.parse(data);
+              for (var data in datas) {
+                if (datas.hasOwnProperty(data)) {
+                  let div = document.createElement('div');
+                  div.innerHTML = datas[data];
+                  sBox.prepend(div);
+                }
+              }
+            });
           })
           .catch(error => {
             console.log(error);

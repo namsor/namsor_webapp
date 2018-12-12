@@ -211,16 +211,17 @@
       window.ui = ui;
     }
     window.onload = function () {
-      initApp().then(function (token) {
-        getApiKey().then(function (key) {
-          document.getElementById('namsor_api_key_input').value = key;
-          insertSwag(key);
-        });
-      }, function () {
+      Promise.all([initApp(), getApiKey()])
+      .then(values => {
+        key = values[1];
+        document.getElementById('namsor_api_key_input').value = key;
+        insertSwag(key);
+      })
+      .catch(error => {
         insertSwag('');
         document.getElementById('namsor-api-key').innerHTML =
           `<div class="alert alert-warning" role="alert">
-            You need an API key to sign in to use real-time functions. 
+            You need an API key to sign in to use real-time functions.
           </div>`;
       });
     }
