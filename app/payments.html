@@ -223,7 +223,7 @@
             box.dataset.amount = 0;
             box.dataset.description = "Namsor API Setup";
             document.getElementById("stripeForm").appendChild(box);
-            tokenRequest('paymentsInfo').then(datas => {
+            tokenRequest('paymentInfo').then(datas => {
               let tbody = document.getElementById('cardInfo');
               cards = JSON.parse(data).StripedCards;
               for (var i = 0; i < cards.length; i++) {
