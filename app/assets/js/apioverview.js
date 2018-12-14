@@ -73,10 +73,9 @@ apiKeyRequest('apiUsageHistoryAggregate')
       let newDataSet = () => {
           let dataSets = [];
           let iter = usage.data;
-          let row = usage.rowHeaders;
           let col = usage.colHeaders;
           for (let index = 0; index < col.length; index++) {
-              let newLabel = col[index]
+              let newLabel = col[index].replace(/\_/ /g)
               let values = [];
               for (let i = 0; i < iter.length; i++) {
                   values.push(iter[i][index]);
@@ -84,10 +83,11 @@ apiKeyRequest('apiUsageHistoryAggregate')
               let newData = {
                   label: newLabel,
                   data: values,
-                  backgroundColor: r_clr
+                  backgroundColor: r_clr(1.0)
               }
               dataSets.push(newData);
           }
+          return (dataSets);
       }
       var myChart = new Chart(ctx, {
         type: 'bar',
