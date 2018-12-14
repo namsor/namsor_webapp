@@ -149,7 +149,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4 offset-md-1">
+              <div class="col-md-6 offset-md-1">
                 <div class="card">
                   <div class="card-block">
                     <h4 class="card-title">Add or update a payment card</h4>
@@ -242,10 +242,10 @@
               for (var i = 0; i < cards.length; i++) {
                 let card = cards[i];
                 let tr = document.createElement('tr')
-                tr.append(cTd(index));
+                tr.append(cTd(i));
                 tr.append(cTd(card.brand));
-                tr.append(cTd(card.expMonth + "/" - card.expYear));
                 tr.append(cTd('**** '.repeat(3) + card.last4));
+                tr.append(cTd(card.expMonth + "/" + card.expYear));
                 if (card.defaultCard)
                   tr.className = 'border-primary'
                 tbody.append(tr);
