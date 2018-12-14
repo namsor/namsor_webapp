@@ -161,9 +161,17 @@
                   </div>
                   <div class="card-block" id='stripeInfo'>
                     <table class="table table-hover">
-                        <tbody id="cardInfo">
+                      <thead>
+                        <tr>
+                          <td>#</td>
+                          <td>Brand</td>
+                          <td>Card number</td>
+                          <td>Expiration date</td>
+                        </tr>
+                      </thead>
+                      <tbody id="cardInfo">
 
-                        </tbody>
+                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -223,21 +231,23 @@
             box.dataset.amount = 0;
             box.dataset.description = "Namsor API Setup";
             document.getElementById("stripeForm").appendChild(box);
+            let cTd = (x) => {
+              td = document.createElement('td');
+              td.innerHTML = x;
+              return (td)
+            }
             tokenRequest('paymentInfo').then(datas => {
               let tbody = document.getElementById('cardInfo');
-              cards = JSON.parse(data).StripedCards;
+              cards = JSON.parse(datas).stripedCards;
               for (var i = 0; i < cards.length; i++) {
                 let card = cards[i];
                 let tr = document.createElement('tr')
-                for (var info in card) {
-                  if (card.hasOwnProperty(info)) {
-                    let td = document.createElement('td');
-                    td.innerHTML = card[info];
-                    tr.prepend(td);
-                  }
-                }
-                if (card['defaultCard'] === true)
-                  tr.className = 'bg-info';
+                tr.append(cTd(index));
+                tr.append(cTd(card.brand));
+                tr.append(cTd(card.expMonth + "/" - card.expYear));
+                tr.append(cTd('**** '.repeat(3) + card.last4));
+                if (card.defaultCard)
+                  tr.className = 'border-primary'
                 tbody.append(tr);
               }
             });

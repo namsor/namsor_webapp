@@ -19,12 +19,12 @@ uBtn.addEventListener('click', function (event) {
     updateLimit(lSoft.value, lHard.value);
 });
 
-let updateLimit = (vSoft, vHard) => {
+let updateLimit = (vSoft = 0, vHard = 0) => {
     getToken()
         .then(token => {
             Promise.all[
-                    ApiKeyRequest(`updateLimit/${vSoft}/false/${token}`),
-                    ApiKeyRequest(`updateLimit/${vHard}/true/${token}`)
+                    request({url : `updateLimit/${vSoft}/false/${token}`}),
+                    request({url : `updateLimit/${vHard}/false/${token}`})
                 ]
                 .then(() => {
                     alertBox(
@@ -57,6 +57,7 @@ apiKeyRequest('apiUsageHistoryAggregate')
     .then(usage => {
         usage = JSON.parse(usage);
         let ctx = getElem("myChart").getContext('2d');
+        ctx.height = 600;
         let r_clr = (alpha) => {
             let o = () => Math.round(Math.random() * 255);
             return 'rgba(' + o() + ',' + o() + ',' + o() + ', ' + alpha + ')';
@@ -67,6 +68,7 @@ apiKeyRequest('apiUsageHistoryAggregate')
             let col = usage.colHeaders;
             for (let index = 0; index < col.length; index++) {
                 let newLabel = col[index].replace(/_/, ' ')
+                newLabel = newLabel.replace(/personal/, '')
                 let values = [];
                 for (let i = 0; i < iter.length; i++) {
                     values.push(iter[i][index]);

@@ -192,7 +192,7 @@ var alertBox = (message, alertClass, boxToPrepend, appendOr) => {
     setTimeout(
         function () {
             $('.alert').fadeOut();
-        }, 3000);
+        }, 5000);
 }
 
 initApp = function () {
