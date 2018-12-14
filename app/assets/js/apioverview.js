@@ -75,7 +75,7 @@ apiKeyRequest('apiUsageHistoryAggregate')
           let iter = usage.data;
           let col = usage.colHeaders;
           for (let index = 0; index < col.length; index++) {
-              let newLabel = col[index].replace(/\_/ /g)
+              let newLabel = col[index].replace(/_/, ' ')
               let values = [];
               for (let i = 0; i < iter.length; i++) {
                   values.push(iter[i][index]);
