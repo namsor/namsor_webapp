@@ -49,7 +49,7 @@ let updateLimit = (vSoft, vHard) => {
                 'warning',
                 prependBox
             );
-            btn.innerHTML = 'Update';
+            uBtn.innerHTML = 'Update';
         });
 }
 
@@ -57,11 +57,6 @@ apiKeyRequest('apiUsageHistoryAggregate')
     .then(usage => {
         usage = JSON.parse(usage);
         let ctx = getElem("myChart").getContext('2d');
-        let lab, dat, cl, b_clr;
-        lab = []
-        dat = []
-        clr = []
-        b_clr = []
         let r_clr = (alpha) => {
             let o = () => Math.round(Math.random() * 255);
             return 'rgba(' + o() + ',' + o() + ',' + o() + ', ' + alpha + ')';
@@ -76,10 +71,11 @@ apiKeyRequest('apiUsageHistoryAggregate')
                 for (let i = 0; i < iter.length; i++) {
                     values.push(iter[i][index]);
                 }
+                let color = r_clr(0.3);
                 let newData = {
                     label: newLabel,
                     data: values,
-                    backgroundColor: r_clr(1.0)
+                    backgroundColor: color
                 }
                 dataSets.push(newData);
             }
