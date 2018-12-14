@@ -155,8 +155,15 @@
               </div>
               <div class="col-lg-6">
                 <div class="card">
+                  <div class="row m-0">
+                    <div class="col-md-6 card-heading">
+                      <h4 class="card-title">API current limits</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class='btn btn-info float-right' name="button" id='updateButton'>Update</button>
+                    </div>
+                  </div>
                   <div class="card-heading border bottom">
-                    <h4 class="card-title">API current limits</h4>
                   </div>
                   <div class="card-block">
                     <form id='updateLimit'>
@@ -165,18 +172,12 @@
                           <label for="limitSoft">Soft limit :</label>
                           <input type="text" class="form-control" id="limitSoft" placeholder="Soft limit">
                         </div>
-                        <div class="col-md-6">
-                            <button type="button" class='btn btn-info float-right' name="button" id='updateSoft'>Update</button>
-                          </div>
                         </div>
                         <div class="row">
                           <div class="form-group col-md-6">
                             <label for="limitHard">Hard limit :</label>
                             <input type="text" class="form-control" id="limitHard" placeholder="Hard limit">
                           </div>
-                          <div class="col-md-6">
-                              <button type="button" class='btn btn-info float-right' name="button" id='updateHard'>Update</button>
-                        </div>
                       </div>
                     </form>
                   </div>

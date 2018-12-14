@@ -187,22 +187,26 @@ var alertBox = (message, alertClass, boxToPrepend, appendOr) => {
     box.innerHTML = message;
     if (appendOr == 'append')
         boxToPrepend.append(box);
-      else
+    else
         boxToPrepend.prepend(box);
+    setTimeout(
+        function () {
+            $('.alert').fadeOut();
+        }, 3000);
 }
 
 initApp = function () {
     return new Promise((resolve, reject) => {
         getToken()
-        .then(token => {
-            accSettings(token);
-            resolve(token);
-        })
-        .catch(error => {
-          let box = document.getElementById("signin");
-          if (box)
-            box.style.display = "inline";
-          reject('No user');
-        });
+            .then(token => {
+                accSettings(token);
+                resolve(token);
+            })
+            .catch(error => {
+                let box = document.getElementById("signin");
+                if (box)
+                    box.style.display = "inline";
+                reject('No user');
+            });
     });
 };
