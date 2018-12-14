@@ -57,7 +57,7 @@ let updateLimit = (value, isHard, btn) => {
         });
 }
 
-apiKeyRequest('apiUsageHistory')
+apiKeyRequest('apiUsageHistoryAggregate')
   .then(usage => {
       usage = JSON.parse(usage);
       let ctx = getElem("myChart").getContext('2d');
@@ -66,44 +66,39 @@ apiKeyRequest('apiUsageHistory')
       dat = []
       clr = []
       b_clr = []
-      r_clr = (alpha) => {
+      let r_clr = (alpha) => {
         let o = () => Math.round(Math.random() * 255);
         return 'rgba(' + o() + ',' + o() + ',' + o() + ', ' + alpha + ')';
       }
-      for (var i = 0; i < usage.length; i++) {
-        let info = usage[i]
-        if (info.totalUsage > 0) {
-          lab.push(info.apiService.split('_').join(' ').replace("basic->", ''))
-          dat.push(info.totalUsage)
-          let color = r_clr('0.2');
-          clr.push(color);
-          b_clr.push(color.replace('0.2', '1.0'));
-        }
+      let newDataSet = () => {
+          let dataSets = [];
+          let iter = usage.data;
+          let row = usage.rowHeaders;
+          let col = usage.colHeaders;
+          for (let index = 0; index < col.length; index++) {
+              let newLabel = col[index]
+              let values = [];
+              for (let i = 0; i < iter.length; i++) {
+                  values.push(iter[i][index]);
+              }
+              let newData = {
+                  label: newLabel,
+                  data: values,
+                  backgroundColor: r_clr
+              }
+              dataSets.push(newData);
+          }
       }
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: lab,
-          datasets: [{
-            label: 'frequency',
-            data: dat,
-            backgroundColor: clr,
-            borderColor: b_clr,
-            borderWidth: 1
-          }]
+          labels: usage.rowHeaders,
+          datasets: newDataSet()
         },
         options: {
           scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }],
-            xAxes: [{
-              ticks: {
-                display: false
-              }
-            }]
+            xAxes: [{ stacked: true }],
+            yAxes: [{ stacked: true }]
           }
         }
       });
