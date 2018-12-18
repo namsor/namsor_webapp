@@ -52,6 +52,29 @@ var insertServices = function (data, current, signedIn, currency) {
   return dataServicesToHTML(data, current, signedIn, currency);
 }
 
+var logicData = (btnQ, btn, name) => {
+  btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
+  tokenRequest('subscribePlan/' + name).then(
+    planInfos => {
+      planInfos = JSON.parse(planInfos)
+      if (prep) {
+        alertBox(
+          'You have successfuly register to ' + planInfos.planName,
+          'success',
+          services
+        );
+        btnQ.text(() => 'Success');
+        btnQ.toggleClass('btn-info');
+      }
+      setTimeout(function () {
+        insertData(true);
+      }, 3000);
+    },
+    function (error) {
+      console.log(error)
+    });
+}
+
 var insertData = function (prep) {
   availablePlans.then(data => {
     const services = document.getElementById('services')
@@ -63,27 +86,10 @@ var insertData = function (prep) {
         services.innerHTML = insertServices(data, current, true, usage.subscription.currency);
         if (usage.subscription.stripeStatus == 'active') {
           jQuery('#services').find('button').not('#current').click(function (event) {
-            var btn = $(this)
-            this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
-            tokenRequest('subscribePlan/' + this.dataset.name).then(
-              planInfos => {
-                planInfos = JSON.parse(planInfos)
-                if (prep) {
-                  alertBox(
-                    'You have successfuly register to ' + planInfos.planName,
-                    'success',
-                    services
-                  );
-                  btn.text(() => 'Success');
-                  btn.toggleClass('btn-info');
-                }
-                setTimeout(function () {
-                  insertData(true);
-                }, 3000);
-              },
-              function (error) {
-                console.log(error)
-              });
+            let btnQ = $(this)
+            let btn = this;
+            let name = this.dataset.name;
+            addConfirm(btnQ, logicData, [btnQ, btn, name]);
           });
         } else if (prep) {
           alertBox(
