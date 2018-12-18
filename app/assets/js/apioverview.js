@@ -22,17 +22,15 @@ uBtn.addEventListener('click', function (event) {
 let updateLimit = (vSoft = 0, vHard = 0) => {
     getToken()
         .then(token => {
-            Promise.all[
-                    request({url : `updateLimit/${vSoft}/false/${token}`}),
-                    request({url : `updateLimit/${vHard}/true/${token}`})
-                ]
-                .then(() => {
-                    alertBox(
-                        'Limits have been updated',
-                        'success',
-                        prependBox
-                    );
-                    uBtn.innerHTML = 'Update'
+                request({url : `updateLimit/${vSoft}/false/${token}`}).then(() => {
+                    request({url : `updateLimit/${vHard}/true/${token}`}).then(() => {
+                        alertBox(
+                            'Limits have been updated',
+                            'success',
+                            prependBox
+                        );
+                        uBtn.innerHTML = 'Update'
+                    })
                 })
                 .catch(error => {
                     alertBox(
