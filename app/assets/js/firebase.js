@@ -168,9 +168,14 @@ var getUsage = () => {
     return apiKeyRequest('apiUsage');
 }
 
-var signOut = () => {
+var signOut = (message = "You are now signed out ") => {
     firebase.auth().signOut().then(function (success) {
         window.location.replace("index.html");
+        alertBox(
+            message,
+            'info',
+            document.getElementsByClassName('main-content')[0]
+        );
     });
 };
 
@@ -181,7 +186,7 @@ var divError = error => {
         </div>');
 }
 
-var alertBox = (message, alertClass, boxToPrepend, appendOr) => {
+var alertBox = (message, alertClass, boxToPrepend, appendOr, disappear = true) => {
     let box = document.createElement('div');
     box.className = 'col-sm-12 alert alert-' + alertClass;
     box.innerHTML = message;
@@ -189,10 +194,12 @@ var alertBox = (message, alertClass, boxToPrepend, appendOr) => {
         boxToPrepend.append(box);
     else
         boxToPrepend.prepend(box);
-    setTimeout(
-        function () {
-            $('.alert').fadeOut();
-        }, 5000);
+    if (disappear) {
+        setTimeout(
+            function () {
+                $('.alert').fadeOut();
+            }, 5000);
+    }
 }
 
 initApp = function () {

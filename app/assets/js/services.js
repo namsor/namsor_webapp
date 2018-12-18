@@ -18,7 +18,7 @@ function dataServicesToHTML(data, current, signedIn, currency) {
   data.plans.forEach(plan => {
     if (plan.planName != "ENTERPRISE") {
       html += `
-      <div class="col-md-3 mb-3">
+      <div class="col-lg-3 col-sm-6 mb-3">
       <div class="card h-100">
       <h3 class="card-header">${plan.planName}</h3>
       <div class="card-body">
@@ -90,7 +90,8 @@ var insertData = function (prep) {
             'Register your payment card <a href="payments.html">here</a> before purchasing a plan',
             'warning',
             services,
-            'append'
+            'append',
+            false
           );
         }
       })

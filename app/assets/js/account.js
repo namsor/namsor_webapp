@@ -51,6 +51,18 @@ let fillInfo = () => {
   });
 }
 
+let suppressInfo = () => {
+  var confirm = prompt("Please enter your email address to suppress your account", "");
+  if (confirm != null)
+  {
+    getInfo().then(data => {
+      data = JSON.parse(data);
+      if (data.email === confirm)
+        tokenRequest("removeUserAccount").then(signOut("Your account have been removed"));
+    })
+  }
+}
+
 let updateBI = () => {
   divUpdateBillingInfo.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
   getToken().then(function (token) {
