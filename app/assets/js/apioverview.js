@@ -24,7 +24,7 @@ let updateLimit = (vSoft = 0, vHard = 0) => {
         .then(token => {
             Promise.all[
                     request({url : `updateLimit/${vSoft}/false/${token}`}),
-                    request({url : `updateLimit/${vHard}/false/${token}`})
+                    request({url : `updateLimit/${vHard}/true/${token}`})
                 ]
                 .then(() => {
                     alertBox(
