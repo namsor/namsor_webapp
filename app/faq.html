@@ -130,46 +130,7 @@
                         <div class="container">
                             <button class="btn btn-large btn-primary" data-toggle="confirmation">
                                 Confirmation
-                            </button>
-                            <script>
-                                $('[data-toggle=confirmation]').confirmation({
-                                    onConfirm: function (value) {
-                                        alert('You choosed ' + value);
-                                    },
-                                    onCancel: function () {
-                                        alert('You didn\'t choose anything');
-                                    },
-                                    buttons: [{
-                                            class: 'btn btn-danger',
-                                            iconClass: 'material-icons mr-1',
-                                            iconContent: 'directions_railway',
-                                            label: 'Railway',
-                                            value: 'Railway'
-                                        },
-                                        {
-                                            class: 'btn btn-primary',
-                                            iconClass: 'material-icons mr-1',
-                                            iconContent: 'directions_car',
-                                            label: 'Car',
-                                            value: 'Car'
-                                        },
-                                        {
-                                            class: 'btn btn-warning',
-                                            iconClass: 'material-icons mr-1',
-                                            iconContent: 'directions_boat',
-                                            label: 'Boat',
-                                            value: 'Boat'
-                                        },
-                                        {
-                                            class: 'btn btn-secondary',
-                                            iconClass: 'material-icons mr-1',
-                                            iconContent: 'cancel',
-                                            label: 'Cancel',
-                                            cancel: true
-                                        }
-                                    ]
-                                });
-                            </script>
+                            </button>            
                         </div>
                         <div class="container">
                             <div class="row">

@@ -217,3 +217,25 @@ initApp = function () {
             });
     });
 };
+
+let addConfirm = (btnId, callback) => {
+    $('#' + btnId).confirmation({
+        onConfirm: () => {
+           callback();
+        },
+        buttons: [{
+                class: 'btn btn-success',
+                iconClass: 'material-icons mr-1',
+                iconContent: 'Okay',
+                label: 'Ok'
+            },
+            {
+                class: 'btn btn-danger',
+                iconClass: 'material-icons mr-1',
+                iconContent: 'cancel',
+                label: 'Cancel',
+                cancel: true
+            }
+        ]
+    });
+}
