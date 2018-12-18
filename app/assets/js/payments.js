@@ -32,12 +32,28 @@ let appendStripeButton = (userInfo) => {
 
 let appendTable = () => {
     tokenRequest('paymentInfo').then(datas => {
+        if (datas === "")
+        {
+            let message = "If you need to purchase a better subscription, make sure to register your credit card down below"
+            alertBox(
+                message,
+                'info',
+                document.getElementsByClassName('main-content')[0],
+                null,
+                false
+            )
+            return;
+        }
         cards = JSON.parse(datas).stripedCards;
         for (var i = 0; i < cards.length; i++) {
             let card = cards[i];
             let tr = document.createElement('tr')
             if (card.defaultCard)
-                tr.append(cTd('Default'));
+            {
+                let td = (cTd('Default'));
+                td.classList.add('bg-info', 'text-white');
+                tr.append(td);
+            }
             else {
                 let change = cTd('Change')
                 change.addEventListener('click', function (event) {

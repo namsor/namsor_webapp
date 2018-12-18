@@ -128,6 +128,50 @@
                             <h4>FAQ</h4>
                         </div>
                         <div class="container">
+                            <button class="btn btn-large btn-primary" data-toggle="confirmation">
+                                Confirmation
+                            </button>
+                            <script>
+                                $('[data-toggle=confirmation]').confirmation({
+                                    onConfirm: function (value) {
+                                        alert('You choosed ' + value);
+                                    },
+                                    onCancel: function () {
+                                        alert('You didn\'t choose anything');
+                                    },
+                                    buttons: [{
+                                            class: 'btn btn-danger',
+                                            iconClass: 'material-icons mr-1',
+                                            iconContent: 'directions_railway',
+                                            label: 'Railway',
+                                            value: 'Railway'
+                                        },
+                                        {
+                                            class: 'btn btn-primary',
+                                            iconClass: 'material-icons mr-1',
+                                            iconContent: 'directions_car',
+                                            label: 'Car',
+                                            value: 'Car'
+                                        },
+                                        {
+                                            class: 'btn btn-warning',
+                                            iconClass: 'material-icons mr-1',
+                                            iconContent: 'directions_boat',
+                                            label: 'Boat',
+                                            value: 'Boat'
+                                        },
+                                        {
+                                            class: 'btn btn-secondary',
+                                            iconClass: 'material-icons mr-1',
+                                            iconContent: 'cancel',
+                                            label: 'Cancel',
+                                            cancel: true
+                                        }
+                                    ]
+                                });
+                            </script>
+                        </div>
+                        <div class="container">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="sticky">
@@ -706,19 +750,21 @@
                 </div>
                 <!-- Content Wrapper END -->
 
-                	  <!-- Footer START -->
-      <footer class="content-footer">
-        <div class="footer">
-          <div class="copyright">
-            <span> Copyright © 2019 <b class="text-dark">NamSor</b>. NamSor SAS is a French Limited Liability Company, Reg. 81148844400019 - VAT FR84811488444 - Data Reg. 1876223 </span>
-            <span class="go-right">
-              <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" target="top" class="text-gray mrg-right-15">Term &amp; Conditions</a>
-              <a href="assets/pdf/NamSor_Data_Processing_Agreement_v007.pdf" target="top" class="text-gray">DPA</a>
-            </span>
-          </div>
-        </div>
-      </footer>
-      <!-- Footer END -->
+                <!-- Footer START -->
+                <footer class="content-footer">
+                    <div class="footer">
+                        <div class="copyright">
+                            <span> Copyright © 2019 <b class="text-dark">NamSor</b>. NamSor SAS is a French Limited
+                                Liability Company, Reg. 81148844400019 - VAT FR84811488444 - Data Reg. 1876223 </span>
+                            <span class="go-right">
+                                <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" target="top" class="text-gray mrg-right-15">Term
+                                    &amp; Conditions</a>
+                                <a href="assets/pdf/NamSor_Data_Processing_Agreement_v007.pdf" target="top" class="text-gray">DPA</a>
+                            </span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer END -->
 
 
             </div>
@@ -739,6 +785,7 @@
     <!-- build:js assets/js/app.min.js -->
     <!-- core js -->
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/ui-elements/confirmation.js"></script>
     <!-- endbuild -->
 
     <!-- page plugins js -->
