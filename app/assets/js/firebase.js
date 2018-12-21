@@ -223,6 +223,7 @@ let addConfirm = (btnQ, callback, args) => {
         onConfirm: () => {
            callback(...args);
         },
+        rootSelector: $("[data-toggle=confirmation]"),
         popout:	true,
         singleton: true,
         buttons: [{

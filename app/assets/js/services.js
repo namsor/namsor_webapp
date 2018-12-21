@@ -30,7 +30,7 @@ function dataServicesToHTML(data, current, signedIn, currency) {
       <li class="list-group-item">Price overage : ${plan.priceOverage} ${currency}</li>
       <li class="list-group-item">`;
       if (!signedIn) {
-        html += `<button class="btn btn-primary">Sign in !</button>`;
+        html += `<button class="btn btn-primary" data-toggle="confirmation" >Sign in !</button>`;
       } else if (plan.planName == current) {
         html += `<button data-name="${plan.planName}" disabled id="current" class="btn btn-success">Current</button>`
       } else {
