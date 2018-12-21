@@ -85,10 +85,10 @@ var insertData = function (prep) {
         usage = JSON.parse(values[1]);
         services.innerHTML = insertServices(data, current, true, usage.subscription.currency);
         if (usage.subscription.stripeStatus == 'active') {
-          jQuery('[data-toggle=confirmation]').each( () => {
-            let btnQ = $(this)
-            let btn = this;
-            let name = this.dataset.name;
+          jQuery('[data-toggle=confirmation]').each( (index, element) => {
+            let btnQ = $(element)
+            let btn = element;
+            let name = element.dataset.name;
             addConfirm(btnQ, logicData, [btnQ, btn, name, prep]);
           });
         } else if (prep) {
