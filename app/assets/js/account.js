@@ -6,11 +6,11 @@ let body = document.getElementsByClassName('main-content')[0];
 let insertInfos = () => {
   const alertMessage = () => {
     alertBox(
-     'There is an error retrieving your informations, please try again \
+      'There is an error retrieving your informations, please try again \
      later or contact an admin',
-     'warning',
-     body
-   );
+      'warning',
+      body
+    );
   }
   getUsage()
     .then(data => {
@@ -52,13 +52,19 @@ let fillInfo = () => {
 }
 
 let suppressInfo = () => {
-  var confirm = prompt("Are you sure ? This is irreversible. You can cancel subscriptions and keep an inactive BASIC account instead. Enter your email address to suppress your account", "");
-  if (confirm != null)
-  {
+  var confirm = prompt("Are you sure ? This is irreversible. You can cancel subscriptions and keep an inactive BASIC account instead.\n\n Enter your email address to suppress your account", "");
+  if (confirm != null) {
     getInfo().then(data => {
       data = JSON.parse(data);
-      if (data.email === confirm)
-        tokenRequest("removeUserAccount").then(signOut("Your account have been removed"));
+      if (data.email === confirm) {
+        tokenRequest("removeUserAccount").then(() => {
+          alertBox(
+            'Check your inbox to confirm the suppression of you account',
+            'warning',
+            body
+          );
+        });
+      }
     })
   }
 }
@@ -100,6 +106,7 @@ window.onload = () => {
     () => {
       insertInfos();
       fillInfo();
+      addConfirm($('#suppress'), suppressInfo, null);
       divUpdateBillingInfo.addEventListener('click', () => {
         updateBI()
       });
