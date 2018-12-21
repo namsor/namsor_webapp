@@ -52,7 +52,7 @@ var insertServices = function (data, current, signedIn, currency) {
   return dataServicesToHTML(data, current, signedIn, currency);
 }
 
-var logicData = (btnQ, btn, name) => {
+var logicData = (btnQ, btn, name, prep) => {
   btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Processing..';
   tokenRequest('subscribePlan/' + name).then(
     planInfos => {
@@ -89,7 +89,7 @@ var insertData = function (prep) {
             let btnQ = $(this)
             let btn = this;
             let name = this.dataset.name;
-            addConfirm(btnQ, logicData, [btnQ, btn, name]);
+            addConfirm(btnQ, logicData, [btnQ, btn, name, prep]);
           });
         } else if (prep) {
           alertBox(

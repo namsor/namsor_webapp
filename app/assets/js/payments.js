@@ -5,7 +5,7 @@ window.onload = function () {
             appendTable();
         })
         .catch(error => {
-            console.log(error)
+            divError(error)
         })
 }
 
