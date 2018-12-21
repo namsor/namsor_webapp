@@ -85,7 +85,7 @@ var insertData = function (prep) {
         usage = JSON.parse(values[1]);
         services.innerHTML = insertServices(data, current, true, usage.subscription.currency);
         if (usage.subscription.stripeStatus == 'active') {
-          jQuery('#services').find('button').not('#current').click(function (event) {
+          jQuery('[data-toggle=confirmation]').each( () => {
             let btnQ = $(this)
             let btn = this;
             let name = this.dataset.name;
