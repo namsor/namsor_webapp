@@ -52,7 +52,7 @@ let fillInfo = () => {
 }
 
 let suppressInfo = () => {
-  var confirm = prompt("Please enter your email address to suppress your account", "");
+  var confirm = prompt("Are you sure ? This is irreversible. You can cancel subscriptions and keep an inactive BASIC account instead. Enter your email address to suppress your account", "");
   if (confirm != null)
   {
     getInfo().then(data => {
