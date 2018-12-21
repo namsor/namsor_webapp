@@ -223,6 +223,8 @@ let addConfirm = (btnQ, callback, args) => {
         onConfirm: () => {
            callback(...args);
         },
+        popout:	true,
+        singleton: true,
         buttons: [{
                 class: 'btn btn-success',
                 iconClass: 'material-icons mr-1',
