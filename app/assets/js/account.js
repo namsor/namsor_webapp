@@ -43,7 +43,7 @@ let fillInfo = () => {
         fill(info);
     } else {
       alertBox(
-        'You have to fill your billing informations',
+        'Please, fill in your billing info',
         'info',
         body
       );
@@ -52,13 +52,13 @@ let fillInfo = () => {
 }
 
 let suppressInfo = () => {
-  var confirm = prompt("Are you sure ? This is irreversible. You can cancel subscriptions and keep an inactive BASIC account instead. Enter your email address to suppress your account", "");
+  var confirm = prompt("Are you sure ? This action is irreversible. Alternatively, you can cancel subscriptions and keep an inactive free BASIC account instead. Please, enter your email address to receive a confirmation link to suppress your account", "");
   if (confirm != null)
   {
     getInfo().then(data => {
       data = JSON.parse(data);
       if (data.email === confirm)
-        tokenRequest("removeUserAccount").then(signOut("Your account have been removed"));
+        tokenRequest("removeUserAccount").then(signOut("Check your email to finalize account removal"));
     })
   }
 }
@@ -79,7 +79,7 @@ let updateBI = () => {
       body: JSON.stringify(info)
     }).then(function (requested) {
       alertBox(
-        'You have successfuly updated your billing informations',
+        'You have successfuly updated your billing info',
         'success',
         divBillingInfo
       );

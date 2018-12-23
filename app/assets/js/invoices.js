@@ -8,7 +8,7 @@ let createRowInvoice = (item) => {
                     <td>${item.description}</td>
                     <td>${item.quantity}</td>
                     <td>${price} ${item.currency}</td>
-                    <td class="text-right">${total}</td>`;
+                    <td class="text-right">${total} ${item.currency}</td>`;
     return (tr);
 }
 

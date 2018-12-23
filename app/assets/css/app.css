@@ -9,7 +9,21 @@
 --------- 1. General ---------
 ----------------------------*/
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto:300,400,500,700");
-html, html a, body { -webkit-font-smoothing: antialiased; }
+html { 
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.8)
+    ), url("../images/others/yolanda-sun-44470-unsplash_low.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -webkit-font-smoothing: antialiased; 
+}
+
+html a, body { -webkit-font-smoothing: antialiased; }
+
+craig-whitehead-471806-unsplash
 
 body { font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif; font-size: 14px; background-color: #f6f7fb; color: #888da8; line-height: 1.5; letter-spacing: 0.2px; overflow-x: hidden; }
 
@@ -3320,7 +3334,14 @@ a.card:hover, a.card:focus { -webkit-box-shadow: 0 7px 15px rgba(0, 0, 0, 0.075)
 
 .jvectormap-zoomout { top: 40px; }
 
-.authentication .sign-in .img-caption { position: absolute; bottom: 0px; left: 0px; padding: 30px; max-width: 600px; }
+.authentication .sign-in .img-caption { 
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff; 
+  display: inline;
+  padding: 0.5rem;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+	position: absolute; bottom: 0px; left: 0px; padding: 30px; max-width: 600px; }
 
 .authentication .sign-in .img-caption .caption-title { color: #ffffff; font-size: 35px; font-weight: 300; }
 

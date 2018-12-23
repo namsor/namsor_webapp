@@ -34,7 +34,7 @@ let appendTable = () => {
     tokenRequest('paymentInfo').then(datas => {
         if (datas === "")
         {
-            let message = "If you need to purchase a better subscription, make sure to register your credit card down below"
+            let message = "Please, add your payment card to set-up your account with secure provider Stripe for billing"
             alertBox(
                 message,
                 'info',
