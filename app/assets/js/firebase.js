@@ -227,12 +227,12 @@ let addConfirm = (btnQ, callback, args) => {
         popout:	true,
         singleton: true,
         buttons: [{
-                class: 'btn btn-success',
+                class: 'btn btn-info',
                 iconClass: 'material-icons mr-1',
                 label: 'Yes'
             },
             {
-                class: 'btn btn-danger',
+                class: 'btn btn-warning',
                 iconClass: 'material-icons mr-1',
                 label: 'Cancel',
                 cancel: true
