@@ -61,7 +61,7 @@
             _attributes: {},
             _selector: null,
             placement: "top",
-            title: "Are you sure?",
+            title: "Please, confirm",
             trigger: "click",
             confirmationEvent: void 0,
             content: "",
