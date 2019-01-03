@@ -19,6 +19,14 @@
   font-size: 50%;
 }
 
+.bg-white-op-80 {
+  background-color: #ffffffdb;
+}
+
+.bg-index-title {
+  text-align: center;
+  background-color: #484c50a8;
+}
 
 .bg-index {
   background-image: url("https://images.unsplash.com/photo-1542769494-0cc077eead4b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80");
