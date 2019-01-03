@@ -1,3 +1,4 @@
+git pull
 mv ../bower_components .
 tar --exclude=release --exclude=node_modules --exclude=.git -czvf ../release/0.0.1/webapp.tar.gz \
 META-INF WEB-INF bower_components/**/dist/* assets/*  bower_components/PACE/** bower_components/perfect-scrollbar/** \
