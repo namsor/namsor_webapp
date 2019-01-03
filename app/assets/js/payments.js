@@ -57,7 +57,7 @@ let appendTable = () => {
             else {
                 let change = cTd('<button class="w-100 h-100 border-0 btn-warning">Change</button>');
                 change.addEventListener('click', function (event) {
-                    tokenRequest(`api2/json/updatePaymentDefault/${card.sourceId}`)
+                    tokenRequest(`updatePaymentDefault/${card.sourceId}`)
                         .then(success => {
                             tbody.innerHTML = '';
                             appendTable();
