@@ -52,7 +52,7 @@ let fillInfo = () => {
 }
 
 let suppressInfo = () => {
-  var confirm = prompt("Are you sure ? This action is irreversible. Alternatively, you can cancel subscriptions and keep an inactive free BASIC account instead. Please, enter your email address to receive a confirmation link to suppress your account", "");
+  var confirm = prompt("Please, confirm ? This action is irreversible. Alternatively, you can cancel subscriptions and keep an inactive free BASIC account instead. Please, enter your email address to receive a confirmation link to suppress your account", "");
   if (confirm != null)
   {
     getInfo().then(data => {
