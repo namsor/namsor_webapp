@@ -1515,7 +1515,7 @@ iframe { border: 0; }
 
 @media only screen and (max-width: 992px) { .is-collapsed .side-nav { left: 0px; } }
 
-.side-nav-dark .side-nav { background-color: #505354; color: #99abb4; }
+.side-nav-dark .side-nav { background-color: #292c2d; color: #99abb4; }
 
 .side-nav-dark .side-nav .side-nav-logo { border-bottom: 1px solid rgba(120, 130, 140, 0.3); border-right: 1px solid transparent; }
 
