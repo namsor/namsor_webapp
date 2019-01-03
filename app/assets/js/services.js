@@ -15,8 +15,14 @@ var currentPlanName = function () {
 
 function dataServicesToHTML(data, current, signedIn, currency) {
   let html = '';
+  let numberWithCommas = (x) => {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
   data.plans.forEach(plan => {
     if (plan.planName != "ENTERPRISE") {
+      plan.planQuota = numberWithCommas(plan.planQuota);
       html += `
       <div class="col-lg-3 col-sm-6 mb-3">
       <div class="card h-100">
