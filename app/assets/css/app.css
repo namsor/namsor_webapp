@@ -3335,7 +3335,7 @@ a.card:hover, a.card:focus { -webkit-box-shadow: 0 7px 15px rgba(0, 0, 0, 0.075)
 .jvectormap-zoomout { top: 40px; }
 
 .authentication .sign-in .img-caption { 
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.75);
   color: #fff; 
   display: inline;
   padding: 0.5rem;
