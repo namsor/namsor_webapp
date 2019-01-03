@@ -55,12 +55,17 @@ let appendTable = () => {
                 tr.append(td);
             }
             else {
-                let change = cTd('Change')
+                let change = cTd('<button class="w-100 h-100 border-0 btn-warning">Change</button>');
                 change.addEventListener('click', function (event) {
-                    tokenRequest(`/api2/json/updatePaymentDefault/${card.sourceId}`)
+                    tokenRequest(`api2/json/updatePaymentDefault/${card.sourceId}`)
                         .then(success => {
                             tbody.innerHTML = '';
                             appendTable();
+                            alertBox(
+                                "Your default card has been updated", 
+                                "success", 
+                                document.getElementsByClassName('main-content')[0]
+                                );
                         })
                 });
                 tr.append(change);
