@@ -66,7 +66,8 @@ let appendTable = () => {
                             alertBox(
                                 "Your default card has been updated", 
                                 "success", 
-                                document.getElementsByClassName('main-content')[0]
+                                document.getElementsByClassName('main-content')[0],
+                                "append"
                             );
                         })
                 });
@@ -74,7 +75,6 @@ let appendTable = () => {
             let td = cTd('');
             td.append(btn);
             tr.append(td);
-            tr.append(change);
             tr.append(cTd(card.brand));
             tr.append(cTd('**** '.repeat(3) + card.last4));
             tr.append(cTd(card.expMonth + "/" + card.expYear));
