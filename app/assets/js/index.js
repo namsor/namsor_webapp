@@ -8,12 +8,13 @@ window.onload = () => {
 }
 
 let buildCard = (success) => {
+  let htit = !success ? "Get your API Key" : "Let's get started !"
   let amsg = !success ? "Sign up" : "Try it out";
   let aref = !success ? "sign-in.html" : "apidoc.html";
   let aclr = !success ? "primary" : "info";
   let html = `
     <h4 class="card-title p-2">
-      Get your API Key
+      ${htit}
     </h4>
     <div class="card-text mb-auto p-2">
       <p>The API is free to classify up to 500 names per month (origin, ethnicity) and 5000 names per month (gender).</p>
