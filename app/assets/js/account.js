@@ -100,6 +100,9 @@ window.onload = () => {
     () => {
       insertInfos();
       fillInfo();
+      document.getElementById('suppress').addEventListener('click', () => {
+        suppressInfo();
+      });
       divUpdateBillingInfo.addEventListener('click', () => {
         updateBI()
       });
