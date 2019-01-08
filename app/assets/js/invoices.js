@@ -67,10 +67,10 @@ let insertInfos = function (datas) {
                     {
                         switch (x) {
                             case "total":
-                                text = parseFloat(y[x]) / 100.0;    
+                                text = parseFloat(y[x]) / 100.0 + " " + y['currency'];    
                                 break;
                             case "subTotal":
-                                text = parseFloat(y[x]) / 100.0;    
+                                text = parseFloat(y[x]) / 100.0 + " " + y['currency'];    
                                 break;    
                             default:
                                 text = y[x];
@@ -164,12 +164,12 @@ let insertData = function () {
 window.onload = function () {
     invoicesContent.innerHTML =
         `<div class="artboard">
-        <div class="domino">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>`;
+            <div class="domino">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>`;
     insertData();
 }
