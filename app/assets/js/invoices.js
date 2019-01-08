@@ -65,7 +65,7 @@ let insertInfos = function (datas) {
                     let text;
                     if (innerDoc.getElementById(x) !== null && y[x] !== null)
                     {
-                        switch (key) {
+                        switch (x) {
                             case "total":
                                 text = parseFloat(y[x]) / 100.0;    
                                 break;
