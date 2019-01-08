@@ -12,13 +12,19 @@ let buildCard = (success) => {
   let amsg = !success ? "Sign up" : "Try it out";
   let aref = !success ? "sign-in.html" : "apidoc.html";
   let aclr = !success ? "primary" : "info";
+  let pfirst = !success ? 
+  "The API is free to classify up to 500 names per month (origin, ethnicity) and 5000 names per month (gender)." : 
+  "The API is free to classify up to 500 names per month (origin, ethnicity) and 5000 names per month (gender).";
+  let psecond = !success ? 
+  "FREE TRIAL – NO CREDIT CARD NEEDED." : 
+  "FREE TRIAL – NO CREDIT CARD NEEDED.";
   let html = `
     <h4 class="card-title p-2">
       ${htit}
     </h4>
     <div class="card-text mb-auto p-2">
-      <p>The API is free to classify up to 500 names per month (origin, ethnicity) and 5000 names per month (gender).</p>
-      <p>FREE TRIAL – NO CREDIT CARD NEEDED.</p>
+      <p>${pfirst}</p>
+      <p>${psecond}</p>
     </div>
     <div class="p-2">
     <a href="${aref}" class="btn btn-${aclr} no-mrg-btm">${amsg} !</a>
