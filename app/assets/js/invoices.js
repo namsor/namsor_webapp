@@ -62,8 +62,22 @@ let insertInfos = function (datas) {
                 let tbody = innerDoc.getElementsByTagName('tbody')[0];
                 tbody.innerHTML = '';
                 let fill = (x, y) => {
+                    let text;
                     if (innerDoc.getElementById(x) !== null && y[x] !== null)
-                        innerDoc.getElementById(x).innerHTML = y[x];
+                    {
+                        switch (key) {
+                            case "total":
+                                text = parseFloat(y[x]) / 100.0;    
+                                break;
+                            case "subTotal":
+                                text = parseFloat(y[x]) / 100.0;    
+                                break;    
+                            default:
+                                text = y[x];
+                                break;
+                        }
+                        innerDoc.getElementById(x).innerHTML = text;
+                    }
                 }
                 // Insert address
                 for (info in infos)

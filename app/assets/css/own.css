@@ -42,8 +42,10 @@
   background-size: cover;
 }
 
-
-
+/* Invoices */
+#invoiceSoloContent > thead > tr > th:nth-child(2) {
+  width: 500px;
+}
 /* REVIEW: modify this to be less */
 
 .artboard {
