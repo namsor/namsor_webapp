@@ -21,7 +21,7 @@ function dataServicesToHTML(data, current, signedIn, currency) {
     return parts.join(".");
   }
   data.plans.forEach(plan => {
-    //if (plan.planName != "ENTERPRISE") {
+    if (plan.planName != "ENTERPRISE") {
       plan.planQuota = numberWithCommas(plan.planQuota);
       html += `
       <div class="col-lg-3 col-sm-6 mb-3">
@@ -49,7 +49,7 @@ function dataServicesToHTML(data, current, signedIn, currency) {
       </div>
       </div>
       `;
-    //}
+    }
   });
   return (html);
 }
