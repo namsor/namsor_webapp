@@ -36,6 +36,11 @@ var getToken = function () {
             if (user) {
                 user.getIdToken().then(function (accessToken) {
                     resolve(accessToken);
+					window.dataLayer = window.dataLayer || [] 
+					dataLayer.push({ 
+					'event': 'loggedInUser', 
+					'loggedIn': 'yes' 
+					}); 
                 }, function (error) {
                     reject(error)
                 });
