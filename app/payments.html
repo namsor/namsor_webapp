@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <title>NamSor v2 Payment methods</title>
+  <meta name="description" content="Add your secure Stripe payment method to use NamSor API to classify personal names accurately by gender, country of origin, diaspora or 'race' / ethnicity" />
+  <meta name="keywords" content="namsor,onomastics,diaspora,ethnicity,name classification,gender,diversity,name recognition software,named entity,ethnic marketing,diaspora marketing,gender marketing" />
+
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="assets/images/logo/logo.png">
+
+  <!-- plugins css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/PACE/themes/blue/pace-theme-minimal.css" />
+  <link rel="stylesheet" href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+  <!-- core css -->
+  <link href="assets/css/ei-icon.css" rel="stylesheet">
+  <link href="assets/css/themify-icons.css" rel="stylesheet">
+  <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/css/animate.min.css" rel="stylesheet">
+  <link href="assets/css/app.css" rel="stylesheet">
+  <link href="assets/css/own.css" rel="stylesheet">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TK74JHJ');</script>
+<!-- End Google Tag Manager -->
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TK74JHJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <div class="app side-nav-dark">
+    <div class="layout">
+      <!-- Side Nav START -->
+      <div class="side-nav">
+        <div class="side-nav-inner">
+          <div class="side-nav-logo">
+            <a href="index.html">
+              <div class="logo logo-dark" style="background-image: url('assets/images/logo/logo.png')"></div>
+              <div class="logo logo-white" style="background-image: url('assets/images/logo/logo.png')"></div>
+
+            </a>
+            <div class="mobile-toggle side-nav-toggle">
+              <a href="">
+                <i class="ti-arrow-circle-left"></i>
+              </a>
+            </div>
+          </div>
+          <ul class="side-nav-menu scrollable">
+            <li class="nav-item">
+              <a class="mrg-top-30" href="index.html">
+                <span class="icon-holder">
+                  <i class="ti-home"></i>
+                </span>
+                <span class="title">Home</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="mrg-top-30" href="pricing.html">
+                <span class="icon-holder">
+                  <i class="ei-hand"></i>
+                </span>
+                <span class="title">Pricing</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="mrg-top-30" href="apidoc.html">
+                <span class="icon-holder">
+                  <i class="ei-file-code"></i>
+                </span>
+                <span class="title">API Documentation</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="mrg-top-30" href="contact.html">
+                <span class="icon-holder">
+                  <i class="ei-phone-book-contact"></i>
+                </span>
+                <span class="title">Contact</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <!-- Side Nav END -->
+
+      <!-- Page Container START -->
+      <div class="page-container">
+        <!-- Header START -->
+
+        <div class="header navbar">
+          <div class="header-container">
+            <ul class="nav-left">
+              <li>
+                <a class="side-nav-toggle" href="javascript:void(0);">
+                  <i class="ti-view-grid"></i>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-right" id="boxSign">
+              <li class="nav-item">
+                <a href="#">
+                  <button id="signin" class="mt-2 nav-link btn btn-outline-success" type="submit" onclick="location.href='sign-in.html'">Sign
+                    in</button>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Header END -->
+
+        <!-- Content Wrapper START -->
+        <div class="main-content">
+          <div class="container-fluid">
+            <div class="page-title col-md-9 offset-md-1">
+              <h4>Payment Settings</h4>
+            </div>
+            <div class="row">
+              <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-1 d-flex align-items-stretch">
+                <div class="card">
+                  <div class="card-block">
+                    <h4 class="card-title">Welcome to NamSor !</h4>
+                  </div>
+                  <div class="card-block">
+                      <p>As a paying customer, we want to give you the best service and all tools you need to manage your account in confidence.</p>
+                      <p>When you register a payment card, an account will be created at our secure payment provider Stripe. From your NamSor account, you can view all your billing history.</p>
+                      <p>We make it easy for you to define soft limits (email notifications) or hard limits (API Key limit) on your subscription. You can also monitor API Usage directly from the API. </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-10 offset-md-1 col-lg-6 offset-lg-0 d-flex align-items-stretch">
+                <div class="card w-100">
+                  <div class="card-block">
+                    <h4 class="card-title">Add or update a payment card</h4>
+                  </div>
+                  <div class="card-block">
+                    <p>We use Stripe for secure payment processing, so we never have access to your card details.</p>
+                    <form action="/NamSorAPIv2/api2/json/charge" method="POST" id="stripeForm">
+                    </form>
+                  </div>
+                  <div class="card-block" id='stripeInfo'>
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <td>Default</td>
+                          <td>Brand</td>
+                          <td>Card number</td>
+                          <td>Expiration date</td>
+                        </tr>
+                      </thead>
+                      <tbody id="cardInfo">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Content Wrapper END -->
+      <!-- Footer START -->
+      <footer class="content-footer">
+        <div class="footer">
+          <div class="copyright">
+            <span> Copyright © 2019 <b class="text-dark">NamSor</b>. NamSor SAS is a French Limited Liability Company, Reg. 81148844400019 - VAT FR84811488444 - Data Reg. 1876223 </span>
+            <span class="go-right">
+              <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" target="top" class="text-gray mrg-right-15">Term &amp; Conditions</a>
+              <a href="assets/pdf/NamSor_Data_Processing_Agreement_v007.pdf" target="top" class="text-gray">DPA</a>
+            </span>
+          </div>
+        </div>
+      </footer>
+      <!-- Footer END -->
+
+
+    </div>
+    <!-- Page Container END -->
+
+  </div>
+  </div>
+
+  <!-- build:js assets/js/vendor.js -->
+  <!-- plugins js -->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+  <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/PACE/pace.min.js"></script>
+  <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:js assets/js/app.min.js -->
+  <!-- core js -->
+  <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+  <script src="assets/js/firebase.js" charset="utf-8"></script>
+  <script src="assets/js/payments.js" charset="utf-8"></script>
+  <script src="assets/js/app.js"></script>
+  <!-- endbuild -->
+
+  <!-- page js -->
+
+</body>
+
+</html>
