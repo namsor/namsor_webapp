@@ -113,7 +113,7 @@ const servicesGestion = {
     getInfoOpt = await getInfo();
     getApiKeyInfo = await getApiKey();
 
-    if (getInfoOpt !== undefined){
+    if (getInfoOpt !== "no user"){
       let result ;
       apiGestion.get({
         key: getApiKeyInfo,
@@ -125,7 +125,7 @@ const servicesGestion = {
         resolve(result);
       })
       .catch(() => reject('Could not process your file, please try with another separator or file.'))
-    } else {
+    } else if (getInfoOpt === "no user"){
       resolve(false);
     }
   }),
@@ -133,7 +133,6 @@ const servicesGestion = {
         resolve(exStructure.routes);
     }),
     papaParsing: id => new Promise (async (resolve, reject) => {
-        console.log("Fonction: papaParsing");
         const {files} = dropzoneGestion;
         const separator = formsGestion.forms[id].separator === "auto" ? "" : formsGestion.forms[id].separator;
         try{
@@ -166,9 +165,6 @@ const servicesGestion = {
       const {files} = dropzoneGestion;
       const {forms} = formsGestion;
       const separator = formsGestion.forms[id].separator === "auto" ? "" : formsGestion.forms[id].separator;
-      console.log(forms[id]);
-      console.log(files[id]);
-
 
       let cols = forms[id].inputsValue.cols;
       try{
@@ -965,7 +961,6 @@ const api_config = {"base":"https://v2.namsor.com/NamSorAPIv2","errorResponses":
 //API GESTION
 let apiGestion = {}
 apiGestion.get = function (options) {
-  // console.log('Request GET');
   opt = options;
   return new Promise((resolve, reject) => {
     try {
@@ -1009,10 +1004,8 @@ apiGestion.post = function (options) {
       // Send
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          console.log('POST Resolved');
           resolve(xhr.response);
         } else {
-          // console.log('POST Rejected');
           reject(xhr.responseText);
         }
       };
@@ -1022,13 +1015,11 @@ apiGestion.post = function (options) {
       xhr.send(body);
     }
     catch (e) {
-      // console.log('POST Rejected');
       reject(e);
     };
   });
 };
 apiGestion.batch = function (fileId, csv) {
-  // console.log('Request BATCH');
   return new Promise(async (resolve, reject) => {
     try {
       const { forms } = formsGestion;
@@ -1052,7 +1043,6 @@ apiGestion.batch = function (fileId, csv) {
           options.ex[key] &&
           options.ex[key] !== csv[0][key]
         ) {
-          console.log('BATCH Rejected');
           reject('Format error, unable to parse the document.');
         };
       });
@@ -1131,7 +1121,6 @@ apiGestion.batch = function (fileId, csv) {
       // Reformat arrays and object
       if (responseArch.meta.length === 1) {
         let fieldObject = responseForm[responseArch.meta];
-        console.log('fieldObject: ', fieldObject);
         Object.keys(fieldObject).forEach(currentField => {
           if (fieldObject[currentField].type === 'array') {
             responseArray.map(dataUnit => dataUnit[currentField] = dataUnit[currentField].join('/'));
@@ -1176,8 +1165,7 @@ const downloadAllButton = byId('download-all-button');
     let isLogin = window.localStorage.getItem("firebaseui::rememberedAccounts");
     // Action à effectuer lors de la mise à jour du local storage
     const storageIsUpdate = async () => {
-        console.log('storageIsUpdate')
-        const justLogged = window.localStorage.getItem("firebaseui::rememberedAccounts");
+      const justLogged = window.localStorage.getItem("firebaseui::rememberedAccounts");
         
         if(isLogin !== justLogged){ //L'utilisateur vient de se connecter
             valideDropzone(); //relancer le choix des modals
