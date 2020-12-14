@@ -112,6 +112,7 @@ const servicesGestion = {
   userIsLogin: () => new Promise (async(resolve, reject) => {
     getInfoOpt = await getInfo();
     getApiKeyInfo = await getApiKey();
+    console.log(getInfoOpt);
 
     if (getInfoOpt !== "no user"){
       let result ;
