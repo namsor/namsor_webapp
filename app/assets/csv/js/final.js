@@ -127,7 +127,7 @@ const servicesGestion = {
       })
       .catch(() => reject('Could not process your file, please try with another separator or file.'))
     } else if (getInfoOpt === "no user"){
-      resolve(false);
+      reject(false);
     }
   }),
     requestStructure: () => new Promise ((resolve, reject) => {
