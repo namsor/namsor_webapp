@@ -1,0 +1,62 @@
+ #footer-csv{
+  background: #4EA399 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 5rem;
+  padding: 1rem 2rem;
+}
+
+#footer-csv a, #footer-csv p{
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+}
+
+#footer-csv .flex{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+}
+
+#footer-csv img{
+  max-height: 4rem;
+  max-width: 4rem;;
+}
+
+#footer-csv .link{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#footer-csv p{
+  color: white;
+  font-size: 12px;
+  padding: 0 2rem;
+  margin: 0;
+}
+
+#footer-csv a{
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+
+@media screen and (max-width: 500px) { 
+  #footer-csv .flex{
+    flex-direction: column-reverse;
+  }
+  #footer-csv p{
+    padding-right: 0;
+  }
+  #footer-csv .link {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+  }
+}

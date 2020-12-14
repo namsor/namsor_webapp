@@ -1,0 +1,296 @@
+#modal-format .modal-content{
+  width: 57rem;
+  max-width: 90vw;
+  max-height: 90vh;
+  padding: 1rem .5rem 1rem 2rem;
+}
+
+#modal-format .modal-content h2{
+  margin-top: .9rem;
+}
+
+#modal-format .modal-content .overflow-x{
+  padding-right: 1.5rem;
+}
+
+#modal-format .hide{
+  display: none;
+}
+
+#modal-format-fieldset{
+  padding: 1rem 3.5rem;
+  padding-top: 0;
+}
+
+#modal-format-fieldset .form{
+  padding-bottom: 3rem;
+  margin-top: 1rem;
+  position: relative;
+  max-width: calc(90vw - 10rem);
+}
+
+#modal-format-fieldset .form:first-child{
+  margin-top: 0;
+}
+
+#modal-format-fieldset .form:before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  border-top: 1px solid #5682A3;
+}
+
+#modal-format-fieldset .first-line{
+  justify-content: start;
+  align-items: flex-end;
+  margin: 1.5rem 0;
+  transform: translateX(-2.5rem);
+}
+
+#modal-format-fieldset .first-line h3 .secondary{
+  font-weight: bold;
+}
+
+#modal-format-fieldset .first-line h3{
+  margin: 0;
+  text-transform: uppercase;
+}
+
+#modal-format-fieldset .first-line img{
+  width: 30px;
+  height: 30px; 
+  cursor: pointer;
+  margin-left: 3rem
+}
+
+#modal-format-fieldset .description-title{
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #5682A3;
+  transform: translateX(-1.5rem);
+  margin-top: 1rem;
+}
+
+
+#modal-format-fieldset .cost{
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+#modal-format-fieldset .summary{
+  width: 40rem;
+  max-width: 100%;
+  color: #344654;
+  margin-top: 0.2rem;
+}
+
+#modal-format-fieldset .inputs-area-title{
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #5682A3;
+  transform: translateX(-1.5rem);
+  margin-top: 1rem;
+}
+
+#modal-format-fieldset .inputs-area > div:first-of-type{
+  margin: .8rem 0;
+}
+
+#modal-format-fieldset .select-input {
+  box-shadow: 3px 3px 7px rgba(52, 70, 84, 0.4);
+}
+
+#modal-format-fieldset .checkbox-header{
+  cursor: pointer;
+}
+
+#modal-format-fieldset .select {
+  padding: .2rem .5rem;
+}
+
+#modal-format-fieldset .select:not([disabled]) {
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(52, 70, 84, 0.2);
+  border: 1px solid #DCDBDB;
+}
+
+
+#modal-format-fieldset .select-area > .input{
+  margin: .8rem 0;
+}
+
+#modal-format-fieldset .select-area > .input.error .select{
+  border: 1px solid #A35856;
+}
+#modal-format-fieldset .select-area > .input p {
+  display: none;
+  color: #A35856;
+  font-size: .7rem;
+  margin-top: 0;
+  font-weight: 600;
+}
+#modal-format-fieldset .select-area > .input.error p{
+  display: block;
+}
+
+#modal-format-fieldset .select-area  select, #modal-format-fieldset .separator-div  select{
+  max-width: max-content;
+}
+
+#modal-format-fieldset .cost-indicator{
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
+#modal-format-fieldset .inputs-area .parsing-error{
+  font-weight: 600;
+  font-size: 16px;
+  transform: translateX(-1.5rem);
+  color: #A35856;
+  margin-top: 2rem;
+}
+
+#modal-format-fieldset .cost-indicator.not-enough, #modal-format-fieldset .cost-indicator.not-enough span{
+  color: #A35856;
+  transform: translateX(-1.5rem);
+}
+#modal-format-fieldset .cost-indicator.enough, #modal-format-fieldset .cost-indicator.enough span{
+  color: #46A362;
+  transform: translateX(-1.5rem);
+}
+
+#modal-format-fieldset .cost-indicator{
+  width: 100%;
+}
+
+#not-all-processing-message, #parsing-error-message{
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 2rem;
+  max-width: calc(90vw - 10rem)
+}
+
+#enough-credits-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  max-width: calc(90vw - 10rem)
+}
+
+#enough-credits-div p{
+  text-align: center;
+}
+
+#enough-credits-div button{
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+#not-enough-credits-div{
+  max-width: calc(90vw - 10rem)
+}
+
+#not-enough-credits-div p{
+  text-align: center;
+}
+
+#not-enough-credits-div p:first-child{
+  color: #A35856;
+  font-weight: 600;
+  padding: 1rem 0;
+}
+
+#not-enough-credits-div .flex{
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+#not-enough-credits-div .flex button{
+  margin: 1rem;
+}
+
+
+/* ==================================================================
+                            RESPONSIVE MOBILE
+====================================================================*/
+
+@media screen and (max-width: 500px) { 
+
+
+  #modal-format .modal-content {
+    padding: 2rem 1rem;
+    padding-top: 3rem;
+    padding-right: 0;
+  }
+  #modal-format .modal-content h2{
+    margin-top: 0;
+  }
+  #modal-format .modal-content .overflow-x{
+    padding-right: 1rem;
+  }
+  #modal-format-fieldset {
+    padding: 1rem;
+  } 
+  #modal-format-fieldset .first-line{
+    transform: translateX(-.7rem);
+  }
+  #modal-format-fieldset .description-title{
+    transform: translateX(0);
+  }
+  #modal-format-fieldset .inputs-area-title {
+    transform: translateX(0);
+}
+  #modal-format-fieldset .inputs-area .parsing-error{
+    transform: translateX(0);
+  }
+  #modal-format-fieldset .cost-indicator.not-enough, #modal-format-fieldset .cost-indicator.not-enough span{
+    transform: translateX(0);
+  }
+  #modal-format-fieldset .cost-indicator.enough, #modal-format-fieldset .cost-indicator.enough span{
+    transform: translateX(0);
+  }
+
+  #modal-format-fieldset .first-line{
+    position: relative;
+  }
+
+  #modal-format-fieldset .first-line h3{
+    padding-right: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  #modal-format-fieldset .first-line .delete{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  #modal-format-fieldset .input, #modal-format-fieldset .separator-div{
+    display: flex;
+    flex-direction: column;
+  }
+  #modal-format-fieldset .input label, #modal-format-fieldset .separator-div label{
+    margin-bottom: .2rem;
+  }
+
+  #not-enough-credits-div{
+    max-width: calc(90vw - 4rem)
+  }
+  #enough-credits-div{
+    max-width: calc(90vw - 4rem)
+  }
+  #not-all-processing-message, #parsing-error-message{
+    max-width: calc(90vw - 4rem)
+  }
+  #modal-format-fieldset .form{
+    max-width: calc(90vw - 4rem);
+  }
+}

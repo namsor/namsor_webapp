@@ -1,0 +1,377 @@
+/* ==================================================================
+                                MODAL
+====================================================================*/
+
+.close-modal{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+/* -------------- Close Button  ------------------*/
+.close-button{
+    display: flex; 
+    z-index: 2 !important;
+    justify-content: center;
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+.close-button .leftright{
+    height: 1px;
+    width: 28px;
+    position: absolute;
+    margin-top: 18px;
+    background-color: #5682A3;
+    border-radius: 2px;
+    transform: rotate(45deg);
+    transition: all .3s ease-in;
+}
+.close-button .rightleft{
+    height: 1px;
+    width: 28px;
+    position: absolute;
+    margin-top: 18px;
+    background-color: #5682A3;
+    border-radius: 2px;
+    transform: rotate(-45deg);
+    transition: all .3s ease-in;
+}
+.close-button label{
+    color: #5682A3;
+    font-family: Helvetica, Arial, sans-serif; 
+    font-size: .5rem;
+    letter-spacing: 2px;
+    transition: all .3s ease-in;
+    opacity: 0;
+}
+.close-button .close{
+    margin: 35px 0 0 0;
+    position: absolute;
+}
+.close-button:hover .leftright{
+transform: rotate(-45deg);
+}
+.close-button:hover .rightleft{
+transform: rotate(45deg);
+}
+.close-button:hover label{
+opacity: 1;
+}
+
+
+
+/* -------------- Modal Login ------------------*/
+#modal-login {
+    position: fixed;
+    display: table;
+    height: 100vh;
+    min-height: 100vh;
+    width: 100vw;
+    margin-left: 0;
+    margin-right: 0;
+    top: 0;
+    left: 0;
+    transform: scale(0);
+    z-index: 35;
+  }
+  #modal-login.six {
+    transform: scale(1);
+  }
+  #modal-login .modal-background {
+    display: table-cell;
+    background: rgba(52, 70, 84, 0.5);
+    text-align: center;
+    vertical-align: middle;
+  }
+  #modal-login .modal-content{
+    background: white;
+    width: 700px;
+    height: 400px;
+    display: inline-block;
+    border-radius: 3px;
+    font-weight: 300;
+    position: relative;
+    z-index: 36;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 2rem;
+  }
+  #modal-login #modal-login-button-div{
+    margin-top: 1rem;
+  }
+  #modal-login #modal-login-button-div a{
+    margin: 1rem;
+  }
+  #modal-login .modal-background .modal-content .modal-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+  }
+  #modal-login .modal-background .modal-content .modal-svg rect {
+    stroke: #fff;
+    stroke-width: 2px;
+    stroke-dasharray: 2202;
+    stroke-dashoffset: 2202;
+  }
+
+  #modal-login.six .modal-background {
+    animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  #modal-login.six .modal-background .modal-content{
+    background-color: transparent;
+    animation: modalFadeIn 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  #modal-login.six .modal-background .modal-content > *:not(svg){
+    opacity: 0;
+    animation: modalContentFadeIn 0.5s 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  #modal-login.six .modal-background .modal-content .modal-svg rect {
+    animation: sketchIn 0.5s 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  #modal-login.six.hide {
+    animation: quickScaleDown 0s 0.5s linear forwards;
+    transition: visibility 1s;
+  }
+  #modal-login.six.hide .modal-background {
+    animation: fadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  #modal-login.six.hide .modal-background .modal-content{
+    animation: modalFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  #modal-login.six.hide .modal-background .modal-content > *:not(svg) {
+    animation: modalContentFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  #modal-login.six.hide .modal-background .modal-content .modal-svg rect {
+    animation: sketchOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      background: rgba(52, 70, 84, 0);
+    }
+    100% {
+      background: rgba(52, 70, 84, 0.5);
+    }
+  }
+  @keyframes fadeOut {
+    0% {
+      background: rgba(52, 70, 84, 0.5);
+    }
+    100% {
+      background: rgba(52, 70, 84, 0);
+    }
+  }
+  
+  @keyframes quickScaleDown {
+    0% {
+      transform: scale(1);
+    }
+    99.9% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  
+  @keyframes sketchIn {
+    0% {
+      stroke-dashoffset: 2202;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes sketchOut {
+    0% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 2202;
+    }
+  }
+  @keyframes modalFadeIn {
+    0% {
+      background-color: transparent;
+    }
+    100% {
+      background-color: white;
+    }
+  }
+  @keyframes modalFadeOut {
+    0% {
+      background-color: white;
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
+  @keyframes modalContentFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes modalContentFadeOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+
+/* -------------- Modal Format ------------------*/
+#modal-format {
+  position: fixed;
+  display: table;
+  height: 100vh;
+  min-height: 100vh;
+  width: 100vw;
+  margin-left: 0;
+  margin-right: 0;
+  top: 0;
+  left: 0;
+  z-index: 35;
+}
+#modal-format .modal-background {
+  display: table-cell;
+  background: rgba(52, 70, 84, 0.5);
+  vertical-align: middle;
+}
+#modal-format .modal-content{
+  background: white;
+  width: max-content;
+  max-width: 90vw;
+  height: max-content;
+  display: inline-block;
+  border-radius: 3px;
+  font-weight: 300;
+  position: relative;
+  z-index: 36;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 2rem;
+}
+
+#modal-format .modal-background {
+  animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-format .modal-background .modal-content{
+  background-color: transparent;
+  animation: modalFadeIn 0.5s 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-format .modal-background .modal-content > *:not(svg){
+  opacity: 0;
+  animation: modalContentFadeIn 0.5s .4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-format.hide {
+  animation: quickScaleDown 0s 0.5s linear forwards;
+  transition: visibility 1s;
+}
+#modal-format.hide .modal-background {
+  animation: fadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-format.hide .modal-background .modal-content{
+  animation: modalFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+#modal-format.hide .modal-background .modal-content > *:not(svg) {
+  animation: modalContentFadeOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+
+
+
+
+    /* ==================================================================
+                            RESPONSIVE MOBILE
+====================================================================*/
+
+@media screen and (max-width: 500px) { 
+
+    /* -------------- Modal  ------------------*/
+    @keyframes sketchIn {
+        0% {
+          stroke-dashoffset: 1202;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+      @keyframes sketchOut {
+        0% {
+          stroke-dashoffset: 0;
+        }
+        100% {
+          stroke-dashoffset: 1202;
+        }
+      }
+    #modal-login .modal-background .modal-content{
+        width: 300px !important;
+        height: 300px !important;
+        padding: 1rem;
+      }
+    #modal-login #modal-login-button-div {
+        margin-top: 0;
+    }
+    #modal-login .modal-background .modal-content .modal-svg rect {
+        stroke: #fff;
+        stroke-width: 2px;
+        stroke-dasharray: 1202;
+        stroke-dashoffset: 1202;
+      }
+  }
+
+
+
+/* ==================================================================
+                            RESPONSIVE TABLETTE
+====================================================================*/
+
+  @media screen and (max-width: 940px) { 
+    /* -------------- Modal  ------------------*/
+    @keyframes sketchIn {
+        0% {
+          stroke-dashoffset: 1602;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+      @keyframes sketchOut {
+        0% {
+          stroke-dashoffset: 0;
+        }
+        100% {
+          stroke-dashoffset: 1602;
+        }
+      }
+    #modal-login .modal-background .modal-content{
+        width: 500px;
+        height: 300px;
+      }
+    #modal-login .modal-background .modal-content .modal-svg rect {
+        stroke: #fff;
+        stroke-width: 2px;
+        stroke-dasharray: 1602;
+        stroke-dashoffset: 1602;
+      }
+  }

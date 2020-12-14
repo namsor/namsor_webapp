@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <Title>NamSor API v2 - your invoice</title>
+	<meta name="description" content="View your NamSor API Invoice - classify personal names accurately by gender, country of origin, diaspora or 'race' / ethnicity" />
+	<meta name="keywords" content="namsor,onomastics,diaspora,ethnicity,name classification,gender,diversity,name recognition software,named entity,ethnic marketing,diaspora marketing,gender marketing" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo/logo.png">
+
+    <!-- plugins css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/PACE/themes/blue/pace-theme-minimal.css" />
+    <link rel="stylesheet" href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+    <!-- core css -->
+    <link href="assets/css/ei-icon.css" rel="stylesheet">
+    <link href="assets/css/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="assets/css/app.css" rel="stylesheet">
+    <link href="assets/css/own.css" rel="stylesheet">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TK74JHJ');</script>
+<!-- End Google Tag Manager -->
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TK74JHJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <div class="container">
+        <div class="card">
+            <div class="pdd-vertical-5 pdd-horizon-10 border bottom print-invisible">
+                <ul class="list-unstyle list-inline text-right">
+                    <li class="list-inline-item">
+                        <a href="" class="btn text-gray text-hover display-block padding-10 no-mrg-btm" onclick="window.print();">
+                            <i class="ti-printer text-info pdd-right-5"></i>
+                            <b>Print</b>
+                        </a>
+                    </li>
+				    <!-- Elian : removed PDF export (no need) -->
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="pdd-horizon-30">
+                    <div class="mrg-top-15">
+                        <div class="inline-block">
+                            <img class="img-responsive" src="assets/images/logo/logo.png" alt="">
+                            <address class="pdd-left-10 mrg-top-20">
+                                <b class="text-dark">NamSor SAS</b><br>
+                                <span>65, rue de la paroisse</span><br>
+                                <span>78000 Versailles, France</span><br>
+								<span>contact@namsor.com</span><br>
+                                <abbr class="text-dark" title="Phone">Phone:</abbr>
+                                <span>+33 6 52 77 99 07</span><br>
+                                <span>Siret : 81148844400019 - NAF : 6201Z</span><br>
+                                <span>TVA : FR 84 811488444</span><br>
+                            </address>
+                        </div>
+                        <div class="pull-right">
+                            <h2>INVOICE</h2>
+                        </div>
+                    </div>
+                    <div class="row mrg-top-20">
+                        <div class="col-sm-8">
+                            <h3 class="pdd-left-10 mrg-top-10">Invoice To:</h3>
+                            <p id='email'></p>
+                            <address class="pdd-left-10 mrg-top-10">
+                                <b class="text-dark" id="customerName"></b><br>
+                                <span id="addressLine1"></span><br>
+                                <span id="addressLine2"></span><br>
+                                <span id="addressCity"></span>
+                                <span id="addressState"></span>
+                                <span id="addressPostalCode"></span>
+                                <span id="addressCountry"></span>
+                                <span id="vatID"></span>
+                            </address>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mrg-top-80">
+                                <div class="text-dark text-uppercase inline-block"><b>Invoice No :</b></div>
+                                <div class="pull-right" id="invoiceId"></div>
+                            </div>
+                            <div class="">
+                                <div class="text-dark text-uppercase inline-block"><b>Date :</b></div>
+                                <div class="pull-right" id="invoiceDate"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mrg-top-20">
+                        <div class="col-md-12">
+                            <table class="table table-hover" id="invoiceSoloContent">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Items</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th class="text-right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <div class="row mrg-top-30">
+                                <div class="col-md-12">
+                                    <div class="pull-right text-right">
+                                        <p>Sub - Total amount: <span id="subTotal"></span></p>
+                                        <p>VAT : <span id="tax"></span></p>
+                                        <hr>
+                                        <h3><b>Total : </b><span id="total"></span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mrg-top-30">
+                                <div class="col-md-12">
+                                    <div class="border top bottom pdd-vertical-20">
+                                        <p class="text-opacity"><small>Corporate Payment Terms = 7 days by direct bank transfer to NAMSOR SAS, IBAN = FR76 3000 3022 1000 0203 6659 309, SWIFT = SOGEFRPP, BANK = SOCIETE GENERALE, VERSAILLES, 78000 FRANCE.</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mrg-vertical-20">
+                                <div class="offset-md-6 col-md-6 text-right">
+                                    <small>Thank you for your business!</small><br>
+                                    <small><b>Phone:</b> +33 6 52 77 99 07</small><br>
+                                    <small>elian.carsenat@namsor.com</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- build:js assets/js/vendor.js -->
+    <!-- plugins js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+    <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/PACE/pace.min.js"></script>
+    <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js assets/js/app.min.js -->
+    <!-- core js -->
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script src="assets/js/firebase.js" charset="utf-8"></script>
+    <script src="assets/js/app.js"></script>
+    <!-- endbuild -->
+
+    <!-- page js -->
+
+</body>
+
+</html>

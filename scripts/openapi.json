@@ -1,0 +1,4045 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "NamSor API v2",
+		"description": "NamSor API v2 : enpoints to process personal names (gender, cultural origin or ethnicity) in all alphabets or languages. Use GET methods for small tests, but prefer POST methods for higher throughput (batch processing of up to 100 names at a time). Need something you can't find here? We have many more features coming soon. Let us know, we'll do our best to add it! ",
+		"contact": {
+			"name": "Namsor SAS",
+			"url": "http://www.namsor.com/",
+			"email": "contact@namsor.com"
+		},
+		"license": {
+			"name": "NamSorAPI_Lic_v0.0.7",
+			"url": "https://v2.namsor.com/NamSorAPIv2/assets/pdf/201803_NamSor_API_Terms_v007.pdf"
+		},
+		"version": "2.0.11"
+	},
+	"externalDocs": {
+		"description": "NamSor API client SDKs v2 for Java, Python",
+		"url": "https://github.com/namsor"
+	},
+	"servers": [
+		{
+			"url": "https://v2.namsor.com/NamSorAPIv2",
+			"description": "namsor_v2",
+			"variables": {}
+		}
+	],
+	"security": [{ "api_key": [] }],
+	"tags": [
+		{
+			"name": "personal",
+			"description": "Personal names (anthroponyms) : gender, country origin/ethnicity, diaspora, US 'race'/ethniciy"
+		},
+		{ "name": "social", "description": "Social media and pseudonyms" },
+		{ "name": "chinese", "description": "CHINESE special features" },
+		{ "name": "japanese", "description": "JAPANESE special features" },
+		{ "name": "admin", "description": "Administrative, system management." }
+	],
+	"paths": {
+		"/api2/json/nameType/{properNoun}": {
+			"get": {
+				"tags": ["general"],
+				"summary": "Infer the likely type of a proper noun (personal name, brand name, place name etc.)",
+				"operationId": "nameType",
+				"parameters": [
+					{
+						"name": "properNoun",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A typed name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProperNounCategorizedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/nameType/{properNoun}/{countryIso2}": {
+			"get": {
+				"tags": ["general"],
+				"summary": "Infer the likely type of a proper noun (personal name, brand name, place name etc.)",
+				"operationId": "nameType_1",
+				"parameters": [
+					{
+						"name": "properNoun",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "countryIso2",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A typed name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProperNounCategorizedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/country/{personalNameFull}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "[USES 10 UNITS PER NAME] Infer the likely country of residence of a personal full name, or one surname. Assumes names as they are in the country of residence OR the country of origin.",
+				"operationId": "country",
+				"parameters": [
+					{
+						"name": "personalNameFull",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A origined name.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/PersonalNameGeoOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/origin/{firstName}/{lastName}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "[USES 10 UNITS PER NAME] Infer the likely country of origin of a personal name. Assumes names as they are in the country of origin. For US, CA, AU, NZ and other melting-pots : use 'diaspora' instead.",
+				"operationId": "origin",
+				"parameters": [
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A origined name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNameOriginedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/stripeConnect": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Connects a Stripe Account.",
+				"operationId": "stripeConnect",
+				"parameters": [
+					{ "name": "scope", "in": "query", "schema": { "type": "string" } },
+					{ "name": "code", "in": "query", "schema": { "type": "string" } },
+					{ "name": "error", "in": "query", "schema": { "type": "string" } },
+					{
+						"name": "error_description",
+						"in": "query",
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Missing or incorrect email or payment token"
+					}
+				}
+			}
+		},
+		"/api2/json/charge": {
+			"post": {
+				"tags": ["admin"],
+				"summary": "Create a Stripe Customer, based on a payment card token (from secure StripeJS) and email.",
+				"operationId": "charge",
+				"requestBody": {
+					"content": {
+						"*/*": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"stripeToken": { "type": "string" },
+									"stripeEmail": { "type": "string" }
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A stripe customerID",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIKeyOut" }
+							}
+						}
+					},
+					"401": {
+						"description": "Missing or incorrect email or payment token"
+					}
+				}
+			}
+		},
+		"/api2/json/paymentInfo/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Get the Stripe payment information associated with the current google auth session token.",
+				"operationId": "paymentInfo",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An session token",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIKeyOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/updatePaymentDefault/{defautSourceId}/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Update the default Stripe card associated with the current google auth session token.",
+				"operationId": "updatePaymentDefault",
+				"parameters": [
+					{
+						"name": "defautSourceId",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An session token",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIKeyOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/softwareVersion": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Get the current software version",
+				"operationId": "softwareVersion",
+				"responses": {
+					"200": {
+						"description": "The current software version",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/SoftwareVersionOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/namsorCounter": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Get the overall API counter",
+				"operationId": "namsorCounter",
+				"responses": {
+					"200": {
+						"description": "The overall API counter",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/SoftwareVersionOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/billingCurrencies": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "List possible currency options for billing (USD, EUR, GBP, ...)",
+				"operationId": "billingCurrencies",
+				"responses": {
+					"200": {
+						"description": "The supported billing currencies.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/CurrenciesOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/billingInfo/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Read the billing information (company name, address, phone, vat ID)",
+				"operationId": "billingInfo",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The current billing info",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/BillingInfoInOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/updateBillingInfo/{token}": {
+			"post": {
+				"tags": ["admin"],
+				"summary": "Sets or update the billing information (company name, address, phone, vat ID)",
+				"operationId": "updateBillingInfo",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json;charset=UTF-8": {
+							"schema": { "$ref": "#/components/schemas/BillingInfoInOut" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "The updated billing info",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/BillingInfoInOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/billingHistory/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Read the history billing information (invoices paid via Stripe or manually).",
+				"operationId": "billingHistory",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The billing history",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/BillingHistoryOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/procureKey/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Procure an API Key (sent via Email), based on an auth token. Keep your API Key secret.",
+				"operationId": "procureKey",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An API Key",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIKeyOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/availablePlans/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "List all available plans in the user's preferred currency.",
+				"operationId": "availablePlans",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Available plans",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPlansOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/availablePlans": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "List all available plans in the default currency (usd).",
+				"operationId": "availablePlans_1",
+				"responses": {
+					"200": {
+						"description": "Available plans",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPlansOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/apiStatus": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Prints the current status of the classifiers.",
+				"operationId": "apiStatus",
+				"responses": {
+					"200": {
+						"description": "Available classifiers and status",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPlansOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/apiServices": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "List of API services and usage cost in Units (default is 1=ONE Unit).",
+				"operationId": "availableServices",
+				"responses": {
+					"200": {
+						"description": "Available services",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPlansOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/taxonomyClasses/{classifierName}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Print the taxonomy classes valid for the given classifier.",
+				"operationId": "taxonomyClasses",
+				"parameters": [
+					{
+						"name": "classifierName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Available plans",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPlansOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/subscribePlan/{planName}/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Subscribe to a give API plan, using the user's preferred or default currency.",
+				"operationId": "subscribePlan",
+				"parameters": [
+					{
+						"name": "planName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An API subscription",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/APIPlanSubscriptionOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/subscribePlanOnBehalf/{planName}/{apiKey}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Subscribe to a give API plan, using the user's preferred or default currency (admin only).",
+				"operationId": "subscribePlanOnBehalf",
+				"parameters": [
+					{
+						"name": "planName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "apiKey",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An API subscription",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/APIPlanSubscriptionOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/removeUserAccount/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Remove the user account.",
+				"operationId": "removeUserAccount",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An API subscription",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/APIPlanSubscriptionOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/removeUserAccountOnBehalf/{apiKey}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Remove (on behalf) a user account.",
+				"operationId": "removeUserAccountOnBehalf",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An API subscription",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/APIPlanSubscriptionOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/updateLimit/{usageLimit}/{hardOrSoft}/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Modifies the hard/soft limit on the API plan's overages (default is 0$ soft limit).",
+				"operationId": "updateLimit",
+				"parameters": [
+					{
+						"name": "usageLimit",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "integer", "format": "int32" }
+					},
+					{
+						"name": "hardOrSoft",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "boolean" }
+					},
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An API subscription",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPeriodUsageOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/verifyEmail/{emailToken}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Verifies an email, based on token sent to that email",
+				"operationId": "verifyEmail",
+				"parameters": [
+					{
+						"name": "emailToken",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An API Key",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIKeyOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/verifyRemoveEmail/{emailToken}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Verifies an email, based on token sent to that email",
+				"operationId": "verifyRemoveEmail",
+				"parameters": [
+					{
+						"name": "emailToken",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An API Key",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIKeyOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/stats": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Print basic system statistics.",
+				"operationId": "stats",
+				"responses": {
+					"200": {
+						"description": "Current system status.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/SystemMetricsOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/apiUsage": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Print current API usage.",
+				"operationId": "apiUsage",
+				"responses": {
+					"200": {
+						"description": "Print current API usage.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPeriodUsageOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/apiUsageHistory": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Print historical API usage.",
+				"operationId": "apiUsageHistory",
+				"responses": {
+					"200": {
+						"description": "Print historical API usage.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPeriodUsageOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/apiUsageHistoryAggregate": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Print historical API usage (in an aggregated view, by service, by day/hour/min).",
+				"operationId": "apiUsageHistoryAggregate",
+				"responses": {
+					"200": {
+						"description": "Print historical API usage.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIPeriodUsageOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/sourceStats/{source}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Print basic source statistics.",
+				"operationId": "sourceStats",
+				"parameters": [
+					{
+						"name": "source",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Current system status.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/SystemMetricsOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/addCredits/{apiKey}/{usageCredits}/{userMessage}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Add usage credits to an API Key.",
+				"operationId": "addCredits",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "usageCredits",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "integer", "format": "int64" }
+					},
+					{
+						"name": "userMessage",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Estimate new after applying credits.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/SystemMetricsOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/redeployUI/{live}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Redeploy UI from current dev branch.",
+				"operationId": "redeployUI",
+				"parameters": [
+					{
+						"name": "live",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "boolean" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Redeploy UI from DEV." },
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/redeployUI": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Redeploy UI from current dev branch.",
+				"operationId": "redeployUI_1",
+				"responses": {
+					"200": { "description": "Redeploy UI from DEV." },
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/invalidateCache": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Invalidate system caches.",
+				"operationId": "invalidateCache",
+				"responses": {
+					"200": { "description": "Clear caches." },
+					"401": { "description": "Missing or incorrect API Key" }
+				}
+			}
+		},
+		"/api2/json/debugLevel/{logger}/{level}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Update debug level for a classifier",
+				"operationId": "debugLevel",
+				"parameters": [
+					{
+						"name": "logger",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "level",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"401": { "description": "Missing or incorrect API Key" }
+				}
+			}
+		},
+		"/api2/json/learnable/{source}/{learnable}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Activate/deactivate learning from a source.",
+				"operationId": "learnable",
+				"parameters": [
+					{
+						"name": "source",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "learnable",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "boolean" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Vetting of a source." },
+					"401": { "description": "Missing or incorrect API Key" }
+				}
+			}
+		},
+		"/api2/json/anonymize/{source}/{anonymized}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Activate/deactivate anonymization for a source.",
+				"operationId": "anonymize",
+				"parameters": [
+					{
+						"name": "source",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "anonymized",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "boolean" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Anonymization of a source." },
+					"401": { "description": "Missing or incorrect API Key" }
+				}
+			}
+		},
+		"/api2/json/vetting/{source}/{vetted}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Vetting of a source.",
+				"operationId": "vet",
+				"parameters": [
+					{
+						"name": "source",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "vetted",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "boolean" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Vetting of a source." },
+					"401": { "description": "Missing or incorrect API Key" }
+				}
+			}
+		},
+		"/api2/json/corporateKey/{apiKey}/{corporate}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Setting an API Key to a corporate status.",
+				"operationId": "corporateKey",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "corporate",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "boolean" }
+					}
+				],
+				"responses": {
+					"200": { "description": "API Key set to a corporate status." },
+					"401": { "description": "Missing or incorrect API Key" }
+				}
+			}
+		},
+		"/api2/json/gender/{firstName}/{lastName}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of a name.",
+				"operationId": "gender",
+				"parameters": [
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A genderized name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderGeo/{firstName}/{lastName}/{countryIso2}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of a name, given a local context (ISO2 country code).",
+				"operationId": "genderGeo",
+				"parameters": [
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "countryIso2",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A genderized name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderGeoBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of up to 100 names, each given a local context (ISO2 country code).",
+				"operationId": "genderGeoBatch",
+				"requestBody": {
+					"description": "A list of names, with country code.",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchFirstLastNameGeoIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of up to 100 names, detecting automatically the cultural context.",
+				"operationId": "genderBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parsedGenderBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of up to 100 fully parsed names, detecting automatically the cultural context.",
+				"operationId": "parsedGenderBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchParsedFullNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parsedGenderGeoBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of up to 100 fully parsed names, detecting automatically the cultural context.",
+				"operationId": "parsedGenderGeoBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchParsedFullNameGeoIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderFullGeo/{fullName}/{countryIso2}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of a full name, given a local context (ISO2 country code).",
+				"operationId": "genderFullGeo",
+				"parameters": [
+					{
+						"name": "fullName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "countryIso2",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A genderized name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderFull/{fullName}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of a full name, ex. John H. Smith",
+				"operationId": "genderFull",
+				"parameters": [
+					{
+						"name": "fullName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A genderized name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderFullBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of up to 100 full names, detecting automatically the cultural context.",
+				"operationId": "genderFullBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchPersonalNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderFullGeoBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "Infer the likely gender of up to 100 full names, with a given cultural context (country ISO2 code).",
+				"operationId": "genderFullGeoBatch",
+				"requestBody": {
+					"description": "A list of personal names, with a country ISO2 code",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchPersonalNameGeoIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/originBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "[USES 10 UNITS PER NAME] Infer the likely country of origin of up to 100 names, detecting automatically the cultural context.",
+				"operationId": "originBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameOriginedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/countryBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "[USES 10 UNITS PER NAME] Infer the likely country of residence of up to 100 personal full names, or surnames. Assumes names as they are in the country of residence OR the country of origin.",
+				"operationId": "countryBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchPersonalNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameGeoOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/usRaceEthnicity/{firstName}/{lastName}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "[USES 10 UNITS PER NAME] Infer a US resident's likely race/ethnicity according to US Census taxonomy W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).",
+				"operationId": "usRaceEthnicity",
+				"parameters": [
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "a US resident's likely race/ethnicity : W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNameUSRaceEthnicityOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/usRaceEthnicityZIP5/{firstName}/{lastName}/{zip5Code}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "[USES 10 UNITS PER NAME] Infer a US resident's likely race/ethnicity according to US Census taxonomy, using (optional) ZIP5 code info. Output is W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).",
+				"operationId": "usRaceEthnicityZIP5",
+				"parameters": [
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "zip5Code",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "a US resident's likely race/ethnicity : W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNameUSRaceEthnicityOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/usRaceEthnicityBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "[USES 10 UNITS PER NAME] Infer up-to 100 US resident's likely race/ethnicity according to US Census taxonomy.",
+				"operationId": "usRaceEthnicityBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchFirstLastNameGeoIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of US resident's likely race/ethnicity. W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameUSRaceEthnicityOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/usZipRaceEthnicityBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "[USES 10 UNITS PER NAME] Infer up-to 100 US resident's likely race/ethnicity according to US Census taxonomy, with (optional) ZIP code.",
+				"operationId": "usZipRaceEthnicityBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchFirstLastNameGeoZippedIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of US resident's likely race/ethnicity. W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameUSRaceEthnicityOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/diaspora/{countryIso2}/{firstName}/{lastName}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "[USES 20 UNITS PER NAME] Infer the likely ethnicity/diaspora of a personal name, given a country of residence ISO2 code (ex. US, CA, AU, NZ etc.)",
+				"operationId": "diaspora",
+				"parameters": [
+					{
+						"name": "countryIso2",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A diaspora / ethnicity for given name and geography.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNameDiasporaedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/diasporaBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "[USES 20 UNITS PER NAME] Infer the likely ethnicity/diaspora of up to 100 personal names, given a country of residence ISO2 code (ex. US, CA, AU, NZ etc.)",
+				"operationId": "diasporaBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchFirstLastNameGeoIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of diaspora / ethnicity given a name and residency.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameDiasporaedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parseName/{nameFull}/{countryIso2}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John. For better accuracy, provide a geographic context.",
+				"operationId": "parseNameGeo",
+				"parameters": [
+					{
+						"name": "nameFull",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "countryIso2",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A origined name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parseNameBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John.",
+				"operationId": "parseNameBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchPersonalNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of parsed names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parseNameGeoBatch": {
+			"post": {
+				"tags": ["personal"],
+				"summary": "Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John. Giving a local context improves precision. ",
+				"operationId": "parseNameGeoBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchPersonalNameGeoIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of parsed names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parseChineseName/{chineseName}": {
+			"get": {
+				"tags": ["chinese"],
+				"summary": "Infer the likely first/last name structure of a name, ex. 王晓明 -> 王(surname) 晓明(given name)",
+				"operationId": "parseChineseName",
+				"parameters": [
+					{
+						"name": "chineseName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A origined name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parseChineseNameBatch": {
+			"post": {
+				"tags": ["chinese"],
+				"summary": "Infer the likely first/last name structure of a name, ex. 王晓明 -> 王(surname) 晓明(given name).",
+				"operationId": "parseChineseNameBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchPersonalNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of parsed names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/pinyinChineseName/{chineseName}": {
+			"get": {
+				"tags": ["chinese"],
+				"summary": "Romanize the Chinese name to Pinyin, ex. 王晓明 -> Wang (surname) Xiaoming (given name)",
+				"operationId": "pinyinChineseName",
+				"parameters": [
+					{
+						"name": "chineseName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A pinyin name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/pinyinChineseNameBatch": {
+			"post": {
+				"tags": ["chinese"],
+				"summary": "Romanize a list of Chinese name to Pinyin, ex. 王晓明 -> Wang (surname) Xiaoming (given name).",
+				"operationId": "pinyinChineseNameBatch",
+				"requestBody": {
+					"description": "A list of Chinese names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchPersonalNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of Pinyin names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/chineseNameMatch/{chineseSurnameLatin}/{chineseGivenNameLatin}/{chineseName}": {
+			"get": {
+				"tags": ["chinese"],
+				"summary": "Return a score for matching Chinese name ex. 王晓明 with a romanized name ex. Wang Xiaoming",
+				"operationId": "chineseNameMatch",
+				"parameters": [
+					{
+						"name": "chineseSurnameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "chineseGivenNameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "chineseName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A romanized name.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/RomanizedNameOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/chineseNameMatchBatch": {
+			"post": {
+				"tags": ["chinese"],
+				"summary": "Identify Chinese name candidates, based on the romanized name (firstName = chineseGivenName; lastName=chineseSurname), ex. Wang Xiaoming",
+				"operationId": "chineseNameMatchBatch",
+				"requestBody": {
+					"description": "A list of personal Chinese names in LATIN, firstName = chineseGivenName; lastName=chineseSurname",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchNameMatchCandidatesOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderChineseNamePinyin/{chineseSurnameLatin}/{chineseGivenNameLatin}": {
+			"get": {
+				"tags": ["chinese"],
+				"summary": "Infer the likely gender of a Chinese name in LATIN (Pinyin).",
+				"operationId": "genderChineseNamePinyin",
+				"parameters": [
+					{
+						"name": "chineseSurnameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "chineseGivenNameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A genderized name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderChineseNamePinyinBatch": {
+			"post": {
+				"tags": ["chinese"],
+				"summary": "Infer the likely gender of up to 100 Chinese names in LATIN (Pinyin).",
+				"operationId": "genderChineseNamePinyinBatch",
+				"requestBody": {
+					"description": "A list of names, with country code.",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderChineseName/{chineseName}": {
+			"get": {
+				"tags": ["chinese"],
+				"summary": "Infer the likely gender of a Chinese full name ex. 王晓明",
+				"operationId": "genderChineseName",
+				"parameters": [
+					{
+						"name": "chineseName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A genderized name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderChineseNameBatch": {
+			"post": {
+				"tags": ["chinese"],
+				"summary": "Infer the likely gender of up to 100 full names ex. 王晓明",
+				"operationId": "genderChineseNameBatch",
+				"requestBody": {
+					"description": "A list of personal names, with a country ISO2 code",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchPersonalNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/chineseNameCandidates/{chineseSurnameLatin}/{chineseGivenNameLatin}": {
+			"get": {
+				"tags": ["chinese"],
+				"summary": "Identify Chinese name candidates, based on the romanized name ex. Wang Xiaoming",
+				"operationId": "chineseNameCandidates",
+				"parameters": [
+					{
+						"name": "chineseSurnameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "chineseGivenNameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A romanized name.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/RomanizedNameOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/chineseNameCandidatesBatch": {
+			"post": {
+				"tags": ["chinese"],
+				"summary": "Identify Chinese name candidates, based on the romanized name (firstName = chineseGivenName; lastName=chineseSurname), ex. Wang Xiaoming",
+				"operationId": "chineseNameCandidatesBatch",
+				"requestBody": {
+					"description": "A list of personal Chinese names in LATIN, firstName = chineseGivenName; lastName=chineseSurname",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchNameMatchCandidatesOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/chineseNameGenderCandidates/{chineseSurnameLatin}/{chineseGivenNameLatin}/{knownGender}": {
+			"get": {
+				"tags": ["chinese"],
+				"summary": "Identify Chinese name candidates, based on the romanized name ex. Wang Xiaoming - having a known gender ('male' or 'female')",
+				"operationId": "chineseNameGenderCandidates",
+				"parameters": [
+					{
+						"name": "chineseSurnameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "chineseGivenNameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "knownGender",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A romanized name.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/RomanizedNameOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/chineseNameCandidatesGenderBatch": {
+			"post": {
+				"tags": ["chinese"],
+				"summary": "Identify Chinese name candidates, based on the romanized name (firstName = chineseGivenName; lastName=chineseSurname) ex. Wang Xiaoming.",
+				"operationId": "chineseNameCandidatesGenderBatch",
+				"requestBody": {
+					"description": "A list of personal Chinese names in LATIN, firstName = chineseGivenName; lastName=chineseSurname",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchNameMatchCandidatesOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parseJapaneseName/{japaneseName}": {
+			"get": {
+				"tags": ["japanese"],
+				"summary": "Infer the likely first/last name structure of a name, ex. 山本 早苗 or Yamamoto Sanae",
+				"operationId": "parseJapaneseName",
+				"parameters": [
+					{
+						"name": "japaneseName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A origined name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/parseJapaneseNameBatch": {
+			"post": {
+				"tags": ["japanese"],
+				"summary": "Infer the likely first/last name structure of a name, ex. 山本 早苗 or Yamamoto Sanae ",
+				"operationId": "parseJapaneseNameBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchPersonalNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of parsed names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/japaneseNameKanjiCandidates/{japaneseSurnameLatin}/{japaneseGivenNameLatin}": {
+			"get": {
+				"tags": ["japanese"],
+				"summary": "Identify japanese name candidates in KANJI, based on the romanized name ex. Yamamoto Sanae",
+				"operationId": "japaneseNameKanjiCandidates",
+				"parameters": [
+					{
+						"name": "japaneseSurnameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "japaneseGivenNameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A romanized name.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/RomanizedNameOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/japaneseNameLatinCandidates/{japaneseSurnameKanji}/{japaneseGivenNameKanji}": {
+			"get": {
+				"tags": ["japanese"],
+				"summary": "Romanize japanese name, based on the name in Kanji.",
+				"operationId": "japaneseNameLatinCandidates",
+				"parameters": [
+					{
+						"name": "japaneseSurnameKanji",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "japaneseGivenNameKanji",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A romanized name.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/RomanizedNameOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/japaneseNameKanjiCandidatesBatch": {
+			"post": {
+				"tags": ["japanese"],
+				"summary": "Identify japanese name candidates in KANJI, based on the romanized name (firstName = japaneseGivenName; lastName=japaneseSurname), ex. Yamamoto Sanae",
+				"operationId": "japaneseNameKanjiCandidatesBatch",
+				"requestBody": {
+					"description": "A list of personal japanese names in LATIN, firstName = japaneseGivenName; lastName=japaneseSurname",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchNameMatchCandidatesOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/japaneseNameLatinCandidatesBatch": {
+			"post": {
+				"tags": ["japanese"],
+				"summary": "Romanize japanese names, based on the name in KANJI",
+				"operationId": "japaneseNameLatinCandidatesBatch",
+				"requestBody": {
+					"description": "A list of personal japanese names in KANJI, firstName = japaneseGivenName; lastName=japaneseSurname",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchNameMatchCandidatesOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/japaneseNameMatch/{japaneseSurnameLatin}/{japaneseGivenNameLatin}/{japaneseName}": {
+			"get": {
+				"tags": ["japanese"],
+				"summary": "Return a score for matching Japanese name in KANJI ex. 山本 早苗 with a romanized name ex. Yamamoto Sanae",
+				"operationId": "japaneseNameMatch",
+				"parameters": [
+					{
+						"name": "japaneseSurnameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "japaneseGivenNameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "japaneseName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A romanized name.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/RomanizedNameOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/japaneseNameMatchFeedbackLoop/{japaneseSurnameLatin}/{japaneseGivenNameLatin}/{japaneseName}": {
+			"get": {
+				"tags": ["japanese"],
+				"summary": "[CREDITS 1 UNIT] Feedback loop to better perform matching Japanese name in KANJI ex. 山本 早苗 with a romanized name ex. Yamamoto Sanae",
+				"operationId": "japaneseNameMatchFeedbackLoop",
+				"parameters": [
+					{
+						"name": "japaneseSurnameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "japaneseGivenNameLatin",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "japaneseName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A romanized name.",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/RomanizedNameOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/japaneseNameMatchBatch": {
+			"post": {
+				"tags": ["japanese"],
+				"summary": "Return a score for matching a list of Japanese names in KANJI ex. 山本 早苗 with romanized names ex. Yamamoto Sanae",
+				"operationId": "japaneseNameMatchBatch",
+				"requestBody": {
+					"description": "A list of personal Japanese names in LATIN, firstName = japaneseGivenName; lastName=japaneseSurname",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of matched names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchNameMatchCandidatesOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderJapaneseName/{japaneseSurname}/{japaneseGivenName}": {
+			"get": {
+				"tags": ["japanese"],
+				"summary": "Infer the likely gender of a Japanese name in LATIN (Pinyin).",
+				"operationId": "genderJapaneseNamePinyin",
+				"parameters": [
+					{
+						"name": "japaneseSurname",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "japaneseGivenName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A genderized name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderJapaneseNameBatch": {
+			"post": {
+				"tags": ["japanese"],
+				"summary": "Infer the likely gender of up to 100 Japanese names in LATIN (Pinyin).",
+				"operationId": "genderJapaneseNamePinyinBatch",
+				"requestBody": {
+					"description": "A list of names, with country code.",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchFirstLastNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderJapaneseNameFull/{japaneseName}": {
+			"get": {
+				"tags": ["japanese"],
+				"summary": "Infer the likely gender of a Japanese full name ex. 王晓明",
+				"operationId": "genderJapaneseNameFull",
+				"parameters": [
+					{
+						"name": "japaneseName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A genderized name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/genderJapaneseNameFullBatch": {
+			"post": {
+				"tags": ["japanese"],
+				"summary": "Infer the likely gender of up to 100 full names",
+				"operationId": "genderJapaneseNameFullBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/BatchPersonalNameIn" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchPersonalNameGenderedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/phoneCode/{firstName}/{lastName}/{phoneNumber}": {
+			"get": {
+				"tags": ["social"],
+				"summary": "[USES 11 UNITS PER NAME] Infer the likely country and phone prefix, given a personal name and formatted / unformatted phone number.",
+				"operationId": "phoneCode",
+				"parameters": [
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "phoneNumber",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A name with country and phone code.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNamePhoneCodedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/phoneCodeGeo/{firstName}/{lastName}/{phoneNumber}/{countryIso2}": {
+			"get": {
+				"tags": ["social"],
+				"summary": "[USES 11 UNITS PER NAME] Infer the likely phone prefix, given a personal name and formatted / unformatted phone number, with a local context (ISO2 country of residence).",
+				"operationId": "phoneCodeGeo",
+				"parameters": [
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "phoneNumber",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "countryIso2",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A name with country and phone code.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNamePhoneCodedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/phoneCodeGeoFeedbackLoop/{firstName}/{lastName}/{phoneNumber}/{phoneNumberE164}/{countryIso2}": {
+			"get": {
+				"tags": ["social"],
+				"summary": "[CREDITS 1 UNIT] Feedback loop to better infer the likely phone prefix, given a personal name and formatted / unformatted phone number, with a local context (ISO2 country of residence).",
+				"operationId": "phoneCodeGeoFeedbackLoop",
+				"parameters": [
+					{
+						"name": "firstName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "lastName",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "phoneNumber",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "phoneNumberE164",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "countryIso2",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A name with country and phone code.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FirstLastNamePhoneCodedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/phoneCodeBatch": {
+			"post": {
+				"tags": ["social"],
+				"summary": "[USES 11 UNITS PER NAME] Infer the likely country and phone prefix, of up to 100 personal names, detecting automatically the local context given a name and formatted / unformatted phone number.",
+				"operationId": "phoneCodeBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchFirstLastNamePhoneNumberIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNamePhoneCodedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/phoneCodeGeoBatch": {
+			"post": {
+				"tags": ["social"],
+				"summary": "[USES 11 UNITS PER NAME] Infer the likely country and phone prefix, of up to 100 personal names, with a local context (ISO2 country of residence).",
+				"operationId": "phoneCodeGeoBatch",
+				"requestBody": {
+					"description": "A list of personal names",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BatchFirstLastNamePhoneNumberGeoIn"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A list of genderized names.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchFirstLastNamePhoneCodedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/shutdown": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Stop learning and shutdown system.",
+				"operationId": "shutdown",
+				"responses": {
+					"200": { "description": "Shutdown AI." },
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/flush": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Flush counters.",
+				"operationId": "flush",
+				"responses": {
+					"200": { "description": "Flush API Key caches." },
+					"401": { "description": "Missing or incorrect API Key" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		},
+		"/api2/json/userInfo/{token}": {
+			"get": {
+				"tags": ["admin"],
+				"summary": "Get the user profile associated with the current google auth session token.",
+				"operationId": "userInfo",
+				"parameters": [
+					{
+						"name": "token",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "An session token",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/APIKeyOut" }
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect token" }
+				}
+			}
+		},
+		"/api2/json/parseName/{nameFull}": {
+			"get": {
+				"tags": ["personal"],
+				"summary": "Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John. ",
+				"operationId": "parseName",
+				"parameters": [
+					{
+						"name": "nameFull",
+						"in": "path",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "A origined name.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PersonalNameParsedOut"
+								}
+							}
+						}
+					},
+					"401": { "description": "Missing or incorrect API Key" },
+					"403": { "description": "API Limit Reached or API Key Disabled" }
+				},
+				"security": [{ "api_key": [] }]
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"BatchFirstLastNameGenderedOut": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/FirstLastNameGenderedOut" }
+					}
+				},
+				"description": "Represents the output of inferring the LIKELY gender from a list of personal names.",
+				"xml": { "name": "BatchFirstLastNameGenderedOut" }
+			},
+			"BillingInfoInOut": {
+				"type": "object",
+				"properties": {
+					"billingEmail": { "type": "string" },
+					"preferredCurrency": { "type": "string" },
+					"customerName": { "type": "string" },
+					"customerPhone": { "type": "string" },
+					"addressLine1": { "type": "string" },
+					"addressLine2": { "type": "string" },
+					"addressCity": { "type": "string" },
+					"addressPostalCode": { "type": "string" },
+					"addressState": { "type": "string" },
+					"addressCountry": { "type": "string" },
+					"vatID": { "type": "string" }
+				},
+				"xml": { "name": "BillingInfoInOut" }
+			},
+			"StripeCardOut": {
+				"type": "object",
+				"properties": {
+					"defaultCard": { "type": "boolean" },
+					"sourceId": { "type": "string" },
+					"expMonth": { "type": "integer", "format": "int64" },
+					"expYear": { "type": "integer", "format": "int64" },
+					"last4": { "type": "string" },
+					"brand": { "type": "string" }
+				},
+				"xml": { "name": "StripeCustomerOut" }
+			},
+			"BatchParsedFullNameGeoIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/ParsedFullNameGeoIn" }
+					}
+				},
+				"xml": { "name": "BatchParsedFullNameGeoIn" }
+			},
+			"UserInfoOut": {
+				"type": "object",
+				"properties": {
+					"uid": { "type": "string" },
+					"email": { "type": "string" },
+					"phoneNumber": { "type": "string" },
+					"emailVerified": { "type": "boolean" },
+					"displayName": { "type": "string" },
+					"photoUrl": { "type": "string" },
+					"disabled": { "type": "boolean" },
+					"firstKnownIpAddress": { "type": "string" },
+					"providerId": { "type": "string" },
+					"timeStamp": { "type": "integer", "format": "int64" },
+					"verifyToken": { "type": "string" },
+					"apiKey": { "type": "string" },
+					"stripePerishableKey": { "type": "string" },
+					"stripeCustomerId": { "type": "string" },
+					"otherInfos": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/UserInfoOut" }
+					}
+				},
+				"xml": { "name": "UserInfoOut" }
+			},
+			"FirstLastNamePhoneNumberIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"firstName": { "type": "string", "xml": { "attribute": true } },
+					"lastName": { "type": "string", "xml": { "attribute": true } },
+					"phoneNumber": { "type": "string" },
+					"FirstLastNameOriginedOut": {
+						"$ref": "#/components/schemas/FirstLastNameOriginedOut"
+					}
+				},
+				"xml": { "name": "FirstLastNamePhoneNumberIn" }
+			},
+			"APICounterV2Out": {
+				"type": "object",
+				"properties": {
+					"apiKey": { "$ref": "#/components/schemas/APIKeyOut" },
+					"apiService": { "type": "string" },
+					"createdDateTime": { "type": "integer", "format": "int64" },
+					"totalUsage": { "type": "integer", "format": "int64" },
+					"lastFlushedDateTime": { "type": "integer", "format": "int64" },
+					"lastUsedDateTime": { "type": "integer", "format": "int64" },
+					"serviceFeaturesUsage": {
+						"type": "object",
+						"additionalProperties": { "type": "integer", "format": "int64" }
+					}
+				},
+				"xml": { "name": "APICallStatOut" }
+			},
+			"APIPlanOut": {
+				"type": "object",
+				"properties": {
+					"planName": { "type": "string" },
+					"planQuota": { "type": "integer", "format": "int64" },
+					"price": { "type": "number", "format": "double" },
+					"priceOverage": { "type": "number", "format": "double" }
+				},
+				"xml": { "name": "APIPlanOut" }
+			},
+			"NameMatchCandidatesOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"firstName": { "type": "string" },
+					"lastName": { "type": "string" },
+					"matchCandidates": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/NameMatchCandidateOut" }
+					}
+				},
+				"xml": { "name": "NameMatchCandidatesOut" }
+			},
+			"CacheMetricsOut": {
+				"type": "object",
+				"properties": {
+					"cacheName": { "type": "string" },
+					"cacheStats": { "type": "string" }
+				},
+				"description": "Simple metrics system caches",
+				"xml": { "name": "CacheMetricsOut" }
+			},
+			"ParsedFullNameGeoIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"firstName": { "type": "string", "xml": { "attribute": true } },
+					"lastName": { "type": "string", "xml": { "attribute": true } },
+					"prefixOrTitle": { "type": "string", "xml": { "attribute": true } },
+					"suffix": { "type": "string", "xml": { "attribute": true } },
+					"middleName": { "type": "string", "xml": { "attribute": true } },
+					"countryIso2": { "type": "string", "xml": { "attribute": true } }
+				},
+				"xml": { "name": "ParsedFullNameGeoIn" }
+			},
+			"SoftwareVersionOut": {
+				"type": "object",
+				"properties": {
+					"softwareNameAndVersion": { "type": "string" },
+					"softwareVersion": {
+						"type": "array",
+						"items": { "type": "integer", "format": "int32" }
+					}
+				},
+				"xml": { "name": "SoftwareVersionOut" }
+			},
+			"APIClassifierOut": {
+				"type": "object",
+				"properties": {
+					"classifierName": { "type": "string" },
+					"serving": { "type": "boolean" },
+					"learning": { "type": "boolean" },
+					"shuttingDown": { "type": "boolean" },
+					"probabilityCalibrated": { "type": "boolean" }
+				},
+				"xml": { "name": "APIClassifierOut" }
+			},
+			"APIPlanSubscriptionOut": {
+				"type": "object",
+				"properties": {
+					"apiKey": { "type": "string" },
+					"planStarted": { "type": "integer", "format": "int64" },
+					"priorPlanStarted": { "type": "integer", "format": "int64" },
+					"planEnded": { "type": "integer", "format": "int64" },
+					"taxRate": { "type": "number", "format": "double" },
+					"planName": { "type": "string" },
+					"planBaseFeesKey": { "type": "string" },
+					"planStatus": { "type": "string" },
+					"planQuota": { "type": "integer", "format": "int64" },
+					"priceUSD": { "type": "number", "format": "double" },
+					"priceOverageUSD": { "type": "number", "format": "double" },
+					"price": { "type": "number", "format": "double" },
+					"priceOverage": { "type": "number", "format": "double" },
+					"currency": { "type": "string" },
+					"currencyFactor": { "type": "number", "format": "double" },
+					"stripeCustomerId": { "type": "string" },
+					"stripeStatus": { "type": "string" },
+					"stripeSubscription": { "type": "string" },
+					"userId": { "type": "string" }
+				},
+				"xml": { "name": "APIPlanSubscriptionOut" }
+			},
+			"FirstLastNameGenderIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"firstName": { "type": "string", "xml": { "attribute": true } },
+					"lastName": { "type": "string", "xml": { "attribute": true } },
+					"gender": { "type": "string", "xml": { "attribute": true } }
+				},
+				"xml": { "name": "FirstLastName" }
+			},
+			"FirstLastNameGeoIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"firstName": { "type": "string", "xml": { "attribute": true } },
+					"lastName": { "type": "string", "xml": { "attribute": true } },
+					"countryIso2": { "type": "string", "xml": { "attribute": true } }
+				},
+				"xml": { "name": "FirstLastNameGeoIn" }
+			},
+			"FirstLastNameGenderedOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"firstName": { "type": "string" },
+					"lastName": { "type": "string" },
+					"likelyGender": {
+						"type": "string",
+						"description": "Most likely gender",
+						"enum": ["male", "female", "unknown"]
+					},
+					"genderScale": {
+						"type": "number",
+						"description": "Compatibility to NamSor_v1 Gender Scale M[-1..U..+1]F value",
+						"format": "double"
+					},
+					"score": { "type": "number", "format": "double" },
+					"probabilityCalibrated": { "type": "number", "format": "double" }
+				},
+				"description": "Represents the output of inferring the LIKELY gender from a personal name.",
+				"xml": { "name": "FirstLastNameGenderedOut" }
+			},
+			"APIKeyOut": {
+				"type": "object",
+				"properties": {
+					"apiKey": { "type": "string", "xml": { "name": "api_key" } },
+					"userId": { "type": "string" },
+					"admin": { "type": "boolean" },
+					"vetted": { "type": "boolean" },
+					"learnable": { "type": "boolean" },
+					"anonymized": { "type": "boolean" },
+					"partner": { "type": "boolean" },
+					"striped": { "type": "boolean" },
+					"corporate": { "type": "boolean" },
+					"disabled": { "type": "boolean" }
+				},
+				"xml": { "name": "APIKeyOut" }
+			},
+			"BatchFirstLastNameDiasporaedOut": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/FirstLastNameDiasporaedOut"
+						}
+					}
+				},
+				"description": "Represents the output of inferring the LIKELY ethnicity from a personal name, given an country of residence.",
+				"xml": { "name": "BatchFirstLastNameDiasporaedOut" }
+			},
+			"BillingHistoryOut": {
+				"type": "object",
+				"properties": {
+					"stripeInvoices": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/InvoiceOut" }
+					},
+					"corporateInvoices": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/InvoiceOut" }
+					}
+				},
+				"xml": { "name": "BillingHistoryOut" }
+			},
+			"BatchPersonalNameGeoOut": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/PersonalNameGeoOut" }
+					}
+				},
+				"xml": { "name": "BatchPersonalNameGeoOut" }
+			},
+			"APIClassifiersStatusOut": {
+				"type": "object",
+				"properties": {
+					"softwareVersion": {
+						"$ref": "#/components/schemas/SoftwareVersionOut"
+					},
+					"classifiers": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/APIClassifierOut" }
+					}
+				},
+				"xml": { "name": "APIClassifiersStatusOut" }
+			},
+			"ProperNounCategorizedOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"name": { "type": "string" },
+					"commonType": { "type": "string" },
+					"commonTypeAlt": { "type": "string" },
+					"score": { "type": "number", "format": "double" }
+				},
+				"xml": { "name": "ProperNounCategorizedOut" }
+			},
+			"SourceMetricsOut": {
+				"type": "object",
+				"properties": {
+					"classifierName": { "type": "string" },
+					"source": { "$ref": "#/components/schemas/APIKeyOut" },
+					"aiEstimateTotal": { "type": "integer", "format": "int64" },
+					"aiEstimatePrecision": { "type": "number", "format": "double" },
+					"aiEstimateRecall": { "type": "number", "format": "double" },
+					"metricTimeStamp": { "type": "integer", "format": "int64" },
+					"aiStartTime": { "type": "integer", "format": "int64" },
+					"aiLearnTotal": { "type": "integer", "format": "int64" },
+					"snapshotDate": { "type": "integer", "format": "int64" }
+				},
+				"description": "Simple metrics on a classifier, for a given source",
+				"xml": { "name": "SourceMetricsOut" }
+			},
+			"PersonalNameGenderedOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"name": { "type": "string" },
+					"likelyGender": {
+						"type": "string",
+						"description": "Most likely gender",
+						"enum": ["male", "female", "unknown"]
+					},
+					"genderScale": {
+						"type": "number",
+						"description": "Compatibility to NamSor_v1 Gender Scale M[-1..U..+1]F value",
+						"format": "double"
+					},
+					"score": { "type": "number", "format": "double" },
+					"probabilityCalibrated": { "type": "number", "format": "double" }
+				},
+				"xml": { "name": "PersonalNameGenderedOut" }
+			},
+			"FirstLastNameOriginedOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"firstName": { "type": "string" },
+					"lastName": { "type": "string" },
+					"countryOrigin": {
+						"type": "string",
+						"description": "Most likely country of Origin"
+					},
+					"countryOriginAlt": {
+						"type": "string",
+						"description": "Second best alternative : country of Origin"
+					},
+					"countriesOriginTop": {
+						"type": "array",
+						"description": "List countries of Origin (top 10)",
+						"items": {
+							"type": "string",
+							"description": "List countries of Origin (top 10)"
+						}
+					},
+					"score": {
+						"type": "number",
+						"description": "Compatibility to NamSor_v1 Origin score value",
+						"format": "double"
+					},
+					"regionOrigin": {
+						"type": "string",
+						"description": "Most likely region of Origin (based on countryOrigin ISO2 code)"
+					},
+					"topRegionOrigin": {
+						"type": "string",
+						"description": "Most likely region of Origin (based on countryOrigin ISO2 code)"
+					},
+					"subRegionOrigin": {
+						"type": "string",
+						"description": "Most likely region of Origin (based on countryOrigin ISO2 code)"
+					},
+					"probabilityCalibrated": { "type": "number", "format": "double" },
+					"probabilityAltCalibrated": { "type": "number", "format": "double" }
+				},
+				"description": "Represents the output of inferring the LIKELY country of Origin from a personal name.",
+				"xml": { "name": "FirstLastNameOriginedOut" }
+			},
+			"BatchFirstLastNameGenderIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/FirstLastNameGenderIn" }
+					}
+				},
+				"xml": { "name": "BatchFirstLastNameGenderIn" }
+			},
+			"InvoiceItemOut": {
+				"type": "object",
+				"properties": {
+					"itemId": { "type": "string" },
+					"amount": { "type": "integer", "format": "int64" },
+					"currency": { "type": "string" },
+					"description": { "type": "string" },
+					"quantity": { "type": "integer", "format": "int64" },
+					"subscription": { "type": "string" },
+					"subscriptionItem": { "type": "string" },
+					"invoiceItemType": { "type": "string" },
+					"planNickname": { "type": "string" },
+					"planDesc": { "type": "string" },
+					"planName": { "type": "string" }
+				},
+				"xml": { "name": "InvoiceItemOut" }
+			},
+			"BatchNameMatchedOut": {
+				"type": "object",
+				"properties": {
+					"matchedNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/NameMatchedOut" }
+					}
+				},
+				"xml": { "name": "BatchNameMatchedOut" }
+			},
+			"DeployUIOut": {
+				"type": "object",
+				"properties": {
+					"errorMessage": { "type": "string" },
+					"succeeded": { "type": "boolean" }
+				},
+				"xml": { "name": "DeployUIOut" }
+			},
+			"BatchNameMatchCandidatesOut": {
+				"type": "object",
+				"properties": {
+					"namesAndMatchCandidates": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/NameMatchCandidatesOut" }
+					}
+				},
+				"xml": { "name": "BatchNameMatchCandidatesOut" }
+			},
+			"BatchPersonalNameParsedOut": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/PersonalNameParsedOut" }
+					}
+				},
+				"xml": { "name": "BatchPersonalNameParsedOut" }
+			},
+			"FirstLastNameDiasporaedOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"firstName": { "type": "string" },
+					"lastName": { "type": "string" },
+					"score": {
+						"type": "number",
+						"description": "Compatibility to NamSor_v1 Origin score value",
+						"format": "double"
+					},
+					"ethnicityAlt": { "type": "string", "xml": { "attribute": true } },
+					"ethnicity": { "type": "string", "xml": { "attribute": true } },
+					"lifted": { "type": "boolean", "xml": { "attribute": true } },
+					"countryIso2": { "type": "string", "xml": { "attribute": true } },
+					"ethnicitiesTop": {
+						"type": "array",
+						"description": "List ethnicities (top 10)",
+						"items": {
+							"type": "string",
+							"description": "List ethnicities (top 10)"
+						}
+					}
+				},
+				"description": "Represents the output of inferring the LIKELY ethnicity from a personal name, given an country of residence.",
+				"xml": { "name": "FirstLastNameDiasporaedOut" }
+			},
+			"BatchPersonalNameGenderedOut": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/PersonalNameGenderedOut" }
+					}
+				},
+				"xml": { "name": "BatchPersonalNameGenderedOut" }
+			},
+			"FeedbackLoopOut": {
+				"type": "object",
+				"properties": {
+					"feedbackCredits": { "type": "integer", "format": "int64" }
+				},
+				"xml": { "name": "FeedbackLoopOut" }
+			},
+			"APIBillingPeriodUsageOut": {
+				"type": "object",
+				"properties": {
+					"apiKey": { "type": "string" },
+					"subscriptionStarted": { "type": "integer", "format": "int64" },
+					"periodStarted": { "type": "integer", "format": "int64" },
+					"periodEnded": { "type": "integer", "format": "int64" },
+					"stripeCurrentPeriodEnd": { "type": "integer", "format": "int64" },
+					"stripeCurrentPeriodStart": { "type": "integer", "format": "int64" },
+					"billingStatus": { "type": "string" },
+					"usage": { "type": "integer", "format": "int64" },
+					"softLimit": { "type": "integer", "format": "int64" },
+					"hardLimit": { "type": "integer", "format": "int64" }
+				},
+				"xml": { "name": "APIBillingPeriodUsageOut" }
+			},
+			"APIPeriodUsageOut": {
+				"type": "object",
+				"properties": {
+					"subscription": {
+						"$ref": "#/components/schemas/APIPlanSubscriptionOut"
+					},
+					"billingPeriod": {
+						"$ref": "#/components/schemas/APIBillingPeriodUsageOut"
+					},
+					"overageExclTax": { "type": "number", "format": "double" },
+					"overageInclTax": { "type": "number", "format": "double" },
+					"overageCurrency": { "type": "string" },
+					"overageQuantity": { "type": "integer", "format": "int64" }
+				},
+				"xml": { "name": "APICurrentUsageOut" }
+			},
+			"PersonalNameIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"name": { "type": "string", "xml": { "attribute": true } }
+				},
+				"xml": { "name": "PersonalNameIn" }
+			},
+			"NamSorCounterOut": {
+				"type": "object",
+				"properties": { "counter": { "type": "integer", "format": "int64" } },
+				"xml": { "name": "NamSorCounterOut" }
+			},
+			"SourceDetailedMetricsOut": {
+				"type": "object",
+				"properties": {
+					"classifierName": { "type": "string" },
+					"source": { "$ref": "#/components/schemas/APIKeyOut" },
+					"aiEstimateTotal": { "type": "integer", "format": "int64" },
+					"aiEstimatePrecision": { "type": "number", "format": "double" },
+					"aiEstimateRecall": { "type": "number", "format": "double" },
+					"metricTimeStamp": { "type": "integer", "format": "int64" },
+					"aiStartTime": { "type": "integer", "format": "int64" },
+					"aiLearnTotal": { "type": "integer", "format": "int64" },
+					"snapshotDate": { "type": "integer", "format": "int64" },
+					"expectedClassMetrics": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/ExpectedClassMetricsOut" }
+					}
+				},
+				"description": "Simple metrics on source, with details by classifier.",
+				"xml": { "name": "SourceDetailedMetricsOut" }
+			},
+			"APIUsageAggregatedOut": {
+				"type": "object",
+				"properties": {
+					"timeUnit": { "type": "string" },
+					"periodStart": { "type": "integer", "format": "int64" },
+					"periodEnd": { "type": "integer", "format": "int64" },
+					"totalUsage": { "type": "integer", "format": "int64" },
+					"historyTruncated": { "type": "boolean" },
+					"data": {
+						"type": "array",
+						"items": {
+							"type": "array",
+							"items": { "type": "integer", "format": "int32" }
+						}
+					},
+					"colHeaders": { "type": "array", "items": { "type": "string" } },
+					"rowHeaders": { "type": "array", "items": { "type": "string" } }
+				},
+				"xml": { "name": "APIUsageAggregatedOut" }
+			},
+			"APIServicesOut": {
+				"type": "object",
+				"properties": {
+					"apiServices": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/APIServiceOut" }
+					}
+				},
+				"xml": { "name": "APIServicesOut" }
+			},
+			"InvoiceOut": {
+				"type": "object",
+				"properties": {
+					"items": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/InvoiceItemOut" }
+					},
+					"userId": { "type": "string" },
+					"invoiceId": { "type": "string" },
+					"isStriped": { "type": "boolean" },
+					"stripeCustomerId": { "type": "string" },
+					"amountDue": { "type": "integer", "format": "int64" },
+					"amountPaid": { "type": "integer", "format": "int64" },
+					"amountRemaining": { "type": "integer", "format": "int64" },
+					"attempted": { "type": "boolean" },
+					"currency": { "type": "string" },
+					"invoiceDate": { "type": "string", "format": "date-time" },
+					"dueDate": { "type": "string", "format": "date-time" },
+					"description": { "type": "string" },
+					"invoicePdf": { "type": "string" },
+					"periodStart": { "type": "string", "format": "date-time" },
+					"periodEnd": { "type": "string", "format": "date-time" },
+					"receiptNumber": { "type": "string" },
+					"invoiceStatus": { "type": "string" },
+					"subTotal": { "type": "integer", "format": "int64" },
+					"tax": { "type": "integer", "format": "int64" },
+					"taxPercent": { "type": "integer", "format": "int64" },
+					"total": { "type": "integer", "format": "int64" }
+				},
+				"xml": { "name": "InvoiceOut" }
+			},
+			"FirstLastNameOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"firstName": { "type": "string" },
+					"lastName": { "type": "string" }
+				},
+				"xml": { "name": "FirstLastNameOut" }
+			},
+			"BatchFirstLastNameUSRaceEthnicityOut": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/FirstLastNameUSRaceEthnicityOut"
+						}
+					}
+				},
+				"description": "Represents the output of inferring the LIKELY US 'race/ethnicity' from a personal name, given US country of residence and (optionally) a ZIP5 code.",
+				"xml": { "name": "BatchFirstLastNameUSRaceEthnicityOut" }
+			},
+			"SystemMetricsOut": {
+				"type": "object",
+				"properties": {
+					"cacheMetrics": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/CacheMetricsOut" }
+					},
+					"classifierMetrics": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/ClassifierMetricsOut" }
+					},
+					"sourceMetrics": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/SourceMetricsOut" }
+					},
+					"totalMem": { "type": "integer", "format": "int64" },
+					"freeMem": { "type": "integer", "format": "int64" },
+					"maxMem": { "type": "integer", "format": "int64" }
+				},
+				"xml": { "name": "SystemMetricsOut" }
+			},
+			"BatchPersonalNameIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/PersonalNameIn" }
+					}
+				},
+				"xml": { "name": "BatchPersonalNameIn" }
+			},
+			"BatchFirstLastNamePhoneNumberIn": {
+				"type": "object",
+				"properties": {
+					"personalNamesWithPhoneNumbers": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/FirstLastNamePhoneNumberIn"
+						}
+					}
+				},
+				"xml": { "name": "BatchFirstLastNamePhoneNumberIn" }
+			},
+			"APIPlansOut": {
+				"type": "object",
+				"properties": {
+					"usageRatioForDupplicates": { "type": "integer", "format": "int64" },
+					"currencyIso3": { "type": "string" },
+					"currencySymbol": { "type": "string" },
+					"plans": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/APIPlanOut" }
+					}
+				},
+				"xml": { "name": "APIPlansOut" }
+			},
+			"FirstLastNamePhoneCodedOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"firstName": { "type": "string" },
+					"lastName": { "type": "string" },
+					"internationalPhoneNumberVerified": { "type": "string" },
+					"phoneCountryIso2Verified": { "type": "string" },
+					"phoneCountryCode": { "type": "integer", "format": "int32" },
+					"phoneCountryCodeAlt": { "type": "integer", "format": "int32" },
+					"phoneCountryIso2": { "type": "string" },
+					"phoneCountryIso2Alt": { "type": "string" },
+					"originCountryIso2": { "type": "string" },
+					"originCountryIso2Alt": { "type": "string" },
+					"phoneNumber": { "type": "string" },
+					"verified": { "type": "boolean" },
+					"score": { "type": "number", "format": "double" },
+					"countryIso2": { "type": "string" }
+				},
+				"description": "Represents the output of inferring the LIKELY country and phone code from a personal name and phone number.",
+				"xml": { "name": "FirstLastNamePhoneCodedOut" }
+			},
+			"MatchPersonalFirstLastNameIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"name1": { "$ref": "#/components/schemas/FirstLastNameIn" },
+					"name2": { "$ref": "#/components/schemas/PersonalNameIn" },
+					"name": { "type": "string" }
+				},
+				"xml": { "name": "MatchPersonalFirstLastNameIn" }
+			},
+			"PersonalNameParsedOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"name": { "type": "string" },
+					"nameParserType": { "type": "string" },
+					"nameParserTypeAlt": { "type": "string" },
+					"firstLastName": { "$ref": "#/components/schemas/FirstLastNameOut" },
+					"score": { "type": "number", "format": "double" }
+				},
+				"xml": { "name": "PersonalNameParsedOut" }
+			},
+			"ExpectedClassMetricsOut": {
+				"type": "object",
+				"properties": {
+					"classifierName": { "type": "string" },
+					"expectedClass": { "type": "string" },
+					"aiEstimateTotal": { "type": "integer", "format": "int64" },
+					"aiEstimatePrecision": { "type": "number", "format": "double" },
+					"aiEstimateRecall": { "type": "number", "format": "double" },
+					"aiLearnTotal": { "type": "integer", "format": "int64" }
+				},
+				"description": "Simple metrics on a classifier, for a given expected class",
+				"xml": { "name": "ExpectedClassMetricsOut" }
+			},
+			"BatchFirstLastNameGeoZippedIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/FirstLastNameGeoZippedIn" }
+					}
+				},
+				"xml": { "name": "BatchFirstLastNameGeoZippedIn" }
+			},
+			"BatchFirstLastNameOriginedOut": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/FirstLastNameOriginedOut" }
+					}
+				},
+				"description": "Represents the output of inferring the LIKELY origin from a list of personal names.",
+				"xml": { "name": "BatchFirstLastNameOriginedOut" }
+			},
+			"FirstLastNameGeoZippedIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"firstName": { "type": "string", "xml": { "attribute": true } },
+					"lastName": { "type": "string", "xml": { "attribute": true } },
+					"countryIso2": { "type": "string", "xml": { "attribute": true } },
+					"zipCode": { "type": "string", "xml": { "attribute": true } }
+				},
+				"xml": { "name": "FirstLastNameGeoZippedIn" }
+			},
+			"BatchPersonalNameGeoIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/PersonalNameGeoIn" }
+					}
+				},
+				"xml": { "name": "BatchPersonalNameGeoIn" }
+			},
+			"FirstLastNameIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"firstName": { "type": "string", "xml": { "attribute": true } },
+					"lastName": { "type": "string", "xml": { "attribute": true } }
+				},
+				"xml": { "name": "FirstLastName" }
+			},
+			"APIClassifierTaxonomyOut": {
+				"type": "object",
+				"properties": {
+					"classifierName": { "type": "string" },
+					"taxonomyClasses": { "type": "array", "items": { "type": "string" } }
+				},
+				"xml": { "name": "APIClassifierTaxonomyOut" }
+			},
+			"NameMatchCandidateOut": {
+				"type": "object",
+				"properties": {
+					"candidateName": { "type": "string" },
+					"probability": { "type": "number", "format": "double" }
+				},
+				"xml": { "name": "NameMatchCandidateOut" }
+			},
+			"StripeCustomerOut": {
+				"type": "object",
+				"properties": {
+					"stripeCustomerId": { "type": "string" },
+					"sourceCountry": { "type": "string" },
+					"sourceCurrency": { "type": "string" },
+					"stripedCards": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/StripeCardOut" }
+					}
+				},
+				"xml": { "name": "StripeCustomerOut" }
+			},
+			"BatchFirstLastNamePhoneCodedOut": {
+				"type": "object",
+				"properties": {
+					"personalNamesWithPhoneNumbers": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/FirstLastNamePhoneCodedOut"
+						}
+					}
+				},
+				"description": "Represents the output of inferring the LIKELY country and phone code of personal names+phones.",
+				"xml": { "name": "BatchFirstLastNamePhoneCodedOut" }
+			},
+			"FirstLastNameUSRaceEthnicityOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"firstName": { "type": "string" },
+					"lastName": { "type": "string" },
+					"raceEthnicityAlt": {
+						"type": "string",
+						"description": "Second most likely US 'race'/ethnicity",
+						"xml": { "attribute": true },
+						"enum": ["W_NL", "HL", "A", "B_NL"]
+					},
+					"raceEthnicity": {
+						"type": "string",
+						"description": "Most likely US 'race'/ethnicity",
+						"xml": { "attribute": true },
+						"enum": ["W_NL", "HL", "A", "B_NL"]
+					},
+					"score": {
+						"type": "number",
+						"description": "Compatibility to NamSor_v1 Origin score value",
+						"format": "double"
+					},
+					"raceEthnicitiesTop": {
+						"type": "array",
+						"description": "List 'race'/ethnicities",
+						"items": {
+							"type": "string",
+							"description": "List 'race'/ethnicities"
+						}
+					},
+					"probabilityCalibrated": { "type": "number", "format": "double" },
+					"probabilityAltCalibrated": { "type": "number", "format": "double" }
+				},
+				"description": "Represents the output of inferring the LIKELY US 'race/ethnicity' from a personal name, given US country of residence and (optionally) a ZIP5 code.",
+				"xml": { "name": "FirstLastNameUSRaceEthnicityOut" }
+			},
+			"BatchFirstLastNamePhoneNumberGeoIn": {
+				"type": "object",
+				"properties": {
+					"personalNamesWithPhoneNumbers": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/FirstLastNamePhoneNumberGeoIn"
+						}
+					}
+				},
+				"xml": { "name": "BatchFirstLastNamePhoneNumberGeoIn" }
+			},
+			"BatchParsedFullNameIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/ParsedFullNameIn" }
+					}
+				},
+				"xml": { "name": "BatchParsedFullNameIn" }
+			},
+			"PersonalNameGeoIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"name": { "type": "string", "xml": { "attribute": true } },
+					"countryIso2": { "type": "string", "xml": { "attribute": true } }
+				},
+				"xml": { "name": "PersonalNameGeoIn" }
+			},
+			"APIServiceOut": {
+				"type": "object",
+				"properties": {
+					"serviceName": { "type": "string" },
+					"serviceGroup": { "type": "string" },
+					"costInUnits": { "type": "integer", "format": "int32" }
+				},
+				"xml": { "name": "APIServiceOut" }
+			},
+			"BatchFirstLastNameIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/FirstLastNameIn" }
+					}
+				},
+				"xml": { "name": "BatchFirstLastNameIn" }
+			},
+			"ParsedFullNameIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"firstName": { "type": "string", "xml": { "attribute": true } },
+					"lastName": { "type": "string", "xml": { "attribute": true } },
+					"prefixOrTitle": { "type": "string", "xml": { "attribute": true } },
+					"suffix": { "type": "string", "xml": { "attribute": true } },
+					"middleName": { "type": "string", "xml": { "attribute": true } }
+				},
+				"xml": { "name": "ParsedFullNameIn" }
+			},
+			"RomanizedNameOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"latinName": { "type": "string" },
+					"originalName": { "type": "string" },
+					"sourceLanguage": { "type": "string" },
+					"targetLanguage": { "type": "string" },
+					"sourceScript": { "type": "string" },
+					"targetScript": { "type": "string" },
+					"score": { "type": "number", "format": "double" }
+				},
+				"xml": { "name": "RomanizedNameOut" }
+			},
+			"NameMatchedOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"matchStatus": { "type": "string" },
+					"score": { "type": "number", "format": "double" }
+				},
+				"xml": { "name": "NameMatchedOut" }
+			},
+			"BatchMatchPersonalFirstLastNameIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/MatchPersonalFirstLastNameIn"
+						}
+					}
+				},
+				"xml": { "name": "BatchMatchPersonalFirstLastNameIn" }
+			},
+			"FirstLastNamePhoneNumberGeoIn": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string", "xml": { "attribute": true } },
+					"firstName": { "type": "string", "xml": { "attribute": true } },
+					"lastName": { "type": "string", "xml": { "attribute": true } },
+					"phoneNumber": { "type": "string" },
+					"FirstLastNameOriginedOut": {
+						"$ref": "#/components/schemas/FirstLastNameOriginedOut"
+					},
+					"countryIso2": { "type": "string" },
+					"countryIso2Alt": { "type": "string" }
+				},
+				"xml": { "name": "FirstLastNamePhoneNumberGeoIn" }
+			},
+			"ClassifierMetricsOut": {
+				"type": "object",
+				"properties": {
+					"softwareVersion": { "type": "string" },
+					"hostAddress": { "type": "string" },
+					"learnQueueSize": { "type": "integer", "format": "int32" },
+					"bufferSize": { "type": "integer", "format": "int32" },
+					"preClassifyQueueSize": { "type": "integer", "format": "int32" },
+					"factKeysSize": { "type": "integer", "format": "int32" },
+					"factsLearned": { "type": "integer", "format": "int64" },
+					"classifyDurationsCurrent": { "type": "number", "format": "double" },
+					"classifyDurationsSummary": { "type": "number", "format": "double" },
+					"learnDurationsCurrent": { "type": "number", "format": "double" },
+					"learnDurationsSummary": { "type": "number", "format": "double" },
+					"classifierName": { "type": "string" },
+					"featuresSize": { "type": "integer", "format": "int64" },
+					"aiVettedEstimateTotal": { "type": "integer", "format": "int64" },
+					"aiVettedEstimatePrecision": { "type": "number", "format": "double" },
+					"aiVettedEstimateRecall": { "type": "number", "format": "double" },
+					"aiVettedLearnTotal": { "type": "integer", "format": "int64" },
+					"aiNonVettedEstimateTotal": { "type": "integer", "format": "int64" },
+					"aiNonVettedEstimatePrecision": {
+						"type": "number",
+						"format": "double"
+					},
+					"aiNonVettedEstimateRecall": { "type": "number", "format": "double" },
+					"aiNonVettedLearnTotal": { "type": "integer", "format": "int64" },
+					"metricTimeStamp": { "type": "integer", "format": "int64" },
+					"aiStartTime": { "type": "integer", "format": "int64" },
+					"aiVettedExpectedClassMetrics": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/ExpectedClassMetricsOut" }
+					},
+					"aiNonVettedExpectedClassMetrics": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/ExpectedClassMetricsOut" }
+					}
+				},
+				"description": "Simple metrics on a classifier",
+				"xml": { "name": "ClassifierMetricsOut" }
+			},
+			"PersonalNameGeoOut": {
+				"type": "object",
+				"properties": {
+					"id": { "type": "string" },
+					"name": { "type": "string" },
+					"score": { "type": "number", "format": "double" },
+					"country": { "type": "string" },
+					"countryAlt": { "type": "string" },
+					"region": { "type": "string" },
+					"topRegion": { "type": "string" },
+					"subRegion": { "type": "string" },
+					"countriesTop": {
+						"type": "array",
+						"description": "List countries (top 10)",
+						"items": {
+							"type": "string",
+							"description": "List countries (top 10)"
+						}
+					},
+					"probabilityCalibrated": { "type": "number", "format": "double" },
+					"probabilityAltCalibrated": { "type": "number", "format": "double" }
+				},
+				"xml": { "name": "PersonalNameGeoOut" }
+			},
+			"BatchFirstLastNameGeoIn": {
+				"type": "object",
+				"properties": {
+					"personalNames": {
+						"type": "array",
+						"items": { "$ref": "#/components/schemas/FirstLastNameGeoIn" }
+					}
+				},
+				"xml": { "name": "BatchFirstLastNameGeoIn" }
+			},
+			"CurrenciesOut": {
+				"type": "object",
+				"properties": {
+					"currenciesIso3": { "type": "array", "items": { "type": "string" } }
+				},
+				"xml": { "name": "CurrenciesOut" }
+			}
+		},
+		"securitySchemes": {
+			"api_key": {
+				"type": "apiKey",
+				"description": "api_key required",
+				"name": "X-API-KEY",
+				"in": "header"
+			}
+		}
+	}
+}

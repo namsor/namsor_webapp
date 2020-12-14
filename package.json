@@ -1,0 +1,35 @@
+{
+	"name": "espire",
+	"version": "1.0.0",
+	"description": "espire",
+	"scripts": {
+		"miniserv": "nodemon miniserv.js",
+		"gen_api_config": "node scripts/genConfig.js"
+	},
+	"dependencies": {
+		"angular": "^1.7.5"
+	},
+	"devDependencies": {
+		"express": "^4.17.1",
+		"grunt": "^1.0.3",
+		"grunt-chmod": "^1.1.1",
+		"grunt-concurrent": "^1.0.0",
+		"grunt-contrib-clean": "^0.6.0",
+		"grunt-contrib-concat": "^0.5.0",
+		"grunt-contrib-connect": "^2.0.0",
+		"grunt-contrib-copy": "^0.6.0",
+		"grunt-contrib-cssmin": "^0.10.0",
+		"grunt-contrib-htmlmin": "^3.0.0",
+		"grunt-contrib-less": "^2.0.0",
+		"grunt-contrib-uglify": "^4.0.0",
+		"grunt-contrib-watch": "^1.1.0",
+		"grunt-filerev": "^2.0.0",
+		"grunt-sass": "^1.0.0",
+		"grunt-usemin": "^3.1.1",
+		"grunt-wiredep": "^3.0.1",
+		"jshint-stylish": "^1.0.0",
+		"load-grunt-tasks": "^4.0.0",
+		"nodemon": "^2.0.6",
+		"time-grunt": "^1.0.0"
+	}
+}

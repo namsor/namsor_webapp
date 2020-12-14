@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+
+    <meta name="description"
+        content="Try free NamSor API to classify personal names accurately by gender, country of origin, diaspora or 'race' / ethnicity" />
+    <meta name="keywords"
+        content="namsor,onomastics,diaspora,ethnicity,name classification,gender,diversity,name recognition software,named entity,ethnic marketing,diaspora marketing,gender marketing" />
+    <title>Namsor CSV</title>
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+    <!-- <base href="Users/louis/Documents/Web/Développement/dev/Namsor/public/" /> -->
+
+    <link rel="preload" href="assets/csv/css/csvPage.min.css" as="stylesheet" />
+
+    <link rel="preload" href="assets/csv/media/img/cloud.svg" as="image" media="(max-width: 1200px)" />
+    <link rel="preload" href="assets/csv/media/img/cloud.png" as="image" media="(max-width: 256px)" />
+    <link rel="preload" href="assets/csv/media/img/upload.svg" as="image" media="(max-width: 196px)" />
+    <link rel="preload" href="assets/csv/media/img/file.svg" as="image" media="(max-width: 42px)" />
+    <link rel="preload" href="assets/csv/media/img/back.png" as="image" media="(max-width: 36px)" />
+    <link rel="preload" href="assets/csv/media/img/logo.png" as="image" media="(max-width: 64px)" />
+
+    <link rel="preload" href="assets/csv/media/font/Segoe-UI-Bold.woff2" as="font" type="font/woff2"
+        crossorigin="anonymous">
+    <link rel="preload" href="assets/csv/media/font/Segoe-UI-Italic.woff2" as="font" type="font/woff2"
+        crossorigin="anonymous">
+    <link rel="preload" href="assets/csv/media/font/Segoe-UI-Light.woff2" as="font" type="font/woff2"
+        crossorigin="anonymous">
+    <link rel="preload" href="assets/csv/media/font/Segoe-UI-Semibold.woff2" as="font" type="font/woff2"
+        crossorigin="anonymous">
+    <link rel="preload" href="assets/csv/media/font/Segoe-UI.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="assets/csv/css/csvPage.min.css" />
+
+  <link rel="preload" href="assets/csv/js/final.js" as="script" />
+
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
+
+<body>
+
+    <header></header>
+
+    <main id="page-csv">
+
+        <!-- Cercle de fond -->
+        <div class="blue-circle"></div>
+        <div class="green-circle"></div>
+
+
+        <!-- Presentation -->
+        <div class="presentation flex">
+            <h1>namsor csv</h1>
+            <div id="cloud-section">
+                <img class="big-cloud" src="assets/csv/media/img/cloud.svg" alt="Namsor csv" />
+                <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+
+                <div class="cloud-group-1">
+                    <div class="relative">
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                    </div>
+                </div>
+                <div class="cloud-group-2">
+                    <div class="relative">
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                    </div>
+                </div>
+                <div class="cloud-group-3">
+                    <div class="relative">
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                        <img class="cloud" src="assets/csv/media/img/cloud.png" alt="nuage" width="256" height="256" />
+                    </div>
+                </div>
+            </div>
+
+            <p>Try free NamSor API to classify personal names accurately by gender, country of origin, diaspora or 'race' / ethnicity. </p>
+            <button id="try" class="button-green">try</button>
+        </div>
+
+
+        <!-- Section dropzone -->
+        <section class="section dropzone-section">
+            <h2>Process your csv files using NamSor</h2>
+
+            <div id="not-loading">
+                <form id="dropzone" class="dropzone-element input flex">
+
+                    <div id="dropzone-input" class="dropzone-content default">
+
+                        <img src="assets/csv/media/img/upload.svg" alt="upload csv" width="196" height="196" />
+                        <p class="description">Drag and drop csv or txt files to upload them</p>
+
+                        <div class="flex">
+                            <img src="assets/csv/media/img/file.svg" alt="upload file" width="42" height="42" />
+                            <p>or click to select a local file. 2 Mb max</p>
+                        </div>
+                    </div>
+                </form>
+                <button id="validate-drop" class="button-green hide">confirm</button>
+            </div>
+
+            <div id="loading" class="fake-dropzone hide">
+                <lottie-player class="rocket" src="assets/csv/media/lottie/rocket.json" loop autoplay></lottie-player>
+                <p class="description">We are processing your files.</p>
+                <p>Please be patient, processing may take up to a few minutes.</p>
+            </div>
+        </section>
+
+
+        <!--Modal Form -->
+        <dialog id="modal-format" class="hide modal">
+            <div class="modal-background">
+                <div class="modal-content">
+
+                    <div class="close-button smartphone">
+                        <div class="leftright"></div>
+                        <div class="rightleft"></div>
+                        <label class="close">Close</label>
+                    </div>
+
+                    <div id="format-overflow" class="overflow-x">
+                        <h2>Formatting your files</h2>
+
+                        <form id="modal-format-fieldset">
+                            <div id="form-area">
+                                <!-- Insérer ici les différents formulaires -->
+                            </div>
+                            <p id="not-all-processing-message" class="default-text">Please select a type of data
+                                processing for
+                                each file to continue.</p>
+                            <p id="parsing-error-message" class="default-text red hide">Some files seem to be
+                                problematic, please refer to the above message.</p>
+
+                            <div id="not-enough-credits-div" class="hide">
+                                <p>You are missing <ins class="needed-credits"></ins> credits, buy more to complete
+                                    the process.</p>
+                                <p><ins class="total-required-credits"></ins> required credits
+                                    /
+                                    <ins class="avaible-credits"></ins> credits avaible
+                                </p>
+                                <div class="flex">
+                                    <a id="buy" class="button-green" href="pricing.html" target="_blank" rel="noopener">buy
+                                        credits</a>
+                                    <button id="continue-form" type="submit"
+                                        data-info="The processing will be carried out incompletely depending on the number of credits available."
+                                        class="button-typical">
+                                        continue with limit
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="enough-credits-div" class="hide">
+                                <p>Processing the data will require
+                                    <ins class="total-required-credits"></ins>
+                                    credits
+                                    <span class="secondary">(<ins class="avaible-credits"></ins> credits avaible)</span>
+                                </p>
+                                <button id="submit-form" type="submit" class="button-green">submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="close-modal"></div>
+            </div>
+        </dialog>
+
+
+        <!-- Modal Login -->
+        <dialog id="modal-login" class="six hide modal">
+            <div class="modal-background">
+                <div class="modal-content">
+
+                    <svg class="modal-svg computer" width="100%" height="100%" preserveAspectRatio="none">
+                        <rect x="0" y="0" fill="none" width="700" height="400" rx="3" ry="3"></rect>
+                    </svg>
+                    <svg class="modal-svg smartphone" width="100%" height="100%" preserveAspectRatio="none">
+                        <rect x="0" y="0" fill="none" width="300" height="300" rx="3" ry="3"></rect>
+                    </svg>
+                    <svg class="modal-svg tablette" width="100%" height="100%" preserveAspectRatio="none">
+                        <rect x="0" y="0" fill="none" width="500" height="300" rx="3" ry="3"></rect>
+                    </svg>
+
+                    <h2>You are not logged in</h2>
+                    <p>Log in or sign up to enjoy the full features of the Namsor API.</p>
+                    <p>Get 5000 free credits each month upon account creation.</p>
+                    <div id="modal-login-button-div" class="flex">
+                        <a href="sign-in.html" target="_blank" id="login" rel="noopener" class="button-green">login</a>
+                        <a href="sign-in.html" target="_blank" id="sign-up" rel="noopener" class="button-typical">sign up</a>
+                    </div>
+
+                </div>
+                <div class="close-modal"></div>
+            </div>
+        </dialog>
+
+
+        <!-- Section Array -->
+        <section id="array-section" class="section hide">
+            <h2>Process your csv files using NamSor</h2>
+
+            <div class="data-array-section">
+
+                <div class="flex tabpanel-section hide">
+                    <div id="arrow-prev" class="arrow prev hide invisible">
+                        <div class="arrow-top"></div>
+                        <div class="arrow-bottom"></div>
+                    </div>
+
+                    <div class="tab-panel-overflow">
+                        <div id="tab-panels"></div>
+                    </div>
+
+                    <div id="arrow-next" class="arrow next hide">
+                        <div class="arrow-top"></div>
+                        <div class="arrow-bottom"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-array-contener"></div>
+
+            </div>
+
+            <div class="flex button-section">
+                <a href="pageCSV.html"><button id="restart-button" class="button-typical"><img
+                            src="assets/csv/media/img/back.png" alt="go back" width="36" height="36" />go
+                        back</button></a>
+                <button id="download-all-button" class="button-typical hide"><img src="assets/csv/media/img/file.svg"
+                        alt="download" width="36" height="36" />download all</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-csv">
+        <img src="assets/csv/media/img/logo.png" alt="NamSor Logo" width="64" height="64" />
+        <div class="flex">
+            <p class="namsor"> Copyright &#169 2019 NamSor. NamSor SAS is a French simplified joint-stock company,
+                Reg.81148844400019 -
+                VAT FR84811488444 - Data Reg. 1876223</p>
+            <div class="link">
+                <a class="surlignement" href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" target="_blank" rel="noopener noreferrer">Terms & Conditions</a>
+                <a class="surlignement" href="assets/pdf/NamSor_Data_Processing_Agreement_v007.pdf" target="_blank" rel="noopener noreferrer">DPA</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- <script type="text/javascript" src="..assets/csv/js/firebase.js"></script> -->
+    <script type="text/javascript" src="assets/csv/js/services/papaParse/papaparse.min.js"></script>
+    <script type="text/javascript" src="assets/csv/js/components/dropzone/dropzone.min.js"></script>
+    <script type="text/javascript" src="assets/csv/js/final.js"></script>
+
+</body>
+
+</html>

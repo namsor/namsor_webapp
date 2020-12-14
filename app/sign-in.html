@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <title>NamSor v2 Sign-in</title>
+  <meta name="description" content="Sign in to try Name Ethnicity and Gender Classifier API for free, classify personal names accurately by gender, country of origin, diaspora or 'race' / ethnicity" />
+  <meta name="keywords" content="namsor,onomastics,diaspora,ethnicity,name classification,gender,diversity,name recognition software,named entity,ethnic marketing,diaspora marketing,gender marketing" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo/logo.png">
+
+    <!-- plugins css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/PACE/themes/blue/pace-theme-minimal.css" />
+    <link rel="stylesheet" href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+
+    <!-- core css -->
+    <link href="assets/css/ei-icon.css" rel="stylesheet">
+    <link href="assets/css/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="assets/css/app.css" rel="stylesheet">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TK74JHJ');</script>
+<!-- End Google Tag Manager -->
+</head>
+<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+<script src="assets/js/firebase.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+<script type="text/javascript">
+    // FirebaseUI config.
+    let url = 'apidoc.html';
+    if (document.referrer == 'https://v2.namsor.com/NamSorAPIv2/pricing.html') {
+        url = 'pricing.html';
+        console.log(document.referrer);
+    }
+    var uiConfig = {
+        signInSuccessUrl: url,
+        signInOptions: [
+            // Leave the lines as is for the providers you want to offer your users.
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+            firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+            firebase.auth.GithubAuthProvider.PROVIDER_ID,
+            firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        // Terms of service url.
+        tosUrl: 'https://v2.namsor.com/NamSorAPIv2/assets/pdf/201803_NamSor_API_Terms_v007.pdf'
+    };
+
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    // The start method will wait until the DOM is loaded.
+    ui.start('#firebaseui-auth-container', uiConfig);
+</script>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TK74JHJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <div class="app side-nav-dark">
+        <div class="authentication">
+            <div class="sign-in">
+                <div class="row no-mrg-horizon">
+                    <div class="col-md-6 col-lg-8 no-pdd-horizon d-none d-md-block">
+                        <div class="full-height bg" style="background-image: url('https://images.unsplash.com/photo-1489582558212-475fa5010897?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1651&q=80')">
+                            <div class="img-caption">
+                                <h1 class="caption-title">Add new data points from names</h1>
+                                <p class="caption-text">Make sense of the 'big data' by extracting valuable information from common names. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 no-pdd-horizon">
+                        <div class="full-height height-50">
+                            <div class="full-height pdd-horizon-70 pdd-vertical-100">
+                                <div class="table-cell">
+                                    <div class="pdd-horizon-15">
+                                        <h2>Sign in</h2>
+                                        <div id="firebaseui-auth-container"></div>
+										<p>No account yet? Go ahead : sign in will sign you up with a new account.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	  <!-- Footer START -->
+      <footer class="content-footer">
+        <div class="footer">
+          <div class="copyright">
+            <span> Copyright © 2019 <b class="text-dark">NamSor</b>. NamSor SAS is a French Limited Liability Company, Reg. 81148844400019 - VAT FR84811488444 - Data Reg. 1876223 </span>
+            <span class="go-right">
+              <a href="assets/pdf/201803_NamSor_API_Terms_v007.pdf" target="top" class="text-gray mrg-right-15">Term &amp; Conditions</a>
+              <a href="assets/pdf/NamSor_Data_Processing_Agreement_v007.pdf" target="top" class="text-gray">DPA</a>
+            </span>
+          </div>
+        </div>
+      </footer>
+      <!-- Footer END -->
+
+    </div>
+
+    <!-- build:js assets/js/vendor.js -->
+    <!-- plugins js -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/PACE/pace.min.js"></script>
+    <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js assets/js/app.min.js -->
+    <!-- core js -->
+    <script src="assets/js/app.js"></script>
+    <!-- endbuild -->
+
+    <!-- page js -->
+
+</body>
+
+</html>
