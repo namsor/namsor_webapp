@@ -966,14 +966,6 @@ const api_config = {"base":"https://v2.namsor.com/NamSorAPIv2","errorResponses":
 let apiGestion = {}
 apiGestion.get = function (options) {
   // console.log('Request GET');
-  // let opt = {
-  //   key: '996048c58adca6c217609e6c46288dc1',
-  //   url: 'gender',
-  //   args: [
-  //     'Daniel',
-  //     'Radpit'
-  //   ],
-  // };
   opt = options;
   return new Promise((resolve, reject) => {
     try {
@@ -1004,20 +996,6 @@ apiGestion.get = function (options) {
   });
 };
 apiGestion.post = function (options) {
-  // console.log('Request POST');
-  // let opt = {
-  //   key: '996048c58adca6c217609e6c46288dc1',
-  //   url: 'genderBatch',
-  //   body: {
-  //     "personalNames": [
-  //       {
-  //         "id": "id-00-001",
-  //         "firstName": "Donkey",
-  //         "lastName": "Radpit"
-  //       }
-  //     ]
-  //   }
-  // };
   opt = options;
   return new Promise((resolve, reject) => {
     try {
@@ -1054,8 +1032,7 @@ apiGestion.batch = function (fileId, csv) {
   return new Promise(async (resolve, reject) => {
     try {
       const { forms } = formsGestion;
-      let apiKey = "0cd268c1527ff3132191326cde6c06bc";
-      // let apiKey = await getApiKey();
+      let apiKey = await getApiKey();
       let options = {
         fileId: fileId,
         key: apiKey,
