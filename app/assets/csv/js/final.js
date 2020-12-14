@@ -109,9 +109,10 @@ const creditsGestion = {
 //SERVICES
 const servicesGestion = {
   //Méthode servant à récupérer le nombre de crédits
-  userIsLogin: () => new Promise ((resolve, reject) => {
+  userIsLogin: () => new Promise (async(resolve, reject) => {
     getInfoOpt = await getInfo();
     getApiKeyInfo = await getApiKey();
+
     if (getInfoOpt !== undefined){
       let result ;
       apiGestion.get({
