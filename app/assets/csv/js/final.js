@@ -113,7 +113,7 @@ const servicesGestion = {
     try{
     let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");
     
-    if (getInfoOpt !== null){
+    if (!getInfoOpt){
 
       let getApiKeyInfo = await getApiKey();
 
@@ -1171,13 +1171,15 @@ const downloadAllButton = byId('download-all-button');
     let isLogin = window.localStorage.getItem("firebaseui::rememberedAccounts");
     // Action à effectuer lors de la mise à jour du local storage
     const storageIsUpdate = () => {
-      console.log("sotrage is update");
+      const buyCredits = window.localStorage.getItem("refresh");
       const justLogged = window.localStorage.getItem("firebaseui::rememberedAccounts");
-        
+        console.log("Storzage is update");
         if(isLogin !== justLogged){ //L'utilisateur vient de se connecter
+            console.log("isLoog in");
             valideDropzone(); //relancer le choix des modals
             isLogin = justLogged;
-        }else if(justLogged){ //L'utilisateur vient d'acheter des credits
+        }else if(justLogged && buyCredits){ //L'utilisateur vient d'acheter des credits
+            console.log("buy credits");
             const {forms} = formsGestion;
             servicesGestion.userIsLogin() //interroger le module fetch
             .then(userIsLogin => {
