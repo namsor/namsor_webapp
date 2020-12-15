@@ -112,7 +112,6 @@ const servicesGestion = {
   userIsLogin: () => new Promise (async(resolve, reject) => {
     try{
     let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");
-    console.log(getInfoOpt);
     
     if (getInfoOpt !== null){
 
@@ -130,11 +129,9 @@ const servicesGestion = {
       })
       .catch(() => reject('1 Could not process your file, please try with another separator or file.'))
     } else {
-      console.log("===>", getInfoOpt);
       resolve(false);
     }
   }catch(error){
-    console.log(error);
     reject('2 Could not process your file, please try with another separator or file.')
   }
   }),
@@ -1173,7 +1170,8 @@ const downloadAllButton = byId('download-all-button');
 /* ========= Mise à jour des components suite à la mise à jour du local storage ===========*/
     let isLogin = window.localStorage.getItem("firebaseui::rememberedAccounts");
     // Action à effectuer lors de la mise à jour du local storage
-    const storageIsUpdate = async () => {
+    const storageIsUpdate = () => {
+      console.log("sotrage is update");
       const justLogged = window.localStorage.getItem("firebaseui::rememberedAccounts");
         
         if(isLogin !== justLogged){ //L'utilisateur vient de se connecter

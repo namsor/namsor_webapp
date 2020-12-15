@@ -34,7 +34,6 @@ var getToken = function () {
     return new Promise(function (resolve, reject) {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                window.localStorage.setItem('refresh', true);
                 user.getIdToken().then(function (accessToken) {
                     resolve(accessToken);
                     window.dataLayer = window.dataLayer || []
