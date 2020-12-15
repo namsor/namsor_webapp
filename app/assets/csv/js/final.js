@@ -1202,20 +1202,22 @@ const downloadAllButton = byId('download-all-button');
 //DROPZONE    
 /* ========= VALIDATION DE LA DROPZONE ===========*/
     // Action à effectuer lors du click sur le bouton validate de la dropzone
-    const valideDropzone = () => {
-      console.log("in valide dropzone");
+    setTimeout(() => {
+      const valideDropzone = () => {
+        console.log("in valide dropzone");
         servicesGestion.userIsLogin() //interroger le module fetch
         .then(userIsLogin => {
           console.log("then valid", userIsLogin);
-            creditsGestion.avaibleCredits = userIsLogin || 0; //Mettre à jour le store credit
-            if(userIsLogin) formsGestion.createForm(); // Ordonner la création de  components forms
-            hideModal(userIsLogin ? modalLogin : modalFormat);
-            showModal(userIsLogin ? modalFormat : modalLogin); //Choisir quel modal afficher
+          creditsGestion.avaibleCredits = userIsLogin || 0; //Mettre à jour le store credit
+          if(userIsLogin) formsGestion.createForm(); // Ordonner la création de  components forms
+          hideModal(userIsLogin ? modalLogin : modalFormat);
+          showModal(userIsLogin ? modalFormat : modalLogin); //Choisir quel modal afficher
         })
         .catch(error => {
           console.log("error dropzone", error);
           flashsGestion.callFlash(error, 'error')});
-    };
+        };
+      }, 500)
         
 //FORMS
 /* ========= Mise à jour du parsing d'un fichier (ex: new separator) ===========*/

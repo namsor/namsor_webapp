@@ -33,6 +33,7 @@ var request = obj => {
 var getToken = function () {
     return new Promise(function (resolve, reject) {
         firebase.auth().onAuthStateChanged(function (user) {
+          console.log("get token , user", user);
             if (user) {
                 user.getIdToken().then(function (accessToken) {
                     resolve(accessToken);
@@ -158,13 +159,17 @@ var getApiKey = () => {
     return new Promise(function (resolve, reject) {
         getToken()
             .then(token => {
+              console.log("TOKEN", token);
                 request({
                     url: 'procureKey/' + token
                 })
-                    .then(data => resolve((JSON.parse(data)).api_key), error => reject(error))
-            }, error => reject(error))
+                    .then(data => {
+                      console.log("DATA GET APIKEY", data);
+                      resolve((JSON.parse(data)).api_key), error => reject(error)})
+            }, error => {
+              console.log("ERREUR GET API KEY", error);
+              reject(error)})
             .catch(error => {
-              console.log("ERREUR GET API KE3", error);
                 reject(error);
             });
     });
