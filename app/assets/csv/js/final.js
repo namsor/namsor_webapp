@@ -111,10 +111,11 @@ const servicesGestion = {
   //Méthode servant à récupérer le nombre de crédits
   userIsLogin: () => new Promise (async(resolve, reject) => {
     try{
-    let getInfoOpt = await getInfo();
+    let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");
+    console.log(getInfoOpt);
     
-    if (typeof getInfoOpt === "string"){
-      
+    if (getInfoOpt !== null){
+
       let getApiKeyInfo = await getApiKey();
 
       let result ;
@@ -129,7 +130,7 @@ const servicesGestion = {
       })
       .catch(() => reject('1 Could not process your file, please try with another separator or file.'))
     } else {
-      console.log(getInfoOpt);
+      console.log("===>", getInfoOpt);
       resolve(false);
     }
   }catch(error){
