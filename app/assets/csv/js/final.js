@@ -113,7 +113,7 @@ const servicesGestion = {
     getInfoOpt = await getInfo();
     getApiKeyInfo = await getApiKey();
 
-    if (getInfoOpt !== "no user"){
+    if (typeof getInfoOpt === "string"){
       let result ;
       apiGestion.get({
         key: getApiKeyInfo,
@@ -125,7 +125,7 @@ const servicesGestion = {
         resolve(result);
       })
       .catch(() => reject('Could not process your file, please try with another separator or file.'))
-    } else if (getInfoOpt === "no user"){
+    } else {
       resolve(false);
     }
   }),
