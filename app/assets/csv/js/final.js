@@ -111,14 +111,9 @@ const servicesGestion = {
   //Méthode servant à récupérer le nombre de crédits
   userIsLogin: () => new Promise (async(resolve, reject) => {
     try{
-    let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");
-    console.log(getInfoOpt);
-    
-
+    let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");   
     if (getInfoOpt){
-      console.log("in the if", getApiKey());
       let getApiKeyInfo = await getApiKey();
-      console.log("API KEY", getApiKeyInfo);
 
       let result ;
       apiGestion.get({
@@ -130,13 +125,12 @@ const servicesGestion = {
         result = JSON.parse(res).subscription.planQuota - JSON.parse(res).billingPeriod.usage;
         resolve(result);
       })
-      .catch(() => reject('1 Problem with your connection, please try again later'))
+      .catch(() => reject('We are facing a problem with the connection, please try again later'))
     } else {
       resolve(false);
     }
   }catch(error){
-    console.log("error catch user ====>", error);
-    reject('2"error', error);
+    reject(error);
   }
   }),
     requestStructure: () => new Promise ((resolve, reject) => {
@@ -1177,14 +1171,11 @@ const downloadAllButton = byId('download-all-button');
     const storageIsUpdate = () => {
       const buyCredits = window.localStorage.getItem("refresh");
       const justLogged = window.localStorage.getItem("firebaseui::rememberedAccounts");
-        console.log("Storage is update");
         if(isLogin !== justLogged){ //L'utilisateur vient de se connecter
-            console.log("isLoog in");
             setTimeout(valideDropzone, 1000)
              //relancer le choix des modals
             isLogin = justLogged;
         }else if(justLogged && buyCredits){ //L'utilisateur vient d'acheter des credits
-            console.log("buy credits");
             const {forms} = formsGestion;
             servicesGestion.userIsLogin() //interroger le module fetch
             .then(userIsLogin => {
@@ -1204,17 +1195,14 @@ const downloadAllButton = byId('download-all-button');
 /* ========= VALIDATION DE LA DROPZONE ===========*/
     // Action à effectuer lors du click sur le bouton validate de la dropzone
       const valideDropzone = () => {
-        console.log("in valide dropzone");
         servicesGestion.userIsLogin() //interroger le module fetch
         .then(userIsLogin => {
-          console.log("then valid", userIsLogin);
           creditsGestion.avaibleCredits = userIsLogin || 0; //Mettre à jour le store credit
           if(userIsLogin) formsGestion.createForm(); // Ordonner la création de  components forms
           hideModal(userIsLogin ? modalLogin : modalFormat);
           showModal(userIsLogin ? modalFormat : modalLogin); //Choisir quel modal afficher
         })
         .catch(error => {
-          console.log("error dropzone", error);
           flashsGestion.callFlash(error, 'error')});
         };
         
