@@ -125,14 +125,14 @@ const servicesGestion = {
         result = JSON.parse(res).subscription.planQuota - JSON.parse(res).billingPeriod.usage;
         resolve(result);
       })
-      .catch(() => reject('Could not process your file, please try with another separator or file.'))
+      .catch(() => reject('1 Could not process your file, please try with another separator or file.'))
     } else {
       console.log(getInfoOpt);
       resolve(false);
     }
   }catch(error){
     console.log(error);
-    reject('Could not process your file, please try with another separator or file.')
+    reject('2 Could not process your file, please try with another separator or file.')
   }
   }),
     requestStructure: () => new Promise ((resolve, reject) => {
