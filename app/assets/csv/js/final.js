@@ -113,7 +113,7 @@ const servicesGestion = {
     try{
     let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");
     
-    if (!getInfoOpt){
+    if (getInfoOpt){
 
       let getApiKeyInfo = await getApiKey();
 
@@ -1173,7 +1173,7 @@ const downloadAllButton = byId('download-all-button');
     const storageIsUpdate = () => {
       const buyCredits = window.localStorage.getItem("refresh");
       const justLogged = window.localStorage.getItem("firebaseui::rememberedAccounts");
-        console.log("Storzage is update");
+        console.log("Storage is update");
         if(isLogin !== justLogged){ //L'utilisateur vient de se connecter
             console.log("isLoog in");
             valideDropzone(); //relancer le choix des modals
