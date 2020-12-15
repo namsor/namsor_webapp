@@ -128,7 +128,7 @@ const servicesGestion = {
       .catch(() => reject('Could not process your file, please try with another separator or file.'))
     } else {
       console.log(getInfoOpt);
-      reject(false);
+      resolve(false);
     }
   }catch(error){
     console.log(error);
