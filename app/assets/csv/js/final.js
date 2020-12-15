@@ -112,9 +112,11 @@ const servicesGestion = {
   userIsLogin: () => new Promise (async(resolve, reject) => {
     try{
     let getInfoOpt = await getInfo();
-    let getApiKeyInfo = await getApiKey();
-
+    
     if (typeof getInfoOpt === "string"){
+      
+      let getApiKeyInfo = await getApiKey();
+
       let result ;
       apiGestion.get({
         key: getApiKeyInfo,
