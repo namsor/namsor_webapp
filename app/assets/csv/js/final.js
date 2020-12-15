@@ -127,12 +127,13 @@ const servicesGestion = {
         result = JSON.parse(res).subscription.planQuota - JSON.parse(res).billingPeriod.usage;
         resolve(result);
       })
-      .catch(() => reject('1 Could not process your file, please try with another separator or file.'))
+      .catch(() => reject('1 Problem with your connection, please try again later'))
     } else {
       resolve(false);
     }
   }catch(error){
-    reject('2 Could not process your file, please try with another separator or file.')
+    console.log("error catch user loged in", error);
+    reject('2"error catch user loged in"', error);
   }
   }),
     requestStructure: () => new Promise ((resolve, reject) => {
