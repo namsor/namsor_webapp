@@ -965,7 +965,7 @@ const api_config = {"base":"https://v2.namsor.com/NamSorAPIv2","errorResponses":
 //API GESTION
 let apiGestion = {}
 apiGestion.get = function (options) {
-  opt = options;
+  let opt = options;
   return new Promise((resolve, reject) => {
     try {
       let xhr = new XMLHttpRequest();
@@ -995,7 +995,7 @@ apiGestion.get = function (options) {
   });
 };
 apiGestion.post = function (options) {
-  opt = options;
+  let opt = options;
   return new Promise((resolve, reject) => {
     try {
       let xhr = new XMLHttpRequest();
