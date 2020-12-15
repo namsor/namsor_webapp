@@ -1180,7 +1180,8 @@ const downloadAllButton = byId('download-all-button');
         console.log("Storage is update");
         if(isLogin !== justLogged){ //L'utilisateur vient de se connecter
             console.log("isLoog in");
-            valideDropzone(); //relancer le choix des modals
+            setTimeout(valideDropzone, 1000)
+             //relancer le choix des modals
             isLogin = justLogged;
         }else if(justLogged && buyCredits){ //L'utilisateur vient d'acheter des credits
             console.log("buy credits");
@@ -1202,7 +1203,6 @@ const downloadAllButton = byId('download-all-button');
 //DROPZONE    
 /* ========= VALIDATION DE LA DROPZONE ===========*/
     // Action à effectuer lors du click sur le bouton validate de la dropzone
-    setTimeout(() => {
       const valideDropzone = () => {
         console.log("in valide dropzone");
         servicesGestion.userIsLogin() //interroger le module fetch
@@ -1217,7 +1217,6 @@ const downloadAllButton = byId('download-all-button');
           console.log("error dropzone", error);
           flashsGestion.callFlash(error, 'error')});
         };
-      }, 500)
         
 //FORMS
 /* ========= Mise à jour du parsing d'un fichier (ex: new separator) ===========*/
