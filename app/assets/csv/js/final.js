@@ -116,6 +116,7 @@ const servicesGestion = {
     if (getInfoOpt){
 
       let getApiKeyInfo = await getApiKey();
+      console.log("API KEY", getApiKeyInfo);
 
       let result ;
       apiGestion.get({
@@ -132,8 +133,8 @@ const servicesGestion = {
       resolve(false);
     }
   }catch(error){
-    console.log("error catch user loged in", error);
-    reject('2"error catch user loged in"', error);
+    console.log("error catch user ====>", error);
+    reject('2"error', error);
   }
   }),
     requestStructure: () => new Promise ((resolve, reject) => {
