@@ -110,8 +110,9 @@ const creditsGestion = {
 const servicesGestion = {
   //Méthode servant à récupérer le nombre de crédits
   userIsLogin: () => new Promise (async(resolve, reject) => {
-    getInfoOpt = await getInfo();
-    getApiKeyInfo = await getApiKey();
+    try{
+    let getInfoOpt = await getInfo();
+    let getApiKeyInfo = await getApiKey();
 
     if (typeof getInfoOpt === "string"){
       let result ;
@@ -126,8 +127,13 @@ const servicesGestion = {
       })
       .catch(() => reject('Could not process your file, please try with another separator or file.'))
     } else {
-      resolve(false);
+      console.log(getInfoOpt);
+      reject(false);
     }
+  }catch(error){
+    console.log(error);
+    reject('Could not process your file, please try with another separator or file.')
+  }
   }),
     requestStructure: () => new Promise ((resolve, reject) => {
         resolve(exStructure.routes);
