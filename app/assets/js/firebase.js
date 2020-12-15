@@ -164,6 +164,7 @@ var getApiKey = () => {
                     .then(data => resolve((JSON.parse(data)).api_key), error => reject(error))
             }, error => reject(error))
             .catch(error => {
+              console.log("ERREUR GET API KE3", error);
                 reject(error);
             });
     });
