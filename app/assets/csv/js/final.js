@@ -789,7 +789,7 @@ function Table(id){
         <div class="title-table">
           <div class="flex">
             <h3> 
-              ${formsGestion.forms[this.id].fileName} 
+              ${dropzoneGestion.file[this.id].name} 
               <span class="secondary">${formsGestion.forms[this.id].fileSize}</span>
             </h3>
             <span class="download-button" id="upload-button-${this.id}"><img src="assets/csv/media/img/time-capsule.gif" alt="wait" /></span>
@@ -898,7 +898,7 @@ function Table(id){
     let csvContent = `data:${fileFormat};charset=utf-8,${json}`;
     csvContent = encodeURI(csvContent);
     let download = json ?
-      `<a class="download-link" href=${csvContent} download="${formsGestion.forms[this.id].fileName}"><img src="assets/csv/media/img/download.svg" alt="download" /></a>` :
+      `<a class="download-link" href=${csvContent} download="${dropzoneGestion.files[this.id].name}_${formsGestion.forms[this.id].requestName}"><img src="assets/csv/media/img/download.svg" alt="download" /></a>` :
       '<img src="assets/csv/media/img/exclamation.png" alt="download" />'
     this.componentsDom.uploadButton.innerHTML = download;
   };
