@@ -317,33 +317,34 @@ const dropzoneComponent = new Dropzone(dropzone, {
         this.on("addedfile", function(file) {
           const fileType = {txt: "text/plain", csv: "text/csv"}
           const regex = /(?:\.([^.]+))?$/;
-          console.log("====>", fileType[regex.exec(file.name)[1]]);
-          if(!["application/vnd.ms-excel", "text/plain", "text/csv"].includes(file.type || fileType[regex.exec(file.name)[1]])){//Vérifier le type de fichier
+          let fileExtension = file.type || fileType[regex.exec(file.name)[1]];
+          if(fileExtension === "application/vnd.ms-excel") fileExtension = "text/csv";
+          if(!["text/plain", "text/csv"].includes(fileExtension)){//Vérifier le type de fichier
               this.removeFile(file);
               flashsGestion.callFlash("Only csv and txt files are accepted.", "warning");
+          } 
+          else if(file.size > (maxFilesize * 1000000)){//Vérifier le poids du fichier
+              this.removeFile(file);
+              flashsGestion.callFlash(`The maximum size cannot exceed ${maxFilesize} MB.`, "warning");
+          } 
+          else{//Ajout d'un fichier
+              file.previewTemplate.children[0].innerHTML = `<img data-dz-thumbnail="" alt="preview img" src=${bas64Imgs[fileExtension]} />`
+              addClass(dropzoneInput, "hide");
+              removeClass(byId('validate-drop'), 'hide');
+              let id = strRandom();
+              const fileRegister = () => {
+                  if(!files[id]) {
+                      file.id = id;
+                      files[id] = file;
+                  }
+                  else {
+                      id = strRandom();
+                      fileRegister()
+                  }
+              };
+              fileRegister();
           }
-            else if(file.size > (maxFilesize * 1000000)){//Vérifier le poids du fichier
-                this.removeFile(file);
-                flashsGestion.callFlash(`The maximum size cannot exceed ${maxFilesize} MB.`, "warning");
-            } 
-            else{//Ajout d'un fichier
-                file.previewTemplate.children[0].innerHTML = `<img data-dz-thumbnail="" alt="preview img" src=${bas64Imgs[file.type === "application/vnd.ms-excel" ? "text/csv" : file.type]} />`
-                addClass(dropzoneInput, "hide");
-                removeClass(byId('validate-drop'), 'hide');
-                let id = strRandom();
-                const fileRegister = () => {
-                    if(!files[id]) {
-                        file.id = id;
-                        files[id] = file;
-                    }
-                    else {
-                        id = strRandom();
-                        fileRegister();
-                    }
-                };
-                fileRegister();
-            }
-        });
+      });
         //------------------------- Lors de la suppression d'un fichier ------------------//
         this.on("removedfile", function(file) {
             delete files[file.id];
