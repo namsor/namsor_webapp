@@ -315,20 +315,13 @@ const dropzoneComponent = new Dropzone(dropzone, {
     init: function() {
         //------------------------- Lors d'un ajout d'un fichier ------------------//
         this.on("addedfile", function(file) {
-          if(!file.type){
-            console.log("in the if !type");
-            const fileType = {txt: "text/plain", csv: "text/csv"}
-            const regex = /(?:\.([^.]+))?$/;
-            const newType = fileType[regex.exec(file.name)[1]];
-            console.log("NEWTYPE", newType);
-        };
-          console.log('file', file);
-          console.log('csvTest: ', ["text/csv"].includes(file.type), "text/csv" === file.type, typeof file.type)
-          console.log('txtTest: ', ["text/plain"].includes(file.type), "text/plain" === file.type, typeof file.type)
-            if(!["application/vnd.ms-excel", "text/plain", "text/csv"].includes(file.type)){//Vérifier le type de fichier
-                this.removeFile(file);
-                flashsGestion.callFlash("Only csv and txt files are accepted.", "warning");
-            } 
+          const fileType = {txt: "text/plain", csv: "text/csv"}
+          const regex = /(?:\.([^.]+))?$/;
+          console.log("====>", fileType[regex.exec(file.name)[1]]);
+          if(!["application/vnd.ms-excel", "text/plain", "text/csv"].includes(file.type || fileType[regex.exec(file.name)[1]])){//Vérifier le type de fichier
+              this.removeFile(file);
+              flashsGestion.callFlash("Only csv and txt files are accepted.", "warning");
+          }
             else if(file.size > (maxFilesize * 1000000)){//Vérifier le poids du fichier
                 this.removeFile(file);
                 flashsGestion.callFlash(`The maximum size cannot exceed ${maxFilesize} MB.`, "warning");
