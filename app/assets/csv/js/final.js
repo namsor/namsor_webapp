@@ -1029,6 +1029,7 @@ apiGestion.batch = function (fileId, csv) {
     try {
       const { forms } = formsGestion;
       let apiKey = await getApiKey();
+
       let options = {
         fileId: fileId,
         key: apiKey,
