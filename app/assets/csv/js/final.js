@@ -316,12 +316,13 @@ const dropzoneComponent = new Dropzone(dropzone, {
         //------------------------- Lors d'un ajout d'un fichier ------------------//
         this.on("addedfile", function(file) {
           if(!file.type){
+            console.log("in the if !type");
             const fileType = {txt: "text/plain", csv: "text/csv"}
             const regex = /(?:\.([^.]+))?$/;
-            file.type = fileType[regex.exec(file.name)[1]];
+            const newType = fileType[regex.exec(file.name)[1]];
+            console.log("NEWTYPE", newType);
         };
           console.log('file', file);
-          console.log(file.type);
           console.log('csvTest: ', ["text/csv"].includes(file.type), "text/csv" === file.type, typeof file.type)
           console.log('txtTest: ', ["text/plain"].includes(file.type), "text/plain" === file.type, typeof file.type)
             if(!["application/vnd.ms-excel", "text/plain", "text/csv"].includes(file.type)){//Vérifier le type de fichier
