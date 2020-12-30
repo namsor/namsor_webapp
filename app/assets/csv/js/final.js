@@ -793,7 +793,7 @@ function Table(id){
         <div class="title-table">
           <div class="flex">
             <h3> 
-              ${dropzoneGestion.file[this.id].name} 
+              ${dropzoneGestion.files[this.id].name} 
               <span class="secondary">${formsGestion.forms[this.id].fileSize}</span>
             </h3>
             <span class="download-button" id="upload-button-${this.id}"><img src="assets/csv/media/img/time-capsule.gif" alt="wait" /></span>
