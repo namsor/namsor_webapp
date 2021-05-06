@@ -114,11 +114,11 @@ const servicesGestion = {
     try{
     let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");   
     if (getInfoOpt){
-      // let getApiKeyInfo = await getApiKey();
+      let getApiKeyInfo = await getApiKey();
 
       let result ;
       apiGestion.get({
-        key: "b1b590d9aaf8a83f1d518f2ff132fb50",
+        key: getApiKeyInfo,
         url: "apiUsage",
         args : []
       })
@@ -782,6 +782,7 @@ const DomElement = {
   arrowNext: byId('arrow-next')
 }
 let formsNumber, tabPanelsPosition;
+
 /* ================================================================================================
                                     CONSTRUCTEUR DES TABLEAUX
 ==================================================================================================*/
@@ -1036,8 +1037,7 @@ apiGestion.batch = function (fileId, csv) {
   return new Promise(async (resolve, reject) => {
     try {
       const { forms } = formsGestion;
-      // let apiKey = await getApiKey();
-      let apiKey = "b1b590d9aaf8a83f1d518f2ff132fb50";
+      let apiKey = await getApiKey();
 
       let options = {
         fileId: fileId,

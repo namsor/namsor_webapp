@@ -211,8 +211,7 @@ apiGestion.batch = function (fileId, csv) {
   return new Promise(async (resolve, reject) => {
     try {
       const { forms } = formsGestion;
-      let apiKey = "0cd268c1527ff3132191326cde6c06bc";
-      // let apiKey = await getApiKey();
+      let apiKey = await getApiKey();
 
       let options = fileId;
       // let options = {
