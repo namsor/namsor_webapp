@@ -1,3 +1,4 @@
+console.log("here assets");
 const exStructure = {
 	"base": "https://v2.namsor.com/NamSorAPIv2","errorResponses": ["401", "403"],	"routes": {		"genderBatch": {"title": "Gender Batch","required": ["firstName", "lastName"],"cost": 1,"summary": "Infer the likely gender of up to 100 names, detecting automatically the cultural context.","request": {	"personalNames": {"id": {"type":"string"},"firstName":{"type":"string" },"lastName":{ "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"likelyGender": {"type": "string","description": "Most likely gender","enum": ["male", "female", "unknown"]},"genderScale": {"type": "number","description": "Compatibility to NamSor_v1 Gender Scale M[-1..U..+1]F value","format": "double"},"score": { "type": "number", "format": "double" },"probabilityCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"genderGeoBatch": {"title": "Gender Geo Batch","required": ["firstName", "lastName", "countryIso2"],"cost": 1,"summary": "Infer the likely gender of up to 100 names, each given a local context (ISO2 country code).","request": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"countryIso2": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"likelyGender": {"type": "string","description": "Most likely gender","enum": ["male", "female", "unknown"]},"genderScale": {"type": "number","description": "Compatibility to NamSor_v1 Gender Scale M[-1..U..+1]F value","format": "double"},"score": { "type": "number", "format": "double" },"probabilityCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"genderFullBatch": {"title": "Gender Full Batch","required": ["name"],"cost": 1,"summary": "Infer the likely gender of up to 100 full names, detecting automatically the cultural context.","request": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" },"likelyGender": {"type": "string","description": "Most likely gender","enum": ["male", "female", "unknown"]},"genderScale": {"type": "number","description": "Compatibility to NamSor_v1 Gender Scale M[-1..U..+1]F value","format": "double"},"score": { "type": "number", "format": "double" },"probabilityCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"genderFullGeoBatch": {"title": "Gender Full Geo Batch","required": ["name", "countryIso2"],"cost": 1,"summary": "Infer the likely gender of up to 100 full names, with a given cultural context (country ISO2 code).","request": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" },"countryIso2": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" },"likelyGender": {"type": "string","description": "Most likely gender","enum": ["male", "female", "unknown"]},"genderScale": {"type": "number","description": "Compatibility to NamSor_v1 Gender Scale M[-1..U..+1]F value","format": "double"},"score": { "type": "number", "format": "double" },"probabilityCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"parsedGenderBatch": {"title": "Parsed Gender Batch","required": ["firstName", "lastName"],"cost": 1,"summary": "Infer the likely gender of up to 100 fully parsed names, detecting automatically the cultural context.","request": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"prefixOrTitle": { "type": "string" },"suffix": { "type": "string" },"middleName": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"likelyGender": {"type": "string","description": "Most likely gender","enum": ["male", "female", "unknown"]},"genderScale": {"type": "number","description": "Compatibility to NamSor_v1 Gender Scale M[-1..U..+1]F value","format": "double"},"score": { "type": "number", "format": "double" },				"probabilityCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"parsedGenderGeoBatch": {"title": "Parsed Gender Geo Batch","required": ["firstName", "lastName", "countryIso2"],"cost": 1,"summary": "Infer the likely gender of up to 100 fully parsed names, detecting automatically the cultural context.","request": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"prefixOrTitle": { "type": "string" },"suffix": { "type": "string" },"middleName": { "type": "string" },"countryIso2": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"likelyGender": {"type": "string","description": "Most likely gender","enum": ["male", "female", "unknown"]},"genderScale": {"type": "number","description": "Compatibility to NamSor_v1 Gender Scale M[-1..U..+1]F value","format": "double"},"score": { "type": "number", "format": "double" },"probabilityCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"originBatch": {"title": "Origin Batch","required": ["firstName", "lastName"],"cost": 10,"summary": "[USES 10 UNITS PER NAME] Infer the likely country of origin of up to 100 names, detecting automatically the cultural context.","request": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"countryOrigin": {"type": "string","description": "Most likely country of Origin"},"countryOriginAlt": {"type": "string","description": "Second best alternative : country of Origin"},"countriesOriginTop": {"type": "array","description": "List countries of Origin (top 10)","items": {"type": "string","description": "List countries of Origin (top 10)"}},"score": {"type": "number","description": "Compatibility to NamSor_v1 Origin score value","format": "double"},"regionOrigin": {"type": "string","description": "Most likely region of Origin (based on countryOrigin ISO2 code)"},"topRegionOrigin": {"type": "string","description": "Most likely region of Origin (based on countryOrigin ISO2 code)"},"subRegionOrigin": {"type": "string","description": "Most likely region of Origin (based on countryOrigin ISO2 code)"},"probabilityCalibrated": { "type": "number", "format": "double" },"probabilityAltCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"countryBatch": {"title": "Country Batch","required": ["name"],"cost": 10,"summary": "[USES 10 UNITS PER NAME] Infer the likely country of residence of up to 100 personal full names, or surnames. Assumes names as they are in the country of residence OR the country of origin.","request": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" },"score": { "type": "number", "format": "double" },"country": { "type": "string" },"countryAlt": { "type": "string" },"region": { "type": "string" },"topRegion": { "type": "string" },"subRegion": { "type": "string" },"countriesTop": {"type": "array","description": "List countries (top 10)","items": {"type": "string","description": "List countries (top 10)"}},"probabilityCalibrated": { "type": "number", "format": "double" },"probabilityAltCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"diasporaBatch": {"title": "Diaspora Batch","required": ["firstName", "lastName", "countryIso2"],"cost": 20,"summary": "[USES 20 UNITS PER NAME] Infer the likely ethnicity/diaspora of up to 100 personal names, given a country of residence ISO2 code (ex. US, CA, AU, NZ etc.)","request": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"countryIso2": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"score": {"type": "number","description": "Compatibility to NamSor_v1 Origin score value","format": "double"},"ethnicityAlt": { "type": "string" },"ethnicity": { "type": "string" },"lifted": { "type": "boolean" },"countryIso2": { "type": "string" },"ethnicitiesTop": {"type": "array","description": "List ethnicities (top 10)","items": {"type": "string","description": "List ethnicities (top 10)"}}}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"usRaceEthnicityBatch": {"title": "US Race & Ethnicity Batch","required": ["firstName", "lastName"],"cost": 10,"summary": "[USES 10 UNITS PER NAME] Infer up-to 100 US resident's likely race/ethnicity according to US Census taxonomy.","request": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"countryIso2": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"raceEthnicityAlt": {"type": "string","description": "Second most likely US 'race'/ethnicity","enum": ["W_NL", "HL", "A", "B_NL"]},"raceEthnicity": {"type": "string","description": "Most likely US 'race'/ethnicity","enum": ["W_NL", "HL", "A", "B_NL"]},"score": {"type": "number","description": "Compatibility to NamSor_v1 Origin score value","format": "double"},"raceEthnicitiesTop": {"type": "array","description": "List 'race'/ethnicities","items": {"type": "string","description": "List 'race'/ethnicities"}},"probabilityCalibrated": { "type": "number", "format": "double" },"probabilityAltCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"usZipRaceEthnicityBatch": {"title": "US Zip Race & Ethnicity Batch","required": ["firstName", "lastName", "countryIso2", "zipCode"],"cost": 10,"summary": "[USES 10 UNITS PER NAME] Infer up-to 100 US resident's likely race/ethnicity according to US Census taxonomy, with (optional) ZIP code.","request": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"countryIso2": { "type": "string" },"zipCode": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" },"raceEthnicityAlt": {"type": "string","description": "Second most likely US 'race'/ethnicity","enum": ["W_NL", "HL", "A", "B_NL"]},"raceEthnicity": {"type": "string","description": "Most likely US 'race'/ethnicity","enum": ["W_NL", "HL", "A", "B_NL"]},"score": {"type": "number","description": "Compatibility to NamSor_v1 Origin score value","format": "double"},"raceEthnicitiesTop": {"type": "array","description": "List 'race'/ethnicities","items": {"type": "string","description": "List 'race'/ethnicities"}},"probabilityCalibrated": { "type": "number", "format": "double" },"probabilityAltCalibrated": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"parseNameBatch": {"title": "Parse Name Batch","required": ["name"],"cost": 1,"summary": "Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John.","request": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" },"nameParserType": { "type": "string" },"nameParserTypeAlt": { "type": "string" },"firstLastName": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" }},"score": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}},"parseNameGeoBatch": {"title": "Parse Name Geo Batch","required": ["name", "countryIso2"],"cost": 1,"summary": "Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John. Giving a local context improves precision. ","request": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" },"countryIso2": { "type": "string" }}},"response": {"200": {"personalNames": {"id": { "type": "string" },"name": { "type": "string" },"nameParserType": { "type": "string" },"nameParserTypeAlt": { "type": "string" },"firstLastName": {"id": { "type": "string" },"firstName": { "type": "string" },"lastName": { "type": "string" }},"score": { "type": "number", "format": "double" }}},"401": { "description": "Missing or incorrect API Key" },"403": { "description": "API Limit Reached or API Key Disabled" }}}}
 }
@@ -113,11 +114,11 @@ const servicesGestion = {
     try{
     let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");   
     if (getInfoOpt){
-      let getApiKeyInfo = await getApiKey();
+      // let getApiKeyInfo = await getApiKey();
 
       let result ;
       apiGestion.get({
-        key: getApiKeyInfo,
+        key: "b1b590d9aaf8a83f1d518f2ff132fb50",
         url: "apiUsage",
         args : []
       })
@@ -138,6 +139,7 @@ const servicesGestion = {
     }),
     papaParsing: id => new Promise (async (resolve, reject) => {
         const {files} = dropzoneGestion;
+      
         const separator = formsGestion.forms[id].separator === "auto" ? "" : formsGestion.forms[id].separator;
         try{
           Papa.parse(files[id], {
@@ -184,6 +186,12 @@ const servicesGestion = {
           preview: preview,
           beforeFirstChunk: function(chunk){
             var rows = chunk.split( /\r\n|\r|\n/ );
+            rows.map((r,i) => {
+              if (r.includes('#')){
+                rows[i] = rows[i].replace(/#/, '');
+              };
+            });
+        
             var headings = rows[0].split( ';' );
             
             if (forms[id].checkboxHeader === "withHeader") {
@@ -268,6 +276,7 @@ const body = document.querySelector("body");
     };
 
     Flash.prototype.insert = function(id){
+      console.log(this);
         body.insertAdjacentHTML("beforeend", this.infoMessage());
         const target = document.getElementById(`info-${this.value.id}`);
         target.style.right= `${this.value.position * this.value.width}px`;
@@ -297,7 +306,7 @@ const dropzoneGestion =
 const {byId, addClass, removeClass} = domGestion;
 
 const dropzoneInput = byId('dropzone-input');
-const maxFilesize = 5;
+const maxFilesize = 10;
 const maxFiles = 5;
 const dropzone = byId('dropzone');
 
@@ -315,36 +324,32 @@ const dropzoneComponent = new Dropzone(dropzone, {
     init: function() {
         //------------------------- Lors d'un ajout d'un fichier ------------------//
         this.on("addedfile", function(file) {
-          const fileType = {txt: "text/plain", csv: "text/csv"}
-          const regex = /(?:\.([^.]+))?$/;
-          let fileExtension = file.type || fileType[regex.exec(file.name)[1]];
-          if(fileExtension === "application/vnd.ms-excel") fileExtension = "text/csv";
-          if(!["text/plain", "text/csv"].includes(fileExtension)){//Vérifier le type de fichier
-              this.removeFile(file);
-              flashsGestion.callFlash("Only csv and txt files are accepted.", "warning");
-          } 
-          else if(file.size > (maxFilesize * 1000000)){//Vérifier le poids du fichier
-              this.removeFile(file);
-              flashsGestion.callFlash(`The maximum size cannot exceed ${maxFilesize} MB.`, "warning");
-          } 
-          else{//Ajout d'un fichier
-              file.previewTemplate.children[0].innerHTML = `<img data-dz-thumbnail="" alt="preview img" src=${bas64Imgs[fileExtension]} />`
-              addClass(dropzoneInput, "hide");
-              removeClass(byId('validate-drop'), 'hide');
-              let id = strRandom();
-              const fileRegister = () => {
-                  if(!files[id]) {
-                      file.id = id;
-                      files[id] = file;
-                  }
-                  else {
-                      id = strRandom();
-                      fileRegister()
-                  }
-              };
-              fileRegister();
-          }
-      });
+            if(!["application/vnd.ms-excel", "text/plain", "text/csv"].includes(file.type)){//Vérifier le type de fichier
+                this.removeFile(file);
+                flashsGestion.callFlash("Only csv and txt files are accepted.", "warning");
+            } 
+            else if(file.size > (maxFilesize * 1000000)){//Vérifier le poids du fichier
+                this.removeFile(file);
+                flashsGestion.callFlash(`The maximum size cannot exceed ${maxFilesize} MB.`, "warning");
+            } 
+            else{//Ajout d'un fichier
+                file.previewTemplate.children[0].innerHTML = `<img data-dz-thumbnail="" alt="preview img" src=${bas64Imgs[file.type === "application/vnd.ms-excel" ? "text/csv" : file.type]} />`
+                addClass(dropzoneInput, "hide");
+                removeClass(byId('validate-drop'), 'hide');
+                let id = strRandom();
+                const fileRegister = () => {
+                    if(!files[id]) {
+                        file.id = id;
+                        files[id] = file;
+                    }
+                    else {
+                        id = strRandom();
+                        fileRegister()
+                    }
+                };
+                fileRegister();
+            }
+        });
         //------------------------- Lors de la suppression d'un fichier ------------------//
         this.on("removedfile", function(file) {
             delete files[file.id];
@@ -570,7 +575,6 @@ Form.prototype.updateForm = function(name){
     if(this.requestName !== name){
         this.data = structure[name];
         this.requestName = name;
-        this.fileName = `${name}_${this.fileName}`
         cost.innerHTML = `Use ${this.data.cost} credit(s) per line`;
         summary.innerHTML = this.data.summary;
         inputsArea.innerHTML = loader;
@@ -793,7 +797,7 @@ function Table(id){
         <div class="title-table">
           <div class="flex">
             <h3> 
-              ${dropzoneGestion.file[this.id].name} 
+              ${dropzoneGestion.files[this.id].name} 
               <span class="secondary">${formsGestion.forms[this.id].fileSize}</span>
             </h3>
             <span class="download-button" id="upload-button-${this.id}"><img src="assets/csv/media/img/time-capsule.gif" alt="wait" /></span>
@@ -902,7 +906,7 @@ function Table(id){
     let csvContent = `data:${fileFormat};charset=utf-8,${json}`;
     csvContent = encodeURI(csvContent);
     let download = json ?
-      `<a class="download-link" href=${csvContent} download="${dropzoneGestion.files[this.id].name}_${formsGestion.forms[this.id].requestName}"><img src="assets/csv/media/img/download.svg" alt="download" /></a>` :
+      `<a class="download-link" href=${csvContent} download="${dropzoneGestion.files[this.id].name}"><img src="assets/csv/media/img/download.svg" alt="download" /></a>` :
       '<img src="assets/csv/media/img/exclamation.png" alt="download" />'
     this.componentsDom.uploadButton.innerHTML = download;
   };
@@ -1032,7 +1036,8 @@ apiGestion.batch = function (fileId, csv) {
   return new Promise(async (resolve, reject) => {
     try {
       const { forms } = formsGestion;
-      let apiKey = await getApiKey();
+      // let apiKey = await getApiKey();
+      let apiKey = "b1b590d9aaf8a83f1d518f2ff132fb50";
 
       let options = {
         fileId: fileId,
@@ -1197,7 +1202,6 @@ const downloadAllButton = byId('download-all-button');
         window.localStorage.removeItem('refresh');
     };
 
-//DROPZONE    
 /* ========= VALIDATION DE LA DROPZONE ===========*/
     // Action à effectuer lors du click sur le bouton validate de la dropzone
       const valideDropzone = () => {
@@ -1212,7 +1216,6 @@ const downloadAllButton = byId('download-all-button');
           flashsGestion.callFlash(error, 'error')});
         };
         
-//FORMS
 /* ========= Mise à jour du parsing d'un fichier (ex: new separator) ===========*/
     const updateParsing = (id, separator) => {
         const form = formsGestion.forms[id];
