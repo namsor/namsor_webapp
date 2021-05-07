@@ -439,7 +439,7 @@ Select.prototype.documentClick = function(evt) {
 Select.prototype.activeSelectListener = function(callback){
     addEvent(this.inputField, 'input', this.inputListener.bind(this));
     this.dropdownArray.forEach(item => {
-        addEvent(item, 'click', () => {
+        addEvent(item, 'mousedown', () => {
             this.itemClick(item);
             callback(item.textContent, this.id);
         });
