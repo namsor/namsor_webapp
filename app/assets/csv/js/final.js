@@ -113,8 +113,7 @@ const servicesGestion = {
     try{
     let getInfoOpt = window.localStorage.getItem("firebaseui::rememberedAccounts");   
     if (getInfoOpt){
-      // let getApiKeyInfo = await getApiKey();
-      let getApiKeyInfo = "3c9fb0607ab5119dba19c95209270002";
+      let getApiKeyInfo = await getApiKey();
 
       let result ;
       apiGestion.get({
@@ -1040,8 +1039,8 @@ apiGestion.batch = function (fileId, csv) {
   return new Promise(async (resolve, reject) => {
     try {
       const { forms } = formsGestion;
-      // let apiKey = await getApiKey();
-      let apiKey = "3c9fb0607ab5119dba19c95209270002";
+      let apiKey = await getApiKey();
+
 
       let options = {
         fileId: fileId,
