@@ -905,13 +905,15 @@ function Table(id){
   };
 // --------------------- Mise à jour du bouton download -------------------//
   Table.prototype.updateDownloadLink = function(json){
+    const {forms} = formsGestion;
     const fileFormat = dropzoneGestion.files[this.id].type === "text/plain" ? "text/plain" : "text/csv";
-    let csvContent = `data:${fileFormat};charset=utf-8,${json}`;
-    console.log(csvContent);
-    console.log(dropzoneGestion.files[this.id].name);
-    csvContent = encodeURI(csvContent);
+    // let csvContent = `data:${fileFormat};charset=utf-8,${json}`;
+    // csvContent = encodeURI(csvContent);
+    let csvContent = new Blob([json], {type: fileFormat});
+    csvContent = URL.createObjectURL(csvContent);
+
     let download = json ?
-      `<a class="download-link" href=${csvContent} download="${dropzoneGestion.files[this.id].name}"><img src="assets/csv/media/img/download.svg" alt="download" /></a>` :
+      `<a class="download-link" target="_blank" href=${csvContent} download="${dropzoneGestion.files[this.id].name}" ><img src="assets/csv/media/img/download.svg" alt="download" /></a>` :
       '<img src="assets/csv/media/img/exclamation.png" alt="download" />'
     this.componentsDom.uploadButton.innerHTML = download;
   };
