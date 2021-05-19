@@ -305,7 +305,7 @@ const dropzoneGestion =
 const {byId, addClass, removeClass} = domGestion;
 
 const dropzoneInput = byId('dropzone-input');
-const maxFilesize = 10;
+const maxFilesize = 1;
 const maxFiles = 5;
 const dropzone = byId('dropzone');
 
